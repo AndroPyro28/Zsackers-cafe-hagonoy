@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- cdn for icons -->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"/>
+
+     <link rel="stylesheet" href="../styles/globalStyle.css">
+     <link rel="stylesheet" href="../styles/inventory.css">
+    
+</head>
+<body>
+    <main>
+        <!-- plain brown header -->
+        <header class="top__header"></header>
+
+
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo__container">
+                <img class="zsaker-logo__sidebar" src="../assets/zsakers-cafe_logo(sidebar).png" alt="">
+            </div>
+
+            <div class="sidebar__navs__container">
+                <ul>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/adminDashboard.html">
+                            <span class="material-symbols-rounded sidebar__icons">home</span>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/pos.html">
+                            <span class="material-symbols-rounded sidebar__icons">point_of_sale</span>
+                            <p>Point of Sale</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/inventory.html">
+                            <span class="material-symbols-rounded sidebar__icons">inventory_2</span>
+                            <p>Inventory</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/sales.html">
+                            <span class="material-symbols-rounded sidebar__icons">monitoring</span>
+                            <p>Sales Record</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/addNewStaff.html">
+                            <span class="material-symbols-rounded sidebar__icons">person_add</span>
+                            <p>Add New Staff</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar__footer__container">
+                <div class="dropdown__profile">
+                    <img src="../assets/arthur estrada profile.jpg" alt="profile pic" class="sidebar__profile-pic">
+                    <ul class="dropdown__menu">
+                        <li><a class="dropdown__item" href="#">Logout</a></li>
+                    </ul>
+                </div>
+                <p class="userRole__text">Admin</p>
+            </div>
+        </aside>
+
+
+
+        <!-- Inventory Content -->
+        <div class="content inventoryContent__container">
+            <div class="inventory__left__cont">
+                <div class="inventory__content__nav">
+                    <p>Products</p>
+                    <div class="search__inventory__cont">
+                        <small>Search for items</small>
+                        <div class="search__item__container">
+                            <input type="text" placeholder="Search...">
+                            <button><span class="material-symbols-rounded">search</span></button>
+                        </div>
+                    </div>
+                    <div class="category__inventory__cont">
+                        <small>Category:</small>
+                        <select name="" id="">
+                            <option value="">Donut</option>
+                            <option value="">Burger</option>
+                        </select>
+                    </div>
+    
+                    <button>Add Item</button>
+                </div>
+                
+
+                <div class="product__inventory__cont">
+
+                    <div class="table__row table__header">
+                        <div class=" header table__image"></div>
+                        <div class=" header table__productName">Name</div>
+                        <div class=" header table__productCategory">Category</div>
+                        <div class=" header table__productCode">Product Code</div>
+                        <div class=" header table__productPrice">Price</div>
+                        <div class=" header table__productStock">Stock</div>
+                        <div class=" header table__action"></div>
+                    </div>
+                    
+                    <div class="product__list__container">
+                        <div class="product__item">
+                            <div class="table__row table__data">
+                                <div class=" data table__image">  
+                                    <img src="../assets/donut.jpg" alt="">
+                                </div>
+                                
+                                <div class=" data table__productName">KitKat Donut</div>
+                                <div class=" data table__productCategory">Donut</div>
+                                <div class=" data table__productCode">D123478</div>
+                                <div class=" data table__productPrice">44.00</div>
+                                <div class=" data table__productStock">55</div>
+                                <div class=" data table__action">
+                                    <span href="#modalBox" class="material-symbols-rounded" onclick="edit__modal__trigger()">edit</span>
+                                    <span class="material-symbols-rounded">delete</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product__item">
+                            <div class="table__row table__data">
+                                <div class=" data table__image">  
+                                    <img src="../assets/donut.jpg" alt="">
+                                </div>
+                                
+                                <div class=" data table__productName">KitKat Donut</div>
+                                <div class=" data table__productCategory">Donut</div>
+                                <div class=" data table__productCode">D123478</div>
+                                <div class=" data table__productPrice">44.00</div>
+                                <div class=" data table__productStock">55</div>
+                                <div class=" data table__action">
+                                    <span href="#modalBox" class="material-symbols-rounded" onclick="edit__modal__trigger()">edit</span>
+                                    <span class="material-symbols-rounded">delete</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>     
+                </div>
+            </div> 
+
+            <div class="inventoryStatus__right__cont">
+                <div>
+                    <div class="inventory__title__cont in-stock__cont">
+                        <p>In-Stock</p>
+                    </div>
+                    <div class="inventory__value__cont">
+                        <p>49</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="inventory__title__cont out-stock__cont">
+                        <p>Out-Stock</p>
+                    </div>
+                    <div class="inventory__value__cont">
+                        <p>0</p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="inventory__title__cont total-stock__cont">
+                        <p>Total</p>
+                    </div>
+                    <div class="inventory__value__cont">
+                        <p>49</p>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </main>
+
+
+    <!-- modal -->
+    <div id="modalBox" class="modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <p>Edit Product</p>
+                <div class="modal__close">
+                    <span onclick="close__modal()">&times;</span>
+                </div>
+            </div>
+            <div class="modal__body">
+                <div class="edit__productImg__cont">  
+                    <img src="../assets/donut.jpg" alt="">
+                </div>
+
+                <div class="item__info__container">
+                    <div class="edit__info__row">
+                        <div class="info">
+                            <label for="">Product Name</label>
+                            <input type="text" value="KitKat Donut">
+                        </div>
+                        <div class="info">
+                            <label for="">Category</label>
+                            <input type="text" value="Donut">
+                        </div>
+                        <div class="info">
+                            <label for="">Product Code</label>
+                            <input type="text" value="D123478">
+                        </div>
+                    </div>
+                    <div class="edit__info__row">
+                        <div class="info">
+                            <label for="">Price</label>
+                            <input type="text" value="44.00">
+                        </div>
+                        <div class="info">
+                            <label for="">Stock</label>
+                            <input type="text" value="55">
+                        </div>
+                        <div class="info">
+                            <!-- ***space*** -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button>Save</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        const modal = document.querySelector("#modalBox");
+
+        function edit__modal__trigger() {
+            modal.style.display = "block";
+        }
+
+        function close__modal() {
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>

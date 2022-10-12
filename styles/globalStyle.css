@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+:root {
+    --brown: #8D6E63;
+    --green: #50A902;
+    --yellow-orange: #FFA904;
+    --red: #D32F2F;
+    --blue: #337DD4;
+    --body-background: #E4E4E4;
+    --box-shadow-color: #888888;
+    --sidebar-color: #F5F5F5;
+    --content-box-color: #fff;
+
+    --txt-color: #666666;
+}
+
+* {
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+}
+
+body {
+    background-color: var(--body-background); 
+}
+
+
+/* grid container of the components/parts in the system */
+main {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 120px 1fr 1fr ;
+    grid-template-rows: 20px 1fr 1fr;
+}
+
+/* main sections of the website */
+.top__header {
+    background-color: var(--brown);
+    grid-column: 1 / 4;
+}
+
+.sidebar {
+    background-color: var(--sidebar-color);
+    padding: 10px;
+    grid-row: 2 / 4;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.content {
+    padding: 20px;
+    grid-column: 2 / 4;
+    grid-row: 2 / 4;
+}
+
+
+/* content inside the sidebar */
+.logo__container {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.zsaker-logo__sidebar {
+    width: 60px;
+}
+
+/* middle part of the sidebar */
+.sidebar__navs__container {
+    padding-bottom: 8px;
+    width: 120px;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar__navigations {
+    width: 120px;
+    height: 60px;
+    padding-top: 6px;
+    transition:  all .1s ease-out;
+
+}
+
+.sidebar__icons {
+    font-size: 30px;
+}
+
+.sidebar ul li .sidebar__navigations {
+    color: var(--txt-color);
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none; 
+    margin-top: 7px;
+}
+
+.sidebar ul li .sidebar__navigations:hover{
+    background-color: #cdcdcd;
+    border-left: solid 5px var(--brown);
+    color: #333;
+}
+
+.sidebar ul li .sidebar__navigations:active{
+    color: #000;
+}
+
+.sidebar__footer__container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 5px;
+    position: relative;
+}
+
+.sidebar__profile-account {
+    background-color: #c7c7c7;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+
+.sidebar__profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: solid 2px var(--green);
+}
+
+.sidebar__profile-pic:hover {
+    opacity: 0.5;
+}
+
+.sidebar__footer__container .userRole__text {
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.dropdown__menu {
+    list-style: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: #fff;
+    box-shadow: 5px 10px 18px var(--box-shadow-color);
+    border-radius: 5px;
+    position: absolute;
+    bottom: 10px;
+    left: -12px;
+    display: none;
+    font-size: 14px;
+    color: #000;
+    transition: all .4s;
+}
+
+.dropdown__profile:hover .dropdown__menu {
+    display: initial
+}

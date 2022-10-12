@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- cdn for icons -->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"/>
+
+     <link rel="stylesheet" href="../styles/globalStyle.css">
+     <link rel="stylesheet" href="../styles/addNewStaff.css">
+ 
+</head>
+<body>
+    <main>
+        <!-- plain brown header -->
+        <header class="top__header"></header>
+
+
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo__container">
+                <img class="zsaker-logo__sidebar" src="../assets/zsakers-cafe_logo(sidebar).png" alt="">
+            </div>
+
+            <div class="sidebar__navs__container">
+                <ul>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/adminDashboard.html">
+                            <span class="material-symbols-rounded sidebar__icons">home</span>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/pos.html">
+                            <span class="material-symbols-rounded sidebar__icons">point_of_sale</span>
+                            <p>Point of Sale</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/inventory.html">
+                            <span class="material-symbols-rounded sidebar__icons">inventory_2</span>
+                            <p>Inventory</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/sales.html">
+                            <span class="material-symbols-rounded sidebar__icons">monitoring</span>
+                            <p>Sales Record</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/addNewStaff.html">
+                            <span class="material-symbols-rounded sidebar__icons">person_add</span>
+                            <p>Add New Staff</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar__footer__container">
+                <div class="dropdown__profile">
+                    <img src="../assets/arthur estrada profile.jpg" alt="profile pic" class="sidebar__profile-pic">
+                    <ul class="dropdown__menu">
+                        <li><a class="dropdown__item" href="#">Logout</a></li>
+                    </ul>
+                </div>
+                <p class="userRole__text">Admin</p>
+            </div>
+        </aside>
+
+
+
+        <!-- Add New Staff Content -->
+        <div class="content addNewStaff__content">
+            <div class="addStaff__form__container">
+                <p>New Staff</p>
+                <form action="">
+                    <div class="info__input">
+                        <label for="">First Name</label>
+                        <input type="text" placeholder="Enter your first name">
+                    </div>
+                    <div class="info__input">
+                        <label for="">Last Name</label>
+                        <input type="text" placeholder="Enter your last name">
+                    </div>
+                    <div class="info__input">
+                        <label for="">Email</label>
+                        <input type="email" placeholder="Email Address">
+                    </div>
+                    <div class="info__input">
+                        <label for="">Phone</label>
+                        <input type="number" placeholder="Phone Number">
+                    </div>  
+                    <div class="info__input">
+                        <label for="">Password</label>
+                        <input type="text" placeholder="Password">
+                    </div>  
+                    <div class="info__input">
+                        <label for="">Confirm Password</label>
+                        <input type="text" placeholder="Confirm Password">
+                    </div>
+                    <div class="info__input">
+                        <input id="createAccount__button" type="submit" value="Create Account">
+                    </div>    
+                </form>
+            </div>
+
+            <div class="addStaff__right__container">
+                <div class="staff__number__cont">
+                    <div>
+                        <span class="material-symbols-rounded">groups</span>
+                        <p>Staff Accounts</p>
+                    </div>
+                    <p class="staff__number">15</p>
+                </div>
+
+                <div class="staff__account__list__container">
+                    <p>Staff Accounts</p>
+
+                    <div class="staff__account__list">
+                        <div class="staff__account__row">
+                            <div class="data table__account__img">
+                                <img src="../assets/arthur estrada profile.jpg" alt="">
+                            </div>
+                            <div class="data table__accountName">Arthur Estrada</div>
+                            <div class="data table__accountAction">
+                                <span href="#modalBox" class="material-symbols-rounded" onclick="edit__modal__trigger()">edit</span>
+                                <span class="material-symbols-rounded">delete</span>
+                            </div>
+                        </div>
+
+                        <div class="staff__account__row">
+                            <div class="data table__account__img">
+                                <img src="../assets/arthur estrada profile.jpg" alt="">
+                            </div>
+                            <div class="data table__accountName">Arthur Estrada</div>
+                            <div class="data table__accountAction">
+                                <span href="#modalBox" class="material-symbols-rounded" onclick="edit__modal__trigger()">edit</span>
+                                <span class="material-symbols-rounded">delete</span>
+                            </div>
+                        </div>
+
+                        <div class="staff__account__row">
+                            <div class="data table__account__img">
+                                <img src="../assets/arthur estrada profile.jpg" alt="">
+                            </div>
+                            <div class="data table__accountName">Arthur Estrada</div>
+                            <div class="data table__accountAction">
+                                <span href="#modalBox" class="material-symbols-rounded" onclick="edit__modal__trigger()">edit</span>
+                                <span class="material-symbols-rounded">delete</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+     <!-- modal -->
+     <div id="modalBox" class="modal">
+        <div class="flexxing__modal__content">
+            <div class="modal__content">
+                <div class="modal__header">
+                    <p>Staff account information</p>
+                    <div class="modal__close">
+                        <span onclick="close__modal()">&times;</span>
+                    </div>
+                </div>
+                <div class="modal__body">
+    
+                    <div class="edit__info__column">
+                        <div class="info">
+                            <label for="">Fist Name</label>
+                            <input type="text" value="Arthur">
+                        </div>
+                        <div class="info">
+                            <label for="">Last Name</label>
+                            <input type="text" value="Estrada">
+                        </div>
+                        <div class="info">
+                            <label for="">Email</label>
+                            <input type="email" value="arthurestrada_24@gmail.com">
+                        </div>
+                        <div class="info">
+                            <label for="">Phone</label>
+                            <input type="number" value="09915079654">
+                        </div>
+                        <div class="info">
+                            <label for="">Password</label>
+                            <input type="text" value="art_estrada123" class="myInput">
+                        </div>
+                        <div class="info">
+                            <label for="">Confirm Password</label>
+                            <input type="text" value="art_estrada123" class="myInput">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal__footer">
+                    <button>Save</button>
+                </div>
+            </div>
+        </div>    
+    </div>
+
+
+    <script>
+        const modal = document.querySelector("#modalBox");
+
+        function edit__modal__trigger() {
+            modal.style.display = "block";
+        }
+
+        function close__modal() {
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+</html>

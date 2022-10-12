@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- cdn for icons -->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"/>
+
+     <link rel="stylesheet" href="../styles/globalStyle.css">
+     <link rel="stylesheet" href="../styles/adminDashboard.css">
+ 
+</head>
+<body>
+    <main>
+        <!-- plain brown header -->
+        <header class="top__header"></header>
+
+
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo__container">
+                <img class="zsaker-logo__sidebar" src="../assets/zsakers-cafe_logo(sidebar).png" alt="">
+            </div>
+
+            <div class="sidebar__navs__container">
+                <ul>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/adminDashboard.html">
+                            <span class="material-symbols-rounded sidebar__icons">home</span>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/pos.html">
+                            <span class="material-symbols-rounded sidebar__icons">point_of_sale</span>
+                            <p>Point of Sale</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/inventory.html">
+                            <span class="material-symbols-rounded sidebar__icons">inventory_2</span>
+                            <p>Inventory</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/sales.html">
+                            <span class="material-symbols-rounded sidebar__icons">monitoring</span>
+                            <p>Sales Record</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/addNewStaff.html">
+                            <span class="material-symbols-rounded sidebar__icons">person_add</span>
+                            <p>Add New Staff</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar__footer__container">
+                <div class="dropdown__profile">
+                    <img src="../assets/arthur estrada profile.jpg" alt="profile pic" class="sidebar__profile-pic">
+                    <ul class="dropdown__menu">
+                        <li><a class="dropdown__item" href="#">Logout</a></li>
+                    </ul>
+                </div>
+                <p class="userRole__text">Admin</p>
+            </div>
+        </aside>
+
+
+
+        <!-- Dashboard Content -->
+        <div class="content dashboard__content">
+            <h1>Dashboard</h1>
+            <div class="dashboard__content__holder">
+                <div class="today__trans__cont">
+                    <div>
+                        <p class="dash__texts">Today Transactions</p>
+                        <span class="material-symbols-rounded dashboard__icons">receipt_long</span>
+                    </div> 
+                    <p>20</p>
+                </div>
+                <div class="sales__today__cont">
+                    <div>
+                        <p class="dash__texts">Sales Today</p>
+                        <span class="material-symbols-rounded dashboard__icons">insights</span>
+                    </div>
+                    <p>12398</p>
+                </div>
+                <div class="walkin__customers__cont">
+                    <div>
+                        <p class="dash__texts">Walk-in Customers</p>
+                        <span class="material-symbols-rounded dashboard__icons">directions_walk</span>
+                    </div>
+                    <p>0</p>
+                </div>
+                <div class="online__customers__cont">
+                    <div>
+                        <p class="dash__texts">Online Customers</p>
+                        <span class="material-symbols-rounded dashboard__icons">phone_android</span>
+                    </div>
+                    <p>0</p>
+                </div>
+                <div class="staff__accounts__cont">
+                    <div>
+                        <p class="dash__texts">Staff Accounts</p>
+                        <span class="material-symbols-rounded dashboard__icons">groups</span>
+                    </div>
+                    <p>0</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

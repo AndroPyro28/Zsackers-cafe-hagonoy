@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+     <!-- cdn for icons -->
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded"/>
+
+     <link rel="stylesheet" href="../styles/globalStyle.css">
+     <link rel="stylesheet" href="../styles/pos.css">
+ 
+</head>
+<body>
+    <main>
+        <!-- plain brown header -->
+        <header class="top__header"></header>
+
+
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo__container">
+                <img class="zsaker-logo__sidebar" src="../assets/zsakers-cafe_logo(sidebar).png" alt="">
+            </div>
+
+            <div class="sidebar__navs__container">
+                <ul>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/adminDashboard.html">
+                            <span class="material-symbols-rounded sidebar__icons">home</span>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/pos.html">
+                            <span class="material-symbols-rounded sidebar__icons">point_of_sale</span>
+                            <p>Point of Sale</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/inventory.html">
+                            <span class="material-symbols-rounded sidebar__icons">inventory_2</span>
+                            <p>Inventory</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/sales.html">
+                            <span class="material-symbols-rounded sidebar__icons">monitoring</span>
+                            <p>Sales Record</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar__navigations" href="../views/addNewStaff.html">
+                            <span class="material-symbols-rounded sidebar__icons">person_add</span>
+                            <p>Add New Staff</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar__footer__container">
+                <div class="dropdown__profile">
+                    <img src="../assets/arthur estrada profile.jpg" alt="profile pic" class="sidebar__profile-pic">
+                    <ul class="dropdown__menu">
+                        <li><a class="dropdown__item" href="#">Logout</a></li>
+                    </ul>
+                </div>
+                <p class="userRole__text">Admin</p>
+            </div>
+        </aside>
+
+
+
+        <!-- Point Of Sale Content -->
+        <div class="content pos__content__container">
+            <div class="productsCatalog__leftContainer">
+
+                <section class="topNav__container">
+                    <div class="search__product__row">
+                        <p>Product Categories</p>
+                        <div class="search__item__container">
+                            <input type="text" placeholder="Search the preffered product here...">
+                            <button>Search</button>
+                        </div>
+                    </div>
+
+                    <div class="sorting__buttons__row">
+                        <button>All</button>
+                        <button>Donut</button>
+                        <button>Burger</button>
+                        <button>Pizza</button>
+                        <button>Milk Tea</button>
+                        <button>Coffee</button>
+                    </div>
+
+                </section>
+
+                <section class="products__container">
+                    <div class="product__card">
+                        <div class="product__img__container">
+                            <img src="../assets/donut.jpg" alt="">
+                        </div>
+                        <div class="product__name__container">
+                            <p class="item__name">Donut Bundle 1</p>
+                            <p class="item__price">150.00</p>
+                        </div>
+                    </div>
+
+                    <div class="product__card">
+                        <div class="product__img__container">
+                            <img src="../assets/donut.jpg" alt="">
+                        </div>
+                        <div class="product__name__container">
+                            <p class="item__name">Donut Bundle 1</p>
+                            <p class="item__price">150.00</p>
+                        </div>
+                    </div>
+
+                    <div class="product__card">
+                        <div class="product__img__container">
+                            <img src="../assets/donut.jpg" alt="">
+                        </div>
+                        <div class="product__name__container">
+                            <p class="item__name">Donut Bundle 1</p>
+                            <p class="item__price">150.00</p>
+                        </div>
+                    </div>
+
+                    <div class="product__card">
+                        <div class="product__img__container">
+                            <img src="../assets/donut.jpg" alt="">
+                        </div>
+                        <div class="product__name__container">
+                            <p class="item__name">Donut Bundle 1</p>
+                            <p class="item__price">150.00</p>
+                        </div>
+                    </div>
+
+                    <div class="product__card">Card</div>
+                   
+                </section>
+
+            </div>
+            <div class="cart__rightContainer">
+                <h3>Current Order</h3>
+                <div class="product__list__container">
+
+                    <div class="product__item__container">
+                        <div class="product__img__cont">
+                            <img src="../assets/donut.jpg" class="product__image" />
+                        </div>
+                        <div class="product__name">
+                            <p>Donut Bundle 1</p>
+                          </div>
+    
+                          <div class="product__quantity">
+                            <button class="decremeant">-</button>
+                            <label>1</label>
+                            <button class="incremeant">+</button>
+                          </div>
+    
+                          <p class="product__price">₱150.00</p>
+    
+                          <span class="material-symbols-rounded remove__product">delete</span>
+                    </div>
+
+                    <div class="product__item__container">
+                        <div class="product__img__cont">
+                            <img src="../assets/donut.jpg" class="product__image" />
+                        </div>
+                        <div class="product__name">
+                            <p>Donut Bundle 1</p>
+                          </div>
+    
+                          <div class="product__quantity">
+                            <button class="decremeant">-</button>
+                            <label>1</label>
+                            <button class="incremeant">+</button>
+                          </div>
+    
+                          <p class="product__price">₱150.00</p>
+    
+                          <span class="material-symbols-rounded remove__product">delete</span>
+                    </div>
+
+                    <div class="product__item__container">
+                        <div class="product__img__cont">
+                            <img src="../assets/donut.jpg" class="product__image" />
+                        </div>
+                        <div class="product__name">
+                            <p>Donut Bundle 1</p>
+                          </div>
+    
+                          <div class="product__quantity">
+                            <button class="decremeant">-</button>
+                            <label>1</label>
+                            <button class="incremeant">+</button>
+                          </div>
+    
+                          <p class="product__price">₱150.00</p>
+    
+                          <span class="material-symbols-rounded remove__product">delete</span>
+                    </div>
+
+                    <div class="product__item__container">
+                        <div class="product__img__cont">
+                            <img src="../assets/donut.jpg" class="product__image" />
+                        </div>
+                        <div class="product__name">
+                            <p>Donut Bundle 1</p>
+                          </div>
+    
+                          <div class="product__quantity">
+                            <button class="decremeant">-</button>
+                            <label>1</label>
+                            <button class="incremeant">+</button>
+                          </div>
+    
+                          <p class="product__price">₱150.00</p>
+    
+                          <span class="material-symbols-rounded remove__product">delete</span>
+                    </div>
+
+                    <div class="product__item__container">
+                        <div class="product__img__cont">
+                            <img src="../assets/donut.jpg" class="product__image" />
+                        </div>
+                        <div class="product__name">
+                            <p>Donut Bundle 1</p>
+                          </div>
+    
+                          <div class="product__quantity">
+                            <button class="decremeant">-</button>
+                            <label>1</label>
+                            <button class="incremeant">+</button>
+                          </div>
+    
+                          <p class="product__price">₱150.00</p>
+    
+                          <span class="material-symbols-rounded remove__product">delete</span>
+                    </div>
+                    
+                </div>
+
+                <div class="order__prices__container">
+                    <div class="checkout__details__container">
+
+                        <div class="checkout__details subtotal__container">
+                          <span class="leftDetails">Subtotal</span>
+                          <span class="rightDetails subtotalPrice">₱ 0.00</span>
+                        </div>
+    
+                        <div class="checkout__details tax__container">
+                          <span class="leftDetails">Tax</span>
+                          <span class="rightDetails TaxPrice">₱ 0.00</span>
+                        </div>
+    
+                        <div class="checkout__details discount__container">
+                          <span class="leftDetails">Discount</span>
+                          <span class="rightDetails DiscountAmount">₱ 0.00</span>
+                        </div>
+
+                        <div class="checkout__details totalAmount__container">
+                            <span class="leftDetails">Total</span>
+                            <span class="rightDetails totalAmount">₱ 0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="print__receipt__button__container">
+                        <button class="print__receipt__button">Print Receipt</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

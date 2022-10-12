@@ -1,0 +1,15 @@
+body {
+    overflow: hidden;
+}
+
+/* .sales__content {
+
+} */
+
+.recent__transaction__container {
+    border-radius: 25px;
+    background-color: var(--content-box-color);
+    height: 100%;
+    padding: 20px;
+    font-weight: 700;
+}
