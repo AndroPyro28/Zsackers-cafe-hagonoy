@@ -5,8 +5,8 @@ function FeaturedProducts() {
   return (
     <FeaturedProductsContainer>
       <Productsidebar>
-        <span className='active'>Milk tea</span>
-        <span>Donuts</span>
+        <span>Milk tea</span>
+        <span className='active'>Donuts</span>
         <span>Frappe</span>
         <span>Pizza</span>
       </Productsidebar>
@@ -14,7 +14,12 @@ function FeaturedProducts() {
         <h1>Our Products</h1>
 
       <ProductList>
-      <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
         <Product />
         <Product />
         <Product />

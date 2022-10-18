@@ -1,12 +1,19 @@
+import { faChessKing } from '@fortawesome/free-solid-svg-icons'
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import PublicNavbar from '../components/public-navbar/PublicNavbar'
 import { PublicRoutesContainer } from './components'
 
 function PublicRoutes() {
+
+  const {pathname} = useLocation()
+  const excludedRoutes = ['login']
+  
   return (
     <PublicRoutesContainer>
-      <PublicNavbar />
+      {
+        !excludedRoutes.some(path => pathname.includes(path)) && <PublicNavbar />
+      }
       <Outlet />
     </PublicRoutesContainer>
   )
