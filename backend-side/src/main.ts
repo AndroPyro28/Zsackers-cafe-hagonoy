@@ -17,6 +17,6 @@ async function bootstrap() {
   )
   const reflector = new Reflector()
   app.useGlobalGuards(new AtGuard(reflector), new Roles(reflector))
-  await app.listen(3001);
+  await app.listen(process.env.PORT || 3001 );
 }
 bootstrap();
