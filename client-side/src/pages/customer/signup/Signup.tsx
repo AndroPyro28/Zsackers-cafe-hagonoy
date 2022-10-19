@@ -152,7 +152,6 @@ function Signup() {
                 {currentField > 0 && <input type={'button'} value={'Prev'} onClick={() => handleFieldChange('prev')}></input>}
                 {currentField < 3 && <input type={'button'} value={'next'} onClick={() => handleFieldChange('next')}></input>}
                 {currentField === 3 && <button type="submit">Sign up</button>}
-                
               </ButtonContainer>
             </Form>
           );

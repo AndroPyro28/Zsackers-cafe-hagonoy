@@ -41,7 +41,7 @@ export class AuthService {
 
     async signToken({id, email}: TokenPayload) {
         return this.jwtService.sign({id, email}, {
-            secret: 'at-secret',
+            secret: process.env.JWT_ACCESS_TOKEN,
             expiresIn: '1d'
         });
     }
