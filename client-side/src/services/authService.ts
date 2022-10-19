@@ -1,8 +1,9 @@
+import { Signin, Signup } from "../model";
 import {publicApi} from "./baseApi"
 
 const authApi = publicApi.injectEndpoints({
     endpoints: builder => ({
-        signup: builder.mutation<void, object>({
+        signup: builder.mutation<void, Signup>({
             query: body => ({
                 url: `auth/signup`,
                 method:"POST",
@@ -10,7 +11,7 @@ const authApi = publicApi.injectEndpoints({
             }),
             invalidatesTags: ['Signup']
         }),
-        signin: builder.mutation<void, object>({
+        signin: builder.mutation<void, Signin>({
             query: body => ({
                 url: `auth/signin`,
                 method:"POST",

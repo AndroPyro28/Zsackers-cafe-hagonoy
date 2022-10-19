@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { Signup } from '../../../model/User'
+import { Signup } from '../../../model'
 import { useSignupMutation } from '../../../services'
 import {useNavigate} from "react-router-dom"
 function Logic({setCurrentField}: any) {
@@ -31,8 +31,8 @@ function Logic({setCurrentField}: any) {
     }
 
     const validationSchema = yup.object({
-        firstname: yup.string().required('Firstname is required').matches(/^[A-Za-z\s]*$/, "Must container letters only").min(3),
-        lastname: yup.string().required('Lastname is required').matches(/^[A-Za-z\s]*$/, "Must container letters only").min(3),
+        firstname: yup.string().required('Firstname is required').matches(/^[A-Za-z\s]*$/, "Must container letters only").min(3,'Firstname must be at least 3 characters'),
+        lastname: yup.string().required('Lastname is required').matches(/^[A-Za-z\s]*$/, "Must container letters only").min(3,'Lastname must be at least 3 characters'),
         email: yup.string().required('Email is required').email('This must be a valid email'),
         address: yup.string().required('Address is required'),
         contact: yup.string().required('Contact is required').matches(/^[0-9]*$/, "Digits only"),

@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import { Signin } from '../../../model/User'
+import { Signin } from '../../../model'
 import { useSigninMutation } from '../../../services'
 
 function Logic() {
