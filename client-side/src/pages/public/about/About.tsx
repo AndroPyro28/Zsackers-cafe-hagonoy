@@ -51,7 +51,7 @@ function About() {
             </p>
           </Content>
         </StoreContent>
-        <video src="/assets/intro.mp4" autoPlay />
+        <video src="/assets/intro.mp4" controls autoPlay />
       </AboutContent>
     </AboutContainer>
   );

@@ -14,7 +14,7 @@ function Login() {
         {(formik) => {
           return (
             <Form autoComplete="off" className="form">
-              <Link to={-1}>
+              <Link to={'/'} className="back-a">
                 <i className="fa-solid fa-arrow-left backBtn"></i>
               </Link>
               <h1>Welcome Back</h1>

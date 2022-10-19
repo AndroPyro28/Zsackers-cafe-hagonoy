@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 
 function Logic() {
   const { pathname } = useLocation();
-  const navLinkStylesFirst = ({ isActive }) => {
+  const navLinkStylesFirst = ({ isActive }: any) => {
     if (pathname !== "/") {
       isActive = false;
     }
@@ -13,10 +13,10 @@ function Logic() {
     };
   };
 
-  const navLinkStyles = (props) => {
+  const navLinkStyles = ({ isActive }: any) => {
     return {
-      color: props.isActive ? "white" : "rgb(51,102,51)",
-      background: props.isActive ? "rgb(51,102,51)" : "white",
+      color: isActive ? "white" : "rgb(51,102,51)",
+      background: isActive ? "rgb(51,102,51)" : "white",
     };
   };
 

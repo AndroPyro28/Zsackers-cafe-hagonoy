@@ -5,6 +5,7 @@ import PublicRoutes from './routes/PublicRoutes';
 import Index from './pages/public/index/Index';
 import About from './pages/public/about/About';
 import Login from './pages/customer/login/Login';
+import Signup from './pages/customer/signup/Signup';
 
 function App() {
 
@@ -24,6 +25,10 @@ function App() {
         {
           element: <Login />,
           path:'/customer/login'
+        },
+        {
+          element: <Signup />,
+          path:'/customer/signup'
         }
       ]
     }

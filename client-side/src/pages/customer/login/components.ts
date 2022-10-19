@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 
@@ -13,6 +14,10 @@ export const AuthContainer = styled.div`
         gap: 20px;
         padding: 0px 50px;
         justify-content: center;
+
+        & > .back-a {
+            width: fit-content;
+        }
         & > h1 {
             color: rgb(51,102,51);
             font-size: 2.5em;
@@ -63,16 +68,36 @@ export const FieldContainer = styled.div`
     & > .error__message {
         color: maroon;
         margin-inline: 5px;
+        font-size: 0.9em;
     }
 `
 export const SideContent = styled.div`
     flex: 1;
-    /* background: black; */
-    /* background: rgb(179,202,179); */
-    background: url('/assets/screenshot1.png');
+    background: ${() => {
+        const {pathname} = useLocation();
+        if(pathname.includes('signup')) return `url('/assets/undraw7.png')`
+        else { return `url('/assets/undraw5.png')`}
+    }}; 
+    /* background:url('/assets/screenshot1.png'); */
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: contain;
     background-position: right;
     height: 100vh;
     width: 100%;
+`
+
+export const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    & > button, input {
+            padding: 8px 0px;
+            border-radius: 5px;
+            outline: none;
+            border: none;
+            background: rgb(51,102,51);
+            color: white;
+            cursor: pointer;
+            flex: 1;
+         }
 `

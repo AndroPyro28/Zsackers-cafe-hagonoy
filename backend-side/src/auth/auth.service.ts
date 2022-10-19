@@ -13,6 +13,7 @@ export class AuthService {
         ) {}
 
     async signup(body: SignupDto) {
+        if(body.password !== body.confirmPassword) throw new ForbiddenException('Invalid Credentials');
         const hashPw = await argon.hash(body.password);
         body.password = hashPw
         const newUser = await this.userModel.createUser(body);
@@ -32,9 +33,9 @@ export class AuthService {
 
         if(!isMatched) throw new ForbiddenException('Invalid Credentials');
 
-        const token = await this.signToken({id: user.id, email: user.email});
+        const access_token = await this.signToken({id: user.id, email: user.email});
         return {
-            token
+            access_token
         }
     }
 

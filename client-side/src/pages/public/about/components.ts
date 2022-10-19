@@ -16,7 +16,6 @@ export const DonutsBg = styled.div`
 
 export const AboutContent = styled.div`
     width: 90%;
-    /* height: 500px; */
     box-shadow: 1px 3px 5px gray;
     margin-top: -200px;
     background:white ;
@@ -29,10 +28,8 @@ export const AboutContent = styled.div`
     gap: 50px;
     & > h1 {
         text-align: center;
-        /* margin-top: -190px; */
         font-size: 3em;
         color: rgb(51, 102, 51);
-        /* text-shadow: 1px 3px 5px black; */
     }
 
      & > img {
@@ -44,7 +41,6 @@ export const AboutContent = styled.div`
         text-align: justify;
         font-size: 1.1em;
         color: rgb(54,48,48);
-        /* color: rgb(51, 102, 51); */
      }
 
      & > video {
@@ -63,7 +59,6 @@ export const StoreContent = styled.div`
     display: flex;
     justify-content: space-evenly;
     gap: 20px;
-    /* padding: 20px; */
 `
 
 export const Content = styled.div`
@@ -78,13 +73,13 @@ export const Content = styled.div`
      }
 
       & > h3 {
+        text-align: center;
         font-size: 2em;
       }
 
       & > p {
         font-size: 1em;
         text-align: justify;
-        /* font-weight: 500; */
         color: rgb(54,48,48);
 
       }

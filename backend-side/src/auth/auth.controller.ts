@@ -13,14 +13,14 @@ export class AuthController {
     @Post('signup')
     @Public()
     @HttpCode(HttpStatus.CREATED)
-    async signup(@Body() body: SignupDto) {
+    async signup(@Body() body: SignupDto): Promise<{success: boolean}> {
         return this.authService.signup(body)
     }
 
     @Post('signin')
     @Public()
     @HttpCode(HttpStatus.OK)
-    async signin(@Body() body: SigninDto) {
+    async signin(@Body() body: SigninDto): Promise<{access_token: string}> {
         return this.authService.signin(body)
     }
 
