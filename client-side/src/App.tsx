@@ -4,8 +4,10 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import PublicRoutes from './routes/PublicRoutes';
 import Index from './pages/public/index/Index';
 import About from './pages/public/about/About';
-import Login from './pages/customer/login/Login';
-import Signup from './pages/customer/signup/Signup';
+import Login from './pages/public/login/Login';
+import Signup from './pages/public/signup/Signup';
+import Inventory from './pages/admin/inventory/Inventory';
+import AdminRoutes  from './routes/AdminRoutes';
 
 function App() {
 
@@ -24,15 +26,25 @@ function App() {
         },
         {
           element: <Login />,
-          path:'/customer/login'
+          path:'login'
         },
         {
           element: <Signup />,
-          path:'/customer/signup'
+          path:'signup'
+        }
+      ]
+    }, {
+      element: <AdminRoutes />,
+      path: '/admin',
+      children: [
+        {
+          element: <Inventory />,
+          path: 'inventory'
         }
       ]
     }
   ])
+
   return (
     <AppMain>
       <GlobalStyles />

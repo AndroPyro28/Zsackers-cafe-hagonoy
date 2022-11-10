@@ -19,14 +19,15 @@ enum ROLE {
 model User {
   id                Int      @id @default(autoincrement())
   createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt 
+  updatedAt         DateTime @updatedAt
   email             String   @unique
   password          String
   hashUpdatePWToken String?
-  isVerify          Boolean?  @default(false)
+  isVerify          Boolean? @default(false)
   role              ROLE
 
-  profile Profile?
+  profile       Profile?
+  order_details Order_Details[]
 
   @@map("users")
 }
@@ -42,4 +43,70 @@ model Profile {
   userId    Int     @unique
 
   @@map("profiles")
+}
+
+model Order_Details {
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  paymentMethod String
+  totalAmount   BigInt
+  user          User           @relation(fields: [userId], references: [id])
+  userId        Int
+  cart_product  Cart_Product[]
+
+  @@map("order_details")
+}
+
+model Cart_Product {
+  id            Int           @id @default(autoincrement())
+  quantity      BigInt
+  product       Product       @relation(fields: [productId], references: [id])
+  productId     Int
+  order_details Order_Details @relation(fields: [orderId], references: [id])
+  orderId       Int
+
+  @@map("cart_products")
+}
+
+model Category {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  sub_category Sub_Category[]
+  Product      Product[]
+
+  @@map("category")
+}
+
+model Sub_Category {
+  id         Int       @id @default(autoincrement())
+  name       String
+  // price      String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  Product    Product[]
+
+  @@map("sub_category")
+}
+
+model Product {
+  id           Int            @id @default(autoincrement())
+  productName  String
+  price        String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  cart_product Cart_Product[]
+
+  image_url     String
+  image_id      String
+  category      Category     @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  sub_category  Sub_Category @relation(fields: [subcategoryId], references: [id])
+  subcategoryId Int
+
+  @@map("products")
 }

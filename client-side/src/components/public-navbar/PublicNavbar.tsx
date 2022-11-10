@@ -23,16 +23,7 @@ function PublicNavbar() {
         </NavLink>
       </Links>
 
-      <span onClick={() => setShowDropDown(prev => !prev)}>
-        Signin as ...
-        {showDropDown && (
-          <DropdownContent>
-            <NavLink to={"customer/login"}>Customer</NavLink>
-            <NavLink to={"#"}>Admin</NavLink>
-            <NavLink to={"#"}>Staff</NavLink>
-          </DropdownContent>
-        )}
-      </span>
+      <NavLink to={"/login"}>login</NavLink>
     </PublicNavbarContainer>
   );
 }

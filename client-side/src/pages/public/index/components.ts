@@ -61,13 +61,13 @@ export const Inner = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 20px;
-
   & > p {
     font-weight: 1000;
     color: inherit;
     font-size: 1.5em;
   }
-  & > .icon {
+
+  /* & > .icon {
     font-size: 5em;
-  }
+  } */
 `;

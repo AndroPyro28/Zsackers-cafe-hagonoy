@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsEmail, IsNumberString } from "class-validator"
+import { Match } from "src/common/decorators";
 
 type ROLE = "ADMIN" | "STAFF" | "CUSTOMER"
 export class SignupDto {
@@ -16,6 +17,9 @@ export class SignupDto {
     password: string;
 
     @IsNotEmpty()
+    @Match('password', {
+        message: 'password and password confirmation do not match'
+    })
     confirmPassword: string;
 
     @IsNotEmpty()

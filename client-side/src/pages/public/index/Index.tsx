@@ -1,7 +1,13 @@
 import React from 'react'
 import FeaturedProducts from '../../../components/featured-products/FeaturedProducts'
 import { IndexContainer, Intro, Content, CircleContainer, Circle, Inner } from './components'
-function Index() {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faStore } from "@fortawesome/free-solid-svg-icons"
+import StoreIcon from '@material-ui/icons/Store';
+import "./style.css"
+
+
+const Index = () => {
     return (
         <IndexContainer>
             <Intro>
@@ -13,25 +19,24 @@ function Index() {
                 <CircleContainer>
                     <Circle>
                         <Inner>
-                            <i className="fa-solid fa-store icon"></i>
+                            <FontAwesomeIcon icon={faStore} className={'icon_color'} />
                             <p>Order Online</p>
                         </Inner>
                     </Circle>
                     <Circle>
                         <Inner>
-                            <i className="fa-solid fa-store icon"></i>
+                            <FontAwesomeIcon icon={faStore} className={'icon_color'} />
                             <p>Order Online</p>
                         </Inner>
                     </Circle>
                     <Circle>
                         <Inner>
-                            <i className="fa-solid fa-store icon"></i>
+                            <FontAwesomeIcon icon={faStore} className={'icon_color'} />
                             <p>Order Online</p>
                         </Inner>
                     </Circle>
                 </CircleContainer>
             </Intro>
-
             <FeaturedProducts />
         </IndexContainer>
     )

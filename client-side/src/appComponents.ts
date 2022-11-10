@@ -13,3 +13,11 @@ export const GlobalStyles = createGlobalStyle`
 export const AppMain = styled.main`
     
 `
+
+export const IconContainer = styled.div`
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 1.3em;
+`
