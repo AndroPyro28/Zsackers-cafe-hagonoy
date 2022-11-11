@@ -5,4 +5,5 @@ export interface CreateProduct {
     image: null | any,
     categoryId: string,
     subcategoryId: string
+    setcategoryId: string
 }

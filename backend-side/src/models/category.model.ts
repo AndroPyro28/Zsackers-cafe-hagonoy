@@ -26,27 +26,20 @@ export class Category {
                         contains: search
                     }
                 },
-                select: {
-                    id : true,
-                    name: true,
-                    createdAt: true,
-                    updatedAt: true,
+                include: {
                     sub_category: {
-                        select: {
-                            id: true,
-                            name: true,
-                            // price: true,
-                            createdAt: true,
-                            updatedAt: true,
-                        }
-                    }
+                        include: {
+                            set_category: true
+                        },
+                        orderBy: [{
+                            createdAt: 'desc'
+                        }]
+                    },
                 },
                 orderBy: [{
                     createdAt: 'desc'
                 }]
             })
-            console.log(categories);
-
             return categories;
         } catch (error) {
             console.error(error)

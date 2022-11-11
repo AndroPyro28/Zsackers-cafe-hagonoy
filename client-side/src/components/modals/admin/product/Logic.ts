@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { CreateProduct } from "../../../../model/product";
+import { CreateProduct } from "../../../../model/Product";
 import { useCreateProductMutation } from "../../../../services";
 
 function Logic() {
@@ -34,7 +34,8 @@ function Logic() {
     productStock: '',
     image: '',
     categoryId: '',
-    subcategoryId: ''
+    subcategoryId: '',
+    setcategoryId: ''
   };
 
   const SUPPORTED_FORMATS = [
@@ -59,6 +60,8 @@ function Logic() {
     .required('Category is required field'),
     subcategoryId: yup.number()
     .required('Subcategory is required field'),
+    setcategoryId: yup.number()
+    .required('Setcategory is required field'),
     image: yup
       .mixed()
       .required("Image is required field")

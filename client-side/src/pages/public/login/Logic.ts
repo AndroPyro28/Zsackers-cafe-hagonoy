@@ -2,7 +2,8 @@ import * as yup from 'yup'
 import { Signin } from '../../../model'
 import { useSigninMutation } from '../../../services'
 import Cookies from 'js-cookie'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
 function Logic() {
   const [signinMutation] = useSigninMutation()
     const navigate = useNavigate()
@@ -18,7 +19,7 @@ function Logic() {
             secure: true,
             expires: 1
           })
-          navigate('/admin/inventory');
+          window.location.assign(`/${data.role}`);
         }
       } catch (error: any) {
         console.error(error.message)

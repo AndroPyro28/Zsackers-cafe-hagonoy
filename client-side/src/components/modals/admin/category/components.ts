@@ -12,7 +12,7 @@ export const CategoryModalBackdrop = styled.div`
 `
 
 export const CategoryModalContainer = styled(motion.div)`
-    width: 95vw;
+    width: 90vw;
     height: 95vh;
     background: white;
     position: absolute;
@@ -99,8 +99,8 @@ max-height: 50vh;
 export const CategoryWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
     padding: 20px 5px;
+    border-bottom: solid 1px lightgray;
    
 `
 export const CategoryContainer = styled.div`
@@ -130,7 +130,16 @@ export const SubCategoryListContainer = styled.div`
 export const SubCategoryContainer = styled.div`
 display: flex;
 width: 100%;
+flex-direction: column;
 margin: 10px 60px;
+padding: 10px;
+border-bottom: solid 1px lightgray;
+
+`
+
+export const SubCategoryData = styled.div`
+display: flex;
+width: 100%;
 
 & > td {
     flex: 1;
@@ -142,7 +151,9 @@ margin: 10px 60px;
     & > span {
         margin: 10px;
         font-size: 1.3em;
+        cursor: pointer;
     }
+
 }
 `
 
@@ -168,7 +179,7 @@ export const CreateSubCategoryContainer = styled.div`
 `
 
 export const LeftForm = styled(Form)`
-
+    margin-top: 20px;
 `
 
 export const CategoryInputField = styled.div`
@@ -236,4 +247,28 @@ flex-direction: column;
     margin: 20px 10px;
     font-size: 1.3em;
  };
+`
+export const SetCategoryListContainer = styled.div`
+    display: flex;
+    flex-direction:column;
+    padding: 10px;
+`
+
+export const SetCategoryContainer = styled.div`
+    display: flex;
+    width: 100%;
+    margin: 10px 30px;
+
+    & > td {
+    flex: 1;
+    font-size: 0.9em;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-inline:10px ;
+    & > span {
+        margin: 10px;
+        font-size: 1.2em;
+    }
+}
 `

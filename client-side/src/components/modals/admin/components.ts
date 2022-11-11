@@ -30,7 +30,7 @@ export const FormFormik = styled(Form)`
     & > button {
         padding: 10px 20px;
         align-self: flex-end;
-        margin: 40px 50px;
+        margin: 20px 50px;
         background: rgb(51,102,51);
         border-radius: 10px;
         border: solid 1px gray;
@@ -40,7 +40,7 @@ export const FormFormik = styled(Form)`
 
     & > h1 {
         text-align: center;
-        margin-block: 40px;
+        margin-block: 20px;
         font-size: 1.8em;
         
     }
@@ -48,7 +48,7 @@ export const FormFormik = styled(Form)`
 export const FormFieldContainer = styled.div`
     width: 85%;
     display: flex;
-    margin: 10px;
+    margin: 8px;
     & > label {
         flex: 1;
         font-size: 0.9em;

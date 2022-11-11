@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import {InventoryRightContentContainer, FilterItemsContainer, FilterContainer, ButtonContainer, TableRow, T_HEAD, ProductListContainer} from "../../pages/admin/inventory/components"
 import CategoryModal from '../modals/admin/category/CategoryModal'
 import ProductCreateModal from '../modals/admin/product/ProductCreateModal'
+import InventoryTableRow from '../table/InventoryTableRow'
 function InventoryRightContent() {
 
   const [openCreateProductModal, setOpenCreateProductModal] = useState<boolean>(false)
@@ -54,16 +55,8 @@ function InventoryRightContent() {
         </div>
       </FilterItemsContainer>
 
-      <TableRow className="table__header">
-        <T_HEAD className="table__image"></T_HEAD>
-        <T_HEAD className="table__productName">Name</T_HEAD>
-        <T_HEAD className="table__petType">Pet Type</T_HEAD>
-        <T_HEAD className="table__productCategory">Category</T_HEAD>
-        <T_HEAD className="table__productAge">Age</T_HEAD>
-        <T_HEAD className="table__productPrice">Price</T_HEAD>
-        <T_HEAD className="table__productStock">Stock</T_HEAD>
-        <T_HEAD className="table__action"></T_HEAD>
-      </TableRow>
+      <InventoryTableRow />
+      
       {/* products here */}
       <ProductListContainer>
         {/* {loading ? <h2 style={{marginBlock:50, color:"gray"}}>Loading products...</h2> : products?.length > 0 ? (
@@ -72,6 +65,7 @@ function InventoryRightContent() {
           <Sign_Products />
         )} */}
       </ProductListContainer>
+      
     </InventoryRightContentContainer>
   )
 }

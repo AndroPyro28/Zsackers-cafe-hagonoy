@@ -14,6 +14,7 @@ export class Product {
                     image_id: body.image_id,
                     categoryId: Number(body.categoryId),
                     subcategoryId: Number(body.subcategoryId),
+                    setcategoryId: Number(body.setcategoryId)
                 }
             })
             return newProduct;

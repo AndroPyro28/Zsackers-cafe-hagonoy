@@ -8,7 +8,7 @@ function AdminNavbar() {
             <NavLink to={''}>
             <i className="fa-solid fa-chart-line"></i> Dashboard
             </NavLink>
-            <NavLink to={''}>
+            <NavLink to={'inventory'}>
             <i className="fa-solid fa-cart-flatbed"></i> Inventory
             </NavLink>
             <NavLink to={''}>

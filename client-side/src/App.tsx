@@ -8,9 +8,12 @@ import Login from './pages/public/login/Login';
 import Signup from './pages/public/signup/Signup';
 import Inventory from './pages/admin/inventory/Inventory';
 import AdminRoutes  from './routes/AdminRoutes';
+import { useGetMeQuery } from './services/user';
+import {useDispatch, useSelector} from "react-redux";
+import { authenticationFailed, authenticationSuccess } from './features';
+import Cookies from 'js-cookie';
 
 function App() {
-
   const router = createBrowserRouter([
     {
       element: <PublicRoutes />,
@@ -44,6 +47,7 @@ function App() {
       ]
     }
   ])
+  
 
   return (
     <AppMain>

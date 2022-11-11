@@ -12,7 +12,9 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
     const { onSubmit, initialValues, validationSchema } = Logic()
     const { data: categories } = useGetAllCategoryQuery('');
     const [categoryId, setCategoryId] = useState<number>(0)
-
+    const [subcategoryId, setSubcategoryId] = useState<number>(0)
+    const category = categories?.find(value => value.id == categoryId)
+    const subcategory = category?.sub_category.find(value => value.id == subcategoryId);
     return (
         <InventoryCreateModalBackdrop>
             <Formik
@@ -38,6 +40,12 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             setCategoryId(0)
                         }
 
+                        if (formik.values.subcategoryId.length > 0 && !isNaN(Number(formik.values.subcategoryId))) {
+                            setSubcategoryId(Number(formik.values.subcategoryId))
+                        } else {
+                            setSubcategoryId(0)
+                        }
+                        
                         return <FormFormik autoComplete='off'>
 
                             <h1>Add New Product</h1>
@@ -90,7 +98,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                                     <Field name="subcategoryId" id="subcategoryId" as="select" placeholder="Current Stock">
                                         <option value="">Select subcategory</option>
                                         {
-                                            categories && categories[categories.findIndex(value => value.id === categoryId)]?.sub_category?.map(subcategory => (
+                                            category && category.sub_category?.map(subcategory => (
                                                 <option value={subcategory.id}>{subcategory.name}</option>
                                             ))
                                         }
@@ -98,6 +106,22 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                                     <ErrorMessage name="subcategoryId" component={'div'} className="error__message" />
                                 </FieldInputContainer>
                             </FormFieldContainer>
+
+                            <FormFieldContainer>
+                                <label htmlFor="setcategoryId">`SetCategory`</label>
+                                <FieldInputContainer>
+                                    <Field name="setcategoryId" id="setcategoryId" as="select" placeholder="Setcategory">
+                                        <option value="">Select setcategory</option>
+                                        {
+                                           subcategory && subcategory?.set_category?.map(setCategory => (
+                                                <option value={setCategory?.id}>{setCategory?.name}</option>
+                                            ))
+                                        }
+                                    </Field>
+                                    <ErrorMessage name="setcategoryId" component={'div'} className="error__message" />
+                                </FieldInputContainer>
+                            </FormFieldContainer>
+
 
                             <FormFieldContainer>
                                 <label htmlFor="image">`Image`</label>

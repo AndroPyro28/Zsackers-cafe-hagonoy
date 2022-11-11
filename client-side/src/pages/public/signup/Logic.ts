@@ -13,7 +13,7 @@ function Logic({setCurrentField}: any) {
         if(error) {
             return alert(error.data.message)
         }
-        navigate('/customer/login')
+        navigate('/login')
         } catch (error) {
             console.error(error)
         }

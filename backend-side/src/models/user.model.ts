@@ -69,8 +69,8 @@ export default interface UserInteface {
   createdAt: Date;
   updatedAt: Date;
   email: string;
-  password: string;
-  hashUpdatePWToken: string | null;
+  password?: string;
+  hashUpdatePWToken?: string | null;
   isVerify: boolean;
   role: 'ADMIN' | 'CUSTOMER' | 'STAFF';
   profile: ProfileInterface

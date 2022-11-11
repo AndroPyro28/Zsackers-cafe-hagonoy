@@ -18,7 +18,6 @@ function Category({data}: {data: CategoryInterface}) {
   return (
     <CategoryWrapper>
       <CategoryContainer>
-          {/* <td>{data.id}</td> */}
           <td>{data.name}</td>
           <td>{date} at {time}</td>
           <td>
@@ -29,7 +28,7 @@ function Category({data}: {data: CategoryInterface}) {
             <i className="fa-solid fa-eraser"></i>
             </span>
           </td>
-          <td><span className="subcategories__button" onClick={() => setShowSubCategories(prev => !prev)}><i className="fa-solid fa-chevron-down"></i></span></td>
+          <td><span className="subcategories__button" onClick={() => setShowSubCategories(prev => !prev)}><i className={ showSubCategories ? "fa-solid fa-chevron-down" : "fa-sharp fa-solid fa-chevron-up"}></i></span></td>
       </CategoryContainer>
       
       {

@@ -34,7 +34,8 @@ export class AuthService {
 
         const access_token = await this.signToken({id: user.id, email: user.email});
         return {
-            access_token
+            access_token,
+            role: user.role.toLocaleLowerCase()
         }
     }
 

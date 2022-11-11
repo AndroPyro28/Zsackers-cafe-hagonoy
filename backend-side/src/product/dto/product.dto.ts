@@ -19,6 +19,10 @@ export class CreateProductDto {
     subcategoryId: string;
 
     @IsNotEmpty()
+    @IsNumberString()
+    setcategoryId: string;
+
+    @IsNotEmpty()
     image: string;
 
     @IsOptional()

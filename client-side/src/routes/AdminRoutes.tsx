@@ -1,30 +1,26 @@
-import { Outlet } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { Navigate, Outlet } from 'react-router-dom'
 import AdminNavbar from '../components/admin-navbar/AdminNavbar'
+import { User } from '../model'
+import user, {GetCurrentUser} from '../services/user'
 import { AdminGlobalStyles, AdminRoutesContainer } from './components'
 
 function AdminRoutes() {
+  const {data:currentUser, isLoading} = GetCurrentUser()
 
-  // const state: any = useSelector(state => state);
-  // const user: User = state.user;
-  // const profileModal = state.profileModal;
-  // const loader = state.loader;
 
-  // const {pathname} = useLocation();
-  // let userCookie: string | undefined = Cookies.get("userToken");
-
-  // if (!userCookie || userCookie.length <= 0) {
-  //   return <Navigate to={'/'} />
-  // }
-
-  // let userToken: userToken = userCookie!
-
-  // if (!userToken || userToken.length <= 0) {
-  //   return <Navigate to={'/'} />
-  // }
-
-  // if(user.role === 'ADMIN') {
-  //   return <Navigate to={'/admin'} />
-  // }
+  if(isLoading) {
+    return <></>
+  }
+  if(!currentUser) {
+    return <Navigate to="/" />
+  }
+  if(currentUser.role === 'CUSTOMER') {
+    return <Navigate to={'/customer'} />
+  }
+  if(currentUser.role === 'STAFF') {
+    return <Navigate to={'/staff'} />
+  }
 
   return (
     <AdminRoutesContainer>
