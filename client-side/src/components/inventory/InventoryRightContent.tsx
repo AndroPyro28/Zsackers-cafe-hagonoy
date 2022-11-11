@@ -4,6 +4,7 @@ import {InventoryRightContentContainer, FilterItemsContainer, FilterContainer, B
 import CategoryModal from '../modals/admin/category/CategoryModal'
 import ProductCreateModal from '../modals/admin/product/ProductCreateModal'
 import InventoryTableRow from '../table/InventoryTableRow'
+import Product from './Product'
 function InventoryRightContent() {
 
   const [openCreateProductModal, setOpenCreateProductModal] = useState<boolean>(false)
@@ -19,8 +20,32 @@ function InventoryRightContent() {
       {
         viewCategory && <CategoryModal setViewCategory={setViewCategory}/>
       }
-      
     
+       
+
+      <FilterItemsContainer>
+        <FilterContainer>
+        <span>Select</span>
+          <select>
+            <option value="">Category</option>
+           
+          </select>
+        </FilterContainer>
+
+        <FilterContainer>
+          <span>Select</span>
+          <select>
+            <option value="">Sub-Category</option>
+          </select>
+        </FilterContainer>
+
+        <FilterContainer>
+          <span>Select</span>
+          <select>
+            <option value="">Set-Category</option>
+          </select>
+        </FilterContainer>
+
         <ButtonContainer>
           <div>
             <button onClick={() => setViewCategory(true)}>
@@ -32,22 +57,6 @@ function InventoryRightContent() {
           </button>
         </ButtonContainer>
 
-      <FilterItemsContainer>
-        <FilterContainer>
-          <span>Category 1</span>
-          <select>
-            <option value="">Select Category</option>
-           
-          </select>
-        </FilterContainer>
-
-        <FilterContainer>
-          <span>Category 2</span>
-          <select>
-            <option value="">Select Sub-Category</option>
-          </select>
-        </FilterContainer>
-
         <div className="pagination">
         <i className="fa-solid fa-chevron-left left" onClick={() => alert("")}></i>
           <span>{`${1} / ${1}`} </span>
@@ -58,12 +67,13 @@ function InventoryRightContent() {
       <InventoryTableRow />
       
       {/* products here */}
+
       <ProductListContainer>
-        {/* {loading ? <h2 style={{marginBlock:50, color:"gray"}}>Loading products...</h2> : products?.length > 0 ? (
-          fetchProducts
-        ) : (
-          <Sign_Products />
-        )} */}
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
       </ProductListContainer>
       
     </InventoryRightContentContainer>

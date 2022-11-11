@@ -11,6 +11,8 @@ export const InventoryLayout = styled.section`
   padding: 10px 0px;
   justify-content: space-evenly;
   overflow:hidden;
+  gap: 10px;
+  padding: 10px;
   /* padding-top: 10px; */
 `;
 export const InventoryLeftContentContainer = styled.div`
@@ -86,7 +88,6 @@ export const InventoryRightContentContainer = styled.div`
   flex-direction: column;
   background: white;
   width: 80%;
-  margin: 0px;
   border-radius: 10px;
 
   @media (max-width:1200px) {
@@ -181,7 +182,7 @@ export const FilterContainer = styled.div`
     }
 
   & > span {
-    font-size: 0.7em;
+    font-size: 0.8em;
     color: gray;
 
     @media (max-width:1200px) {

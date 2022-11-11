@@ -1,17 +1,17 @@
-import { TableRow, T_HEAD } from '../../pages/admin/inventory/components'
+import { TableRow } from "./components"
 
 function InventoryTableRow() {
   return (
-    <TableRow className="table__header">
-        <T_HEAD className="table__image"></T_HEAD>
-        <T_HEAD className="table__productName">Name</T_HEAD>
-        <T_HEAD className="table__petType">Pet Type</T_HEAD>
-        <T_HEAD className="table__productCategory">Category</T_HEAD>
-        <T_HEAD className="table__productAge">Age</T_HEAD>
-        <T_HEAD className="table__productPrice">Price</T_HEAD>
-        <T_HEAD className="table__productStock">Stock</T_HEAD>
-        <T_HEAD className="table__action"></T_HEAD>
-      </TableRow>
+    <TableRow>
+      <th className="image">#</th>
+      <th className="name">Name</th>
+      <th className="category">Category</th>
+      <th className="subcategory">Subcategory</th>
+      {/* <th className="setcategory">Setcategory</th> */}
+      <th className="price">Price</th>
+      <th className="stock">Stock</th>
+      <th className="action"></th>
+    </TableRow>
   )
 }
 

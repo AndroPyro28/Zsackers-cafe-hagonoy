@@ -11,8 +11,9 @@ export const AdminNavbarContainer = styled.nav`
 
 export const AdminLinks = styled.div`
 flex: 1;
+padding-inline:20px;
 & > a {
-    padding: 10px 15px;
+    padding: 10px;
     margin: 5px;
     font-size:0.8em;
 }
