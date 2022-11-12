@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, ParseIntPipe, Post, Query } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
 import { CreateProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
@@ -20,7 +20,18 @@ export class ProductController {
     @Get()
     @Roles(['ADMIN'])
     @HttpCode(HttpStatus.OK)
-    async getAllProducts() {
+    async getAllProducts(
+        @Query('name') productName: string,
+        @Query('categoryId', ParseIntPipe) categoryId: Number,
+        @Query('setcategoryId', ParseIntPipe) setcategoryId: Number,
+        @Query('subcategoryId', ParseIntPipe) subcategoryId: Number
+    ) {
+        console.log({
+            productName,
+            categoryId,
+            setcategoryId,
+            subcategoryId,
+        })
         return this.productService.getAllProducts();
     }
 }

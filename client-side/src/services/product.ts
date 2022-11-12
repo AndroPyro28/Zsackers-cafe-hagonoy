@@ -1,14 +1,14 @@
 import {privateApi} from "../app/baseApi"
-import { CreateProduct } from "../model/product";
+import { CreateProduct, Product, Search } from "../model/product";
 
 const productApi = privateApi.injectEndpoints({
     endpoints: builder => ({
-        getAllProduct: builder.query<any[],string>({
-            query: search => ({
-                url: `products?search=${search}`,
+        getAllProduct: builder.query<Product[], Search>({
+            query: ({searchName, categoryId, subcategoryId, setcategoryId}) => ({
+                url: `products?name=${searchName}&&categoryId=${categoryId}&&subcategoryId=${subcategoryId}&&setcategoryId=${setcategoryId}`,
                 method: "GET"
             }),
-            providesTags: (result = [], error, arg) => [{type:'Product', id: arg}],
+            providesTags: (result = [], error, arg) => [{type:'Product', id: arg.searchName}],
         }),
         createProduct: builder.mutation<void, CreateProduct>({
             query: body => ({

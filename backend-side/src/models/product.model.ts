@@ -27,7 +27,6 @@ export class Product {
     async getAllProducts(): Promise<ProductModel[]> {
         try {
             const products = await product.findMany({})
-            console.log(products);
             return products;
 
         } catch (error) {

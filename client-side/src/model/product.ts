@@ -16,4 +16,14 @@ export interface Product {
     updatedAt: string;
     image_url: string;
     image_id: string;
+    categoryId: number;
+    setcategoryId: number;
+    subcategoryId: number;
+}
+
+export interface Search {
+    searchName:string;
+    categoryId: number;
+    setcategoryId: number;
+    subcategoryId:number;
 }
