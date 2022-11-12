@@ -1,6 +1,6 @@
-import React, { SetStateAction, useState } from 'react'
+import React from 'react'
+import { Category } from '../../model'
 import { ButtonContainer, FilterContainer, FilterItemsContainer } from '../../pages/admin/inventory/components'
-import { useGetAllCategoryQuery } from '../../services'
 import Logic from './Logic'
 
 
@@ -11,8 +11,9 @@ interface Props {
   subcategoryId: number;
   setcategoryId: number;
   setterCategoryId:  React.Dispatch<React.SetStateAction<number>>
-setterSubCategoryId:  React.Dispatch<React.SetStateAction<number>>
-setterSetCategoryId:  React.Dispatch<React.SetStateAction<number>>
+  setterSubCategoryId:  React.Dispatch<React.SetStateAction<number>>
+  setterSetCategoryId:  React.Dispatch<React.SetStateAction<number>>
+  categories: Category[]
 }
 function FilterItems({ 
   setOpenCreateProductModal,
@@ -22,15 +23,12 @@ function FilterItems({
   setcategoryId, 
   setterCategoryId,
   setterSubCategoryId,
-  setterSetCategoryId
+  setterSetCategoryId,
+  categories
  }: Props) {
   const { handleChange } = Logic();
-  const { data: categories, isError, isLoading } = useGetAllCategoryQuery('')
 
-
-  if (isLoading) {
-    return <></>
-  }
+ 
 
   const category = () => {
     return categories?.find(value => value.id === categoryId)
@@ -57,7 +55,7 @@ function FilterItems({
       <FilterContainer>
         <span>Select</span>
         <select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleChange(setterCategoryId, e.target.value)}>
-          <option value="">Category</option>
+          <option value={0}>Category</option>
           {fetchCategories}
         </select>
       </FilterContainer>
@@ -65,7 +63,7 @@ function FilterItems({
       <FilterContainer>
         <span>Select</span>
         <select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleChange(setterSubCategoryId, e.target.value)}>
-          <option value="">Sub-Category</option>
+          <option value={0}>Sub-Category</option>
           {fetchSubCategories}
         </select>
       </FilterContainer>
@@ -73,7 +71,7 @@ function FilterItems({
       <FilterContainer>
         <span>Select</span>
         <select onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleChange(setterSetCategoryId, e.target.value)}>
-          <option value="">Set-Category</option>
+          <option value={0}>Set-Category</option>
           {fetchSetCategories}
         </select>
       </FilterContainer>

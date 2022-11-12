@@ -1,3 +1,7 @@
+import { Category } from "./Category";
+import { SetCategory } from "./SetCategory";
+import { Subcategory } from "./Subcategory";
+
 export interface CreateProduct {
     productName: string,
     productPrice: string,
@@ -16,9 +20,13 @@ export interface Product {
     updatedAt: string;
     image_url: string;
     image_id: string;
+    stock: number;
     categoryId: number;
     setcategoryId: number;
     subcategoryId: number;
+    category: Category;
+    sub_category: Subcategory;
+    set_category: SetCategory;
 }
 
 export interface Search {

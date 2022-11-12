@@ -9,7 +9,7 @@ function Inventory() {
     <InventoryLayout>
         <GlobalStyles />
         <InventoryLeftContent setSearchName={setSearchName}/>
-        <InventoryRightContent searchName={searchName}/>
+        <InventoryRightContent setSearchName={setSearchName} searchName={searchName}/>
     </InventoryLayout>
   )
 }

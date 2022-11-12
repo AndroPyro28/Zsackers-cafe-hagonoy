@@ -11,6 +11,7 @@ export const TableRow = styled.div`
     justify-content: center;
     &.image {
       flex: 1;
+      
       & > .image-border {
         padding: 8px;
         border-radius: 10px;
@@ -22,6 +23,7 @@ export const TableRow = styled.div`
         & > img {
           width: 65px;
           height: 65px;
+          object-fit: contain;
           border-radius: 10px;
         }
       }

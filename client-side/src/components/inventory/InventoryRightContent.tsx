@@ -1,14 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {InventoryRightContentContainer, FilterItemsContainer, FilterContainer, ButtonContainer, TableRow, T_HEAD, ProductListContainer} from "../../pages/admin/inventory/components"
 import CategoryModal from '../modals/admin/category/CategoryModal'
 import ProductCreateModal from '../modals/admin/product/ProductCreateModal'
 import InventoryTableRow from '../table/InventoryTableRow'
 import Product from './Product'
 import FilterItems from './FilterItems'
-import { useGetAllProductQuery } from '../../services'
+import { useGetAllCategoryQuery, useGetAllProductQuery } from '../../services'
 
-
-function InventoryRightContent({searchName}: {searchName: string}) {
+function InventoryRightContent({searchName, setSearchName}: {searchName: string, setSearchName: React.Dispatch<React.SetStateAction<string>>}) {
 
   const [openCreateProductModal, setOpenCreateProductModal] = useState<boolean>(false)
   const [viewCategory, setViewCategory] = useState<boolean>(false)
@@ -16,13 +15,34 @@ function InventoryRightContent({searchName}: {searchName: string}) {
   const [subcategoryId, setterSubCategoryId] = useState<number>(0)
   const [setcategoryId, setterSetCategoryId] = useState<number>(0)
 
-  const {data} = useGetAllProductQuery({
+  const { data: categories } = useGetAllCategoryQuery('', {
+    refetchOnFocus: true,
+    refetchOnReconnect: true
+  })
+
+  const {data: products, isLoading, error} = useGetAllProductQuery({
     searchName,
     categoryId,
     subcategoryId,
     setcategoryId,
+  }, {
+    refetchOnFocus: true,
+    refetchOnReconnect: true
   });
-  
+
+  useEffect(() => {
+    // to reset all the filter
+    setterSubCategoryId(0)
+    setterSetCategoryId(0)
+    setSearchName('')
+    }, [categoryId])
+
+  if(isLoading) return <></>
+
+  const fetchProducts = products?.map((product) => (
+    <Product key={product.id} data={product} />
+  ))
+
   return (
     <InventoryRightContentContainer>
       {
@@ -33,7 +53,8 @@ function InventoryRightContent({searchName}: {searchName: string}) {
         viewCategory && <CategoryModal setViewCategory={setViewCategory}/>
       }
     
-      <FilterItems 
+    {
+      categories && <FilterItems 
       setOpenCreateProductModal={setOpenCreateProductModal}
       setViewCategory={setViewCategory}
       categoryId={categoryId}
@@ -42,19 +63,13 @@ function InventoryRightContent({searchName}: {searchName: string}) {
       setterCategoryId={setterCategoryId}
       setterSubCategoryId={setterSubCategoryId}
       setterSetCategoryId={setterSetCategoryId}
-  
+      categories={categories}
       />
-
+    }
       <InventoryTableRow />
       
-      {/* products here */}
-
       <ProductListContainer>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        { fetchProducts }
       </ProductListContainer>
       
     </InventoryRightContentContainer>

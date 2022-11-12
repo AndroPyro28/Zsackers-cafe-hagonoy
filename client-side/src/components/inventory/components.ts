@@ -31,6 +31,7 @@ flex-direction: column;
     width: 110px;
     height: 110px;
     border-radius: 10px;
+    object-fit: cover;
 }
 };
 
@@ -68,12 +69,16 @@ export const ItemRowInfo = styled.div`
         color: gray;
         margin: 10px 0px;
     }
-    & > input {
+    & > input, select {
         width: 90%;
         border: none;
         border-bottom: solid 1px gray;
         outline: none;
         padding: 5px 10px;
         background: none;
+    }
+
+    & > select {
+        border-radius: 0.1em;
     }
 `
