@@ -29,4 +29,9 @@ export class ProductService {
         return newProduct;
     }
 
+    async getAllProducts() {
+        const products = await this.productModel.getAllProducts();
+        return products;
+    }
+
 }

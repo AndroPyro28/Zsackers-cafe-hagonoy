@@ -5,14 +5,14 @@ const productApi = privateApi.injectEndpoints({
     endpoints: builder => ({
         getAllProduct: builder.query<any[],string>({
             query: search => ({
-                url: `product?search=${search}`,
+                url: `products?search=${search}`,
                 method: "GET"
             }),
             providesTags: (result = [], error, arg) => [{type:'Product', id: arg}],
         }),
         createProduct: builder.mutation<void, CreateProduct>({
             query: body => ({
-                url: `product`,
+                url: `products`,
                 method:"POST",
                 body
             }),

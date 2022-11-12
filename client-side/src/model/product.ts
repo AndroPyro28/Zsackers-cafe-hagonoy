@@ -7,3 +7,13 @@ export interface CreateProduct {
     subcategoryId: string
     setcategoryId: string
 }
+
+export interface Product {
+    id: number;
+    productName: string;
+    price: string;
+    createdAt: string;
+    updatedAt: string;
+    image_url: string;
+    image_id: string;
+}

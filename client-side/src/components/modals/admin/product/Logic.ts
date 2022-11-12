@@ -1,5 +1,5 @@
 import * as yup from "yup";
-import { CreateProduct } from "../../../../model/Product";
+import { CreateProduct } from "../../../../model";
 import { useCreateProductMutation } from "../../../../services";
 
 function Logic() {

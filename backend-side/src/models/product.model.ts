@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from 'src/product/dto/product.dto';
 import {product} from './root.model'
+import {Product as ProductModel} from "@prisma/client"
 
 @Injectable()
 export class Product {
@@ -18,6 +19,17 @@ export class Product {
                 }
             })
             return newProduct;
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    async getAllProducts(): Promise<ProductModel[]> {
+        try {
+            const products = await product.findMany({})
+            console.log(products);
+            return products;
+
         } catch (error) {
             console.error(error)
         }

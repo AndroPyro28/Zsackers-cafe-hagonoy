@@ -1,9 +1,9 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
 import { CreateProductDto } from './dto/product.dto';
 import { ProductService } from './product.service';
 
-@Controller('product')
+@Controller('products')
 export class ProductController {
     /**
      *
@@ -15,5 +15,12 @@ export class ProductController {
     @HttpCode(HttpStatus.CREATED)
     async createProduct(@Body() body: CreateProductDto) {
         return this.productService.createProduct(body);
+    }
+
+    @Get()
+    @Roles(['ADMIN'])
+    @HttpCode(HttpStatus.OK)
+    async getAllProducts() {
+        return this.productService.getAllProducts();
     }
 }
