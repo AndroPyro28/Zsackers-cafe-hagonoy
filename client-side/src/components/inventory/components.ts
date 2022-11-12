@@ -1,3 +1,4 @@
+import { Form } from "formik";
 import styled from "styled-components";
 
 
@@ -12,9 +13,17 @@ export const ProductContainer = styled.div`
     }
 `
 
-export const ProductBottomSide = styled.div`
+export const ProductBottomSide = styled(Form)`
     display: flex;
     width: 100%;
+
+    & .error__message {
+        color: maroon;
+        font-size: 0.9em;
+    }
+    & > * {
+        
+    }
 `
 export const LeftProductContent = styled.div`
 flex: 1;
@@ -27,6 +36,8 @@ flex-direction: column;
     border-radius: 10px;
     border: solid 1px gray;
     margin: 15px;
+    cursor: ${({disableUpdate}: {disableUpdate: boolean}) => disableUpdate ? 'default': 'pointer'} ;
+    background: ${({disableUpdate}: {disableUpdate: boolean}) => disableUpdate ? 'none': '#EAEAEA'} ;
     & > img {
     width: 110px;
     height: 110px;
@@ -44,13 +55,15 @@ flex-direction: column;
 
 export const ActionButtons = styled.div`
     display: flex;
-    & > button {
+    margin: 10px;
+    & > button, input {
     padding: 10px 20px;
     margin: 5px;
     border-radius: 10px;
     border: none;
     background: rgb(51,102,51);
     color: white;
+    cursor: pointer;
 }
 `
 
@@ -76,6 +89,10 @@ export const ItemRowInfo = styled.div`
         outline: none;
         padding: 5px 10px;
         background: none;
+        &:disabled {
+            color: gray;
+            font-style: italic;
+        }
     }
 
     & > select {

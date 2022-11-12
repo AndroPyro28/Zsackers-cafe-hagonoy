@@ -26,9 +26,9 @@ function FilterItems({
   setterSetCategoryId,
   categories
  }: Props) {
-  const { handleChange } = Logic();
+  const { handleChange } = Logic({});
 
- 
+  
 
   const category = () => {
     return categories?.find(value => value.id === categoryId)

@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Cloudinary } from 'src/common/utils/cloudinary.utils';
 import { Product } from 'src/models';
-import { CreateProductDto } from './dto/product.dto';
+import { CreateProductDto, UpdateProduct } from './dto/product.dto';
 
 @Injectable()
 export class ProductService {
@@ -32,6 +32,20 @@ export class ProductService {
     async getAllProducts(search: search) {
         const products = await this.productModel.getAllProducts(search);
         return products;
+    }
+
+    async archiveProductById(id: number) {
+      const archivedProduct = await this.productModel.archiveProductById(id)
+      return archivedProduct
+    }
+
+    async updateProduct(id: number, body: UpdateProduct) {
+        this.cloudinary.cloudinaryDelete(body.image_id)
+        const {secure_url, public_id} = await this.cloudinary.cloudinaryUpload(body.image_url, 'zsackers_product_image')
+        body.image_url = secure_url;
+        body.image_id = public_id
+        const updateProduct = await this.productModel.updateProduct(id, body)
+        return updateProduct
     }
 
 }

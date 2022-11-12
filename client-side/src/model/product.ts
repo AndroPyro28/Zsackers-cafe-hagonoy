@@ -15,7 +15,7 @@ export interface CreateProduct {
 export interface Product {
     id: number;
     productName: string;
-    price: string;
+    price: number;
     createdAt: string;
     updatedAt: string;
     image_url: string;
@@ -27,6 +27,19 @@ export interface Product {
     category: Category;
     sub_category: Subcategory;
     set_category: SetCategory;
+    archive: boolean;
+}
+
+export interface UpdateProduct {
+    id: number,
+    productName: string,
+    price: number,
+    stock: number,
+    image_url: string,
+    image_id:string,
+    categoryId: number,
+    subcategoryId: number,
+    setcategoryId: number,
 }
 
 export interface Search {

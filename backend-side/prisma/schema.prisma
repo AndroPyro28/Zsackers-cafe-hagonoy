@@ -108,7 +108,7 @@ model Set_Category {
 model Product {
   id            Int            @id @default(autoincrement())
   productName   String
-  price         String
+  price         Int
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   cart_product  Cart_Product[]
@@ -121,6 +121,6 @@ model Product {
   subcategoryId Int
   set_category  Set_Category?  @relation(fields: [setcategoryId], references: [id])
   setcategoryId Int?
-
+  archive Boolean @default(false)
   @@map("products")
 }

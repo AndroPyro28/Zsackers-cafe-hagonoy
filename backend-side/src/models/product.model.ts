@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto } from 'src/product/dto/product.dto';
+import { CreateProductDto, UpdateProduct } from 'src/product/dto/product.dto';
 import { product } from './root.model';
 import { Product as ProductModel } from '@prisma/client';
 
@@ -10,7 +10,7 @@ export class Product {
       const newProduct = await product.create({
         data: {
           productName: body.productName,
-          price: body.productPrice + '',
+          price: body.productPrice,
           image_url: body.image_url,
           stock: body.productStock,
           image_id: body.image_id,
@@ -46,7 +46,8 @@ export class Product {
       const conditionArr = arr.filter(value => typeof value === 'object')
       const products = await product.findMany({
         where: {
-          AND: conditionArr
+          AND: conditionArr,
+          archive: false
         },
         include: {
           set_category: true,
@@ -57,6 +58,38 @@ export class Product {
       return products;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async archiveProductById(id: number) {
+    try {
+      const archived = await product.update({
+        where: {
+          id
+        },
+        data: {
+          archive: true
+        }
+      })
+      return archived;
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async updateProduct(id: number, body: UpdateProduct) {
+    try {
+      const updated = await product.update({
+        where: {
+          id
+        },
+        data: {
+          ...body
+        }
+      })
+      return updated;
+    } catch (error) {
+      console.error(error)
     }
   }
 }

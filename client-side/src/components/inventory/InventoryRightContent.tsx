@@ -40,7 +40,7 @@ function InventoryRightContent({searchName, setSearchName}: {searchName: string,
   if(isLoading) return <></>
 
   const fetchProducts = products?.map((product) => (
-    <Product key={product.id} data={product} />
+    <Product key={product.id} data={product} categories={categories!}/>
   ))
 
   return (

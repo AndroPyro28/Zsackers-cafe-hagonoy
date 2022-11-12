@@ -1,15 +1,19 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   ParseIntPipe,
+  Patch,
   Post,
+  Put,
   Query,
 } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
-import { CreateProductDto } from './dto/product.dto';
+import { CreateProductDto, UpdateProduct } from './dto';
 import { ProductService } from './product.service';
 
 @Controller('products')
@@ -42,4 +46,23 @@ export class ProductController {
       subcategoryId,
     });
   }
+
+  @Put(':id')
+  @Roles(['ADMIN'])
+  @HttpCode(HttpStatus.OK)
+  async archiveProductById(@Param('id', ParseIntPipe) id: number) {
+    return this.productService.archiveProductById(id);
+  }
+
+  @Patch(':id')
+  @Roles(['ADMIN'])
+  @HttpCode(HttpStatus.OK)
+  async updateProduct(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateProduct
+  ) {
+     return this.productService.updateProduct(id, body);
+  }
 }
+
+

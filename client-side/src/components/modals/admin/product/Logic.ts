@@ -20,7 +20,7 @@ function Logic() {
             }
         } else {
             resetForm(initialValues)
-            alert('Subcategory Created')
+            alert('Product Created')
         }
       }
     } catch (error) {
