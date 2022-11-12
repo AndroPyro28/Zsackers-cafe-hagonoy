@@ -30,7 +30,6 @@ export class AuthController {
     async authMe(@GetCurrentUser() currentUser: UserInteface) {
         delete currentUser.password
         delete currentUser.hashUpdatePWToken
-        console.log(currentUser);
         return currentUser;
     }
 }

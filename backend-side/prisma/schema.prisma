@@ -81,13 +81,13 @@ model Category {
 }
 
 model Sub_Category {
-  id              Int               @id @default(autoincrement())
-  name            String
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  category        Category          @relation(fields: [categoryId], references: [id])
-  categoryId      Int
-  Product         Product[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  category     Category       @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  Product      Product[]
   set_category Set_Category[]
 
   @@map("sub_category")
@@ -106,20 +106,20 @@ model Set_Category {
 }
 
 model Product {
-  id           Int            @id @default(autoincrement())
-  productName  String
-  price        String
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  cart_product Cart_Product[]
-
+  id            Int            @id @default(autoincrement())
+  productName   String
+  price         String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  cart_product  Cart_Product[]
+  stock         Int            @default(0)
   image_url     String
   image_id      String
-  category      Category      @relation(fields: [categoryId], references: [id])
+  category      Category       @relation(fields: [categoryId], references: [id])
   categoryId    Int
-  sub_category  Sub_Category  @relation(fields: [subcategoryId], references: [id])
+  sub_category  Sub_Category   @relation(fields: [subcategoryId], references: [id])
   subcategoryId Int
-  set_category  Set_Category? @relation(fields: [setcategoryId], references: [id])
+  set_category  Set_Category?  @relation(fields: [setcategoryId], references: [id])
   setcategoryId Int?
 
   @@map("products")
