@@ -1,5 +1,5 @@
 import {privateApi} from "../app/baseApi"
-import { CreateProduct } from "../model/Product";
+import { CreateProduct } from "../model/product";
 
 const productApi = privateApi.injectEndpoints({
     endpoints: builder => ({
