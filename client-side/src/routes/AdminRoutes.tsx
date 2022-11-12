@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import { Navigate, Outlet } from 'react-router-dom'
 import AdminNavbar from '../components/admin-navbar/AdminNavbar'
 import {GetCurrentUser} from '../services/user'
