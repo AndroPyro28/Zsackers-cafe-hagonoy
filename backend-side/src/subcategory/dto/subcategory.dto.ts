@@ -9,3 +9,13 @@ export class CreateSubcategoryDto {
     @IsNumber()
     categoryId: number
 }
+
+export class UpdateSubCategoryDto {
+    @IsNotEmpty()
+    @MinLength(3, {message: 'subcategory must be atleast 3 characters'})
+    subcategory: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    id: number
+}

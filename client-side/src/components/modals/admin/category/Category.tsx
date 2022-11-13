@@ -3,34 +3,56 @@ import { useState } from 'react'
 import DateTimeFormatter from '../../../../helpers/DateTimeFormatter';
 import { Category as CategoryInterface} from '../../../../model/Category';
 import { CategoryContainer, CategoryWrapper, SubCategoryListContainer, CreateSubCategoryContainer, CategoryInputField, LeftForm } from './components'
-import LeftContentLogic from './LeftContentLogic';
+import SubCategoryLogic from './SubCategoryLogic';
 import SubCategory from './SubCategory';
-
+import CategoryLogic from './CategoryLogic'
+import { FieldInputContainer } from '../components';
 function Category({data}: {data: CategoryInterface}) {
+
   const [showSubCategories, setShowSubCategories] = useState(false);
-  const {initialValues,
+  const {initialValuesCreateSubCategory,
     validationSchema,
-    onSubmit} = LeftContentLogic({categoryId: data.id})
+    createSubCategory} = SubCategoryLogic({categoryId: data.id})
 
     const {dateAndTimeParser} = DateTimeFormatter()
     const {date, time} = dateAndTimeParser(data.createdAt)
     const {sub_category} = data;
+    const [allowUpdate, setAllowUpdate] = useState(false);
+    const {validationSchema: validationSchemaUpdateCategory, updateCategory } = CategoryLogic({setAllowUpdate})
+    const initialValuesUpdateCategory = {
+      id: data.id,
+      category: data.name
+    }
   return (
     <CategoryWrapper>
+      <Formik
+      onSubmit={updateCategory}
+      initialValues={initialValuesUpdateCategory}
+      validationSchema={validationSchemaUpdateCategory}
+      >
       <CategoryContainer>
-          <td>{data.name}</td>
-          <td>{date} at {time}</td>
+      {
+            allowUpdate ? <FieldInputContainer>
+            <Field type="text" name="category" placeholder="category name" />
+            <ErrorMessage name="category" component={'div'} className="error__message" />
+          </FieldInputContainer> : <td>{data.name} </td>
+          }
+          {
+            !allowUpdate && <td>{date} at {time}</td>
+          }
           <td>
-            <span>
-            <i className="fa-solid fa-file-pen"></i>
-            </span>
+            {
+              !allowUpdate ? <span onClick={() => setAllowUpdate(true)}><i className="fa-solid fa-file-pen"></i></span> : <button type='submit'>
+              <i className="fa-solid fa-file-pen"></i>
+            </button>
+            }
             <span>
             <i className="fa-solid fa-eraser"></i>
             </span>
           </td>
           <td><span className="subcategories__button" onClick={() => setShowSubCategories(prev => !prev)}><i className={ showSubCategories ? "fa-solid fa-chevron-down" : "fa-sharp fa-solid fa-chevron-up"}></i></span></td>
       </CategoryContainer>
-      
+      </Formik>
       {
         showSubCategories && <SubCategoryListContainer>
 
@@ -42,9 +64,9 @@ function Category({data}: {data: CategoryInterface}) {
 
         <CreateSubCategoryContainer>
         <Formik
-        initialValues={initialValues}
+        initialValues={initialValuesCreateSubCategory}
         validationSchema={validationSchema}
-        onSubmit={onSubmit}      
+        onSubmit={createSubCategory}      
         >
         {
           formik => {

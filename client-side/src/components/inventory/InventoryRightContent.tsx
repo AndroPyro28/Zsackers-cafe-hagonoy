@@ -15,12 +15,12 @@ function InventoryRightContent({searchName, setSearchName}: {searchName: string,
   const [subcategoryId, setterSubCategoryId] = useState<number>(0)
   const [setcategoryId, setterSetCategoryId] = useState<number>(0)
 
-  const { data: categories } = useGetAllCategoryQuery('', {
+  const { data: categories, refetch: refetchCategory } = useGetAllCategoryQuery('', {
     refetchOnFocus: true,
     refetchOnReconnect: true
   })
 
-  const {data: products, isLoading, error} = useGetAllProductQuery({
+  const {data: products, isLoading, error, refetch:refetechProduct} = useGetAllProductQuery({
     searchName,
     categoryId,
     subcategoryId,
@@ -36,6 +36,11 @@ function InventoryRightContent({searchName, setSearchName}: {searchName: string,
     setterSetCategoryId(0)
     setSearchName('')
     }, [categoryId])
+
+    useEffect(() => {
+      refetchCategory()
+      refetechProduct()
+    }, [])
 
   if(isLoading) return <></>
 

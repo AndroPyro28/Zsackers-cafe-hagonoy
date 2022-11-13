@@ -28,4 +28,20 @@ export class Subcategory {
             console.error(error)
         }
     }
+
+    async updateSubcategories(id: number, subcategory: string) {
+        try {
+            const updatedSubCategory = await sub_Category.update({
+                where: {
+                    id
+                },
+                data: {
+                    name: subcategory
+                }
+            })
+            return updatedSubCategory;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

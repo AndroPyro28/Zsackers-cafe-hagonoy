@@ -1,5 +1,5 @@
 import {privateApi} from "../app/baseApi"
-import { createSetCategory, SetCategory } from "../model";
+import { createSetCategory, SetCategory, UpdateSetcategory } from "../model";
 
 const setCategoryApi = privateApi.injectEndpoints({
     endpoints: builder => ({
@@ -18,9 +18,17 @@ const setCategoryApi = privateApi.injectEndpoints({
             }),
             invalidatesTags: (result, error, arg) => [{type:"SetCategory"}, {type:'Subcategory'}, {type:'Category'}]
         }),
+        updateSetCategory: builder.mutation<void, UpdateSetcategory>({
+            query: ({id, ...rest}) => ({
+                url: `setcategory/${id}`,
+                method:"PATCH",
+                body: {...rest}
+            }),
+            invalidatesTags: (result, error, arg) => [{type:"SetCategory"}, {type:'Subcategory'}, {type:'Category'}]
+        }),
     }),
     overrideExisting: false
 })
 export default setCategoryApi;
 
-export const { useCreateSetCategoryMutation, useGetAllSetCategoryQuery } = setCategoryApi
+export const { useCreateSetCategoryMutation, useGetAllSetCategoryQuery, useUpdateSetCategoryMutation } = setCategoryApi

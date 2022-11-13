@@ -1,4 +1,4 @@
-import { Controller, HttpCode, Post, HttpStatus, Body } from '@nestjs/common';
+import { Controller, HttpCode, Post, HttpStatus, Body, Patch, Param, ParseIntPipe } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
 import { createSetCategoryDto } from './dto';
 import { SetCategoryService } from './setcategory.service';
@@ -22,5 +22,14 @@ export class SetCategoryController {
     @Roles(['ADMIN'])
     async getAllSubcategory() {
         return this.setCategoryService.getAllSetCategory()
+    }
+
+    @Patch(':id')
+    @Roles(['ADMIN'])
+    async updateSetcategory(
+        @Param('id', ParseIntPipe) id: number,
+        @Body('setcategory') setcategory: string
+    ) {
+         return this.setCategoryService.updateSetcategory(id, setcategory)
     }
 }

@@ -3,9 +3,10 @@ import * as yup from 'yup';
 import { UpdateProduct } from "../../model";
 interface Props {
     imageUrl?: string;
-    setDisableUpdate?:React.Dispatch<React.SetStateAction<boolean>>
+    setDisableUpdate?:React.Dispatch<React.SetStateAction<boolean>>;
+    imageFile?: File
 }
-function Logic({imageUrl, setDisableUpdate}: Props) {
+function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
 
     const handleChange = (setFunction: React.Dispatch<React.SetStateAction<number>>, value: any ) => {
         setFunction(Number(value))
@@ -65,14 +66,14 @@ function Logic({imageUrl, setDisableUpdate}: Props) {
   const [updateProduct] = useUpdateProductMutation()
   const onSubmit = async (values: UpdateProduct) => {
     try {
-        values.image_url = imageUrl!;
         console.log(values);
         const res: any = await updateProduct({...values, 
             price: Number(values.price), 
             stock: Number(values.stock),
             categoryId: Number(values.categoryId),
             setcategoryId: Number(values.setcategoryId),
-            subcategoryId: Number(values.subcategoryId)
+            subcategoryId: Number(values.subcategoryId),
+            image_url: imageUrl!
         });
         const {error, data} = res;
         console.log(res);
@@ -83,6 +84,7 @@ function Logic({imageUrl, setDisableUpdate}: Props) {
                 setDisableUpdate!(true)
                 alert('product updated!');
             }
+
     } catch (error) {
         console.error(error)
     }

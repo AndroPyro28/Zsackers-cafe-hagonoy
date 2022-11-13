@@ -1,5 +1,5 @@
 import {privateApi} from "../app/baseApi"
-import { CreateSubcategory, Subcategory } from "../model";
+import { CreateSubcategory, Subcategory, UpdateSubcategory } from "../model";
 
 const subCategoryApi = privateApi.injectEndpoints({
     endpoints: builder => ({
@@ -18,9 +18,17 @@ const subCategoryApi = privateApi.injectEndpoints({
             }),
             invalidatesTags: (result, error, arg) => [{type:"Subcategory"}, {type:'Category'}]
         }),
+        updateSubcategory: builder.mutation<void, UpdateSubcategory>({
+            query: ({id, ...rest}) => ({
+                url: `subcategory/${id}`,
+                method:"PATCH",
+                body: {...rest}
+            }),
+            invalidatesTags: (result, error, arg) => [{type:"Subcategory"}, {type:'Category'}]
+        }),
     }),
     overrideExisting: false
 })
 export default subCategoryApi;
 
-export const { useCreateSubcategoryMutation, useGetAllSubcategoryQuery } = subCategoryApi
+export const { useCreateSubcategoryMutation, useGetAllSubcategoryQuery, useUpdateSubcategoryMutation } = subCategoryApi

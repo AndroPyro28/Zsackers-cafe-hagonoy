@@ -1,5 +1,5 @@
 import {privateApi} from "../app/baseApi"
-import { Category, CreateCategory } from "../model";
+import { Category, CreateCategory, UpdateCategory } from "../model";
 
 const categoryApi = privateApi.injectEndpoints({
     endpoints: builder => ({
@@ -18,9 +18,17 @@ const categoryApi = privateApi.injectEndpoints({
             }),
             invalidatesTags: (result, error, arg) => [{type:"Category"}]
         }),
+        updateCategory: builder.mutation<void, UpdateCategory>({
+            query: ({id, ...rest}) => ({
+                url: `category/${id}`,
+                method:"PATCH",
+                body: {...rest}
+            }),
+            invalidatesTags: (result, error, arg) => [{type:"Category"}]
+        }),
     }),
     overrideExisting: false
 })
 export default categoryApi;
 
-export const { useCreateCategoryMutation, useGetAllCategoryQuery } = categoryApi
+export const { useCreateCategoryMutation, useGetAllCategoryQuery, useUpdateCategoryMutation } = categoryApi

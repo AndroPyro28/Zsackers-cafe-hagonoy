@@ -22,4 +22,10 @@ export class CategoryService {
         const categories = await this.categoryModel.getAllCategories(search)
         return categories
     }
+
+    async updateCategory(id: number, category: string) {
+        const updatedCategory = await this.categoryModel.updateCategory(id, category)
+        if(!updatedCategory) throw new ForbiddenException('Error Occured maybe this category is already taken')
+        return updatedCategory
+    }
 }

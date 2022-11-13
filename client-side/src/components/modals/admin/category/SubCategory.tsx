@@ -2,10 +2,11 @@ import { ErrorMessage, Field, Formik } from 'formik'
 import { useState } from 'react'
 import DateTimeFormatter from '../../../../helpers/DateTimeFormatter'
 import { Subcategory } from '../../../../model'
+import { FieldInputContainer } from '../components'
 import { CategoryInputField, CreateSubCategoryContainer, SetCategoryListContainer, LeftForm, SubCategoryContainer, SubCategoryData } from './components'
 import SetCategory from './SetCategory'
 import SetCategoryLogic from './SetCategoryLogic'
-
+import SubCategoryLogic from './SubCategoryLogic'
 interface Props {
   data: Subcategory
 }
@@ -13,22 +14,50 @@ function SubCategory({ data }: Props) {
   const { dateAndTimeParser } = DateTimeFormatter()
   const { date, time } = dateAndTimeParser(data.createdAt)
   const [showSetCategory, setShowSetCategory] = useState(false)
-  const {initialValues, onSubmit, validationSchema} = SetCategoryLogic({subcategoryId:data.id})
+  const [allowUpdate, setAllowUpdate] = useState(false);
+
+  //setcategory concerns
+  const { initialValuesCreateSetategory, createSetategory, validationSchema } = SetCategoryLogic({ subcategoryId: data.id })
+
+  // subcategory concerns
+  const { validationSchema: validationSchemaUpdateSubcategory, updateSubCategory } = SubCategoryLogic({ setAllowUpdate })
+
+  const initialValuesUpdateSubCategory = {
+    id: data.id,
+    subcategory: data.name
+  }
+
   return (
     <SubCategoryContainer>
-      <SubCategoryData>
-        <td>{data.name} </td>
-        <td>{date} at {time}</td>
-        <td>
-          <span>
-            <i className="fa-solid fa-file-pen"></i>
-          </span>
-          <span>
-            <i className="fa-solid fa-eraser"></i>
-          </span>
-        </td>
-        <td><span className="subcategories__button" onClick={() => setShowSetCategory(prev => !prev)}><i className={ showSetCategory ?"fa-solid fa-chevron-down" : "fa-sharp fa-solid fa-chevron-up"}></i></span></td>
-      </SubCategoryData>
+      <Formik
+        initialValues={initialValuesUpdateSubCategory}
+        validationSchema={validationSchemaUpdateSubcategory}
+        onSubmit={updateSubCategory}
+      >
+        <SubCategoryData>
+          {
+            allowUpdate ? <FieldInputContainer>
+              <Field type="text" name="subcategory" placeholder="subcategory name" />
+              <ErrorMessage name="subcategory" component={'div'} className="error__message" />
+            </FieldInputContainer> : <td>{data.name} </td>
+          }
+
+          {
+            !allowUpdate && <td>{date} at {time}</td>
+          }
+          <td>
+            {
+              !allowUpdate ? <span onClick={() => setAllowUpdate(true)}><i className="fa-solid fa-file-pen"></i></span> : <button type='submit'>
+                <i className="fa-solid fa-file-pen"></i>
+              </button>
+            }
+            <span>
+              <i className="fa-solid fa-eraser"></i>
+            </span>
+          </td>
+          <td><span className="subcategories__button" onClick={() => setShowSetCategory(prev => !prev)}><i className={showSetCategory ? "fa-solid fa-chevron-down" : "fa-sharp fa-solid fa-chevron-up"}></i></span></td>
+        </SubCategoryData>
+      </Formik>
       {
         showSetCategory && <><SetCategoryListContainer>
           {
@@ -36,13 +65,13 @@ function SubCategory({ data }: Props) {
               <SetCategory key={setCategory.id} data={setCategory} />
             ))
           }
-          
+
         </SetCategoryListContainer>
           <CreateSubCategoryContainer>
             <Formik
-              initialValues={initialValues}
+              initialValues={initialValuesCreateSetategory}
               validationSchema={validationSchema}
-              onSubmit={onSubmit}
+              onSubmit={createSetategory}
             >
               {
                 formik => {

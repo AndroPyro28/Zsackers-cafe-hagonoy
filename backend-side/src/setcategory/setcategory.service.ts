@@ -11,15 +11,21 @@ export class SetCategoryService {
     constructor(private readonly setCategoryModel: SetCategory) {
     }
     async createSetCategory(body: createSetCategoryDto) {
-        const newFlavorCategory = this.setCategoryModel.createSetCategory(body)
+        const newSetCategory = this.setCategoryModel.createSetCategory(body)
 
-        if(!newFlavorCategory) throw new ForbiddenException('Something went wrong...')
+        if(!newSetCategory) throw new ForbiddenException('Something went wrong...')
 
-        return newFlavorCategory;
+        return newSetCategory;
     }
 
     async getAllSetCategory() {
-        const flavorCategories = await this.setCategoryModel.getAllSetCategory()
-        return flavorCategories
+        const setCategories = await this.setCategoryModel.getAllSetCategory()
+        return setCategories
+    }
+
+    async updateSetcategory(id: number, setcategory: string) {
+        const updatedSetCategory = await this.setCategoryModel.updateSetcategory(id, setcategory)
+        if(!updatedSetCategory) throw new ForbiddenException('Error: something went wrong')
+        return updatedSetCategory
     }
 }

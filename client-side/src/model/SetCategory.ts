@@ -9,3 +9,8 @@ export interface createSetCategory {
     name: string
     subcategoryId: number
 }
+
+export interface UpdateSetcategory {
+    id:number;
+    setcategory: string;
+}

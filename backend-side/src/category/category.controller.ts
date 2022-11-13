@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto';
@@ -23,5 +23,14 @@ export class CategoryController {
     @HttpCode(HttpStatus.CREATED)
     async createCategory(@Body() body: CreateCategoryDto) {
         return this.categoryService.createCategory(body)
+    }
+
+    @Patch(':id')
+    @Roles(['ADMIN'])
+    async updatecategory(
+        @Param('id', ParseIntPipe) id: number,
+        @Body('category') category: string
+    ) {
+        return this.categoryService.updateCategory(id, category)
     }
 }

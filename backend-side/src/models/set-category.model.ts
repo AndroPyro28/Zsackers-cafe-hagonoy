@@ -26,4 +26,20 @@ export class SetCategory {
             console.error(error)
         }
     }
+
+    async updateSetcategory(id: number, setcategory: string) {
+        try {
+            const updatedSetCategory = await set_Category.update({
+                where: {
+                    id
+                },
+                data: {
+                    name: setcategory
+                }
+            })
+            return updatedSetCategory;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

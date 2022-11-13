@@ -22,4 +22,10 @@ export class SubcategoryService {
         const subcategories = await this.subCategoryModel.getAllSubcategories()
         return subcategories
     }
+
+    async updateSubcategory(id: number, subcategory: string) {
+        const updatedcategory = await this.subCategoryModel.updateSubcategories(id, subcategory)
+        if(!updatedcategory) throw new ForbiddenException('Error: something went wrong')
+        return updatedcategory
+    }
 }

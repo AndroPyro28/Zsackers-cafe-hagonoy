@@ -1,16 +1,16 @@
 import { Formik, Field, ErrorMessage } from 'formik'
 import { CategoryInputField, RightCategoryContentContainer, RightForm } from './components'
-import RightContentLogic from './RightContentLogic'
+import CategoryLogic from './CategoryLogic'
 
 function RightCategoryContent() {
 
-  const {initialValues, validationSchema, onSubmit} = RightContentLogic()
+  const {initialValues, validationSchema, createCategory} = CategoryLogic({})
   return (
     <RightCategoryContentContainer>
       <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}      
+      onSubmit={createCategory}      
       >
         {
           formik => {

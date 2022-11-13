@@ -103,20 +103,27 @@ export const CategoryWrapper = styled.div`
     border-bottom: solid 1px lightgray;
    
 `
-export const CategoryContainer = styled.div`
+export const CategoryContainer = styled(Form)`
     display: flex;
+    align-items: center;
     & > td {
         flex: 1;
         text-align: center;
-
         & > span {
             margin: 10px;
             font-size: 1.3em;
-
+            cursor: pointer;
             &.subcategories__button {
                 cursor: pointer;
             }
         }
+        & > button {
+        margin: 10px;
+        font-size: 1.3em;
+        cursor: pointer;
+        border: none;
+        background: none;
+    }
     }
 `
 
@@ -137,10 +144,10 @@ border-bottom: solid 1px lightgray;
 
 `
 
-export const SubCategoryData = styled.div`
+export const SubCategoryData = styled(Form)`
 display: flex;
 width: 100%;
-
+align-items: center;
 & > td {
     flex: 1;
     font-size: 0.9em;
@@ -152,6 +159,13 @@ width: 100%;
         margin: 10px;
         font-size: 1.3em;
         cursor: pointer;
+    }
+    & > button {
+        margin: 10px;
+        font-size: 1.3em;
+        cursor: pointer;
+        border: none;
+        background: none;
     }
 
 }
@@ -254,11 +268,11 @@ export const SetCategoryListContainer = styled.div`
     padding: 10px;
 `
 
-export const SetCategoryContainer = styled.div`
+export const SetCategoryContainer = styled(Form)`
     display: flex;
     width: 100%;
     margin: 10px 30px;
-
+    align-items: center;
     & > td {
     flex: 1;
     font-size: 0.9em;
@@ -269,6 +283,14 @@ export const SetCategoryContainer = styled.div`
     & > span {
         margin: 10px;
         font-size: 1.2em;
+        cursor: pointer;
+    }
+    & > button {
+        margin: 10px;
+        font-size: 1.3em;
+        cursor: pointer;
+        border: none;
+        background: none;
     }
 }
 `

@@ -15,7 +15,7 @@ function Product({ data, categories }: Props) {
   const [imageFile, setImageFile] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<any>(null);
   const [disableUpdate, setDisableUpdate] = useState(true)
-  const { handleDelete, onSubmit, validationSchema } = Logic({imageUrl, setDisableUpdate})
+  const { handleDelete, onSubmit, validationSchema } = Logic({imageUrl, setDisableUpdate, imageFile})
 
   const getBase64FromUrl = async (url:string) => {
     const data = await fetch(url);
@@ -96,7 +96,6 @@ function Product({ data, categories }: Props) {
               const fetchSetCategories = findSubcategory()?.set_category.map((setcategory) => (
                 <option value={setcategory.id} key={setcategory.id}>{setcategory.name}</option>
               ))
-              
               return <ProductBottomSide>
                 <LeftProductContent disableUpdate={disableUpdate}>
                   <label htmlFor='image_url'>

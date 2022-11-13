@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { Sub_Category } from '@prisma/client';
 import { Roles } from 'src/common/decorators';
 import { CreateSubcategoryDto } from './dto/';
@@ -19,6 +19,15 @@ export class SubcategoryController {
     @Roles(['ADMIN'])
     async getAllSubcategory() {
         return this.subCategoryService.getAllSubcategory()
+    }
+
+    @Patch(':id')
+    @Roles(['ADMIN'])
+    async updateSubcategory(
+        @Param('id', ParseIntPipe) id: number,
+        @Body('subcategory') subcategory: string
+    ) {
+         return this.subCategoryService.updateSubcategory(id, subcategory)
     }
 
 }

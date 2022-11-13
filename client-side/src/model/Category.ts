@@ -13,3 +13,8 @@ export interface Category {
 export interface CreateCategory {
     name: string
 }
+
+export interface UpdateCategory {
+    id: number;
+    category: string
+}

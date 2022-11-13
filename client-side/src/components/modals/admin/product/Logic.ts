@@ -13,19 +13,20 @@ function Logic() {
         const res: any = await createProduct({...values, image: fileReader.result});
         const {error, data} = res;
         if(error) {
-            if (typeof error.data.message) {
-                return alert(error.data.message[0]);
-            } else {
-                return alert(error.data.message);
-            }
+          if (typeof error.data.message === 'object') {
+            throw new Error(error.data.message[0]);
+          } else {
+            throw new Error(error.data.message);
+          }
         } else {
             resetForm(initialValues)
             alert('Product Created')
         }
       }
-    } catch (error) {
+    } catch (error: any) {
+      alert(error.message)
       console.error(error)
-    }
+    } 
   };
 
   const initialValues = {

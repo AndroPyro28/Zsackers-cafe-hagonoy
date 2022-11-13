@@ -45,4 +45,20 @@ export class Category {
             console.error(error)
         }
     }
+
+    async updateCategory(id: number, categoryData: string) {
+        try {
+            const updatedCategory = await category.update({
+                where: {
+                    id
+                },
+                data: {
+                    name: categoryData
+                }
+            })
+            return updatedCategory;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

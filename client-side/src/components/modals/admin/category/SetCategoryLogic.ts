@@ -1,32 +1,34 @@
 import { ClientRequest } from 'http'
 import * as yup from 'yup'
-import { CreateSubcategory } from '../../../../model'
-import { useCreateSetCategoryMutation } from '../../../../services/set-category'
+import { CreateSubcategory, UpdateSetcategory } from '../../../../model'
+import { useCreateSetCategoryMutation, useUpdateSetCategoryMutation } from '../../../../services/set-category'
 
 interface Props {
-    subcategoryId: number
+    subcategoryId?: number;
+    setAllowUpdate?: React.Dispatch<React.SetStateAction<boolean>>
 }
-function FlavorLogic({subcategoryId}: Props) {
+function SetCategoryLogic({subcategoryId, setAllowUpdate}: Props) {
 
-    const initialValues = {
+    const initialValuesCreateSetategory = {
         setcategory:'',
     }
-    const [createSetategory] = useCreateSetCategoryMutation()
-    const onSubmit = async (values: any, {resetForm}:any) => {
+    const [createSetategoryMutation] = useCreateSetCategoryMutation()
+    const createSetategory = async (values: any, {resetForm}:any) => {
         try {
-            const res: any = await createSetategory({...values, subcategoryId})
+            const res: any = await createSetategoryMutation({...values, subcategoryId})
             const {error, data} = res;
             if(error) {
-                if (typeof error.data.message) {
-                    return alert(error.data.message[0]);
-                } else {
-                    return alert(error.data.message);
-                }
+                if (typeof error.data.message === 'object') {
+                    throw new Error(error.data.message[0]);
+                  } else {
+                    throw new Error(error.data.message);
+                  }
             } else {
-                resetForm(initialValues)
+                resetForm(initialValuesCreateSetategory)
                 alert('Setcategory Created')
             }
-        } catch (error) {
+        } catch (error: any) {
+            alert(error.message)
             console.error(error)
         }
     }
@@ -37,10 +39,32 @@ function FlavorLogic({subcategoryId}: Props) {
         .min(3, 'must be atleast 3 characters'),
         
     })
+    const [updateSetCategoryMutation] = useUpdateSetCategoryMutation()
+    const updateSetCategory = async (values: UpdateSetcategory) => {
+        try {
+            const res: any = await updateSetCategoryMutation(values)
+            const {error, data} = res;
+            if(error) {
+                if (typeof error.data.message === 'object') {
+                    throw new Error(error.data.message[0]);
+                  } else {
+                    throw new Error(error.data.message);
+                  }
+            } else {
+                alert('Setcategory Updated')
+            }
+        } catch (error: any) {
+            console.error(error)
+            alert(error.message)
+        } finally {
+            setAllowUpdate!(false)
+        }
+    }
 
-    return {onSubmit,
-initialValues,
-validationSchema,}
+    return {initialValuesCreateSetategory,
+createSetategory,
+validationSchema,
+updateSetCategory}
 }
 
-export default FlavorLogic
+export default SetCategoryLogic

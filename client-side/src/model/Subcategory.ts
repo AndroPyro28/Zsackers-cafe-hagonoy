@@ -12,3 +12,8 @@ export interface CreateSubcategory {
     name: string;
     categoryId: number
 }
+
+export interface UpdateSubcategory {
+    id:number;
+    subcategory: string;
+}
