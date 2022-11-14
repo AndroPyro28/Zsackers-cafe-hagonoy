@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProductDto, UpdateProduct } from 'src/product/dto/product.dto';
+import { CreateProductDto, UpdateProduct } from 'src/routes/product/dto/product.dto';
 import { product } from './root.model';
 import { Product as ProductModel } from '@prisma/client';
 

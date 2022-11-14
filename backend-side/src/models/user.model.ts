@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SignupDto } from 'src/auth/dto/auth.dto';
+import { SignupDto } from 'src/routes/auth/dto/auth.dto';
 import { user } from './root.model';
 
 @Injectable()

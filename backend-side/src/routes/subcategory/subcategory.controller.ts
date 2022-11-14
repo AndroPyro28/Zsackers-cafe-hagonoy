@@ -1,7 +1,7 @@
 import { Body, Controller, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 import { Sub_Category } from '@prisma/client';
 import { Roles } from 'src/common/decorators';
-import { CreateSubcategoryDto } from './dto/';
+import { CreateSubcategoryDto } from './dto';
 import { SubcategoryService } from './subcategory.service';
 
 @Controller('subcategory')

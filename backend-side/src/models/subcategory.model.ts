@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateSubcategoryDto } from "src/subcategory/dto";
+import { CreateSubcategoryDto } from "src/routes/subcategory/dto";
 import { sub_Category } from "./root.model";
 @Injectable()
 
