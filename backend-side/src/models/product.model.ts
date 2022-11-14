@@ -30,7 +30,7 @@ export class Product {
       const arr = [
         search.productName !== "" && {
          productName: {
-          startsWith: search.productName
+          contains: search.productName
          }
         },
         search.categoryId !== 0 && {

@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { UpdateCategory } from "../../../../model";
 import {
   useCreateCategoryMutation,
+  useDeleteCategoryMutation,
   useUpdateCategoryMutation,
 } from "../../../../services";
 
@@ -61,8 +62,30 @@ function CategoryLogic({ setAllowUpdate }: Props) {
       setAllowUpdate!(false)
     }
   };
+  const [deleteCategoryMutation] = useDeleteCategoryMutation();
+  const deleteCategory = async (id: number) => {
+    try {
+      const res: any = await deleteCategoryMutation(id);
+      const { error, data } = res;
+      if (error) {
+        if (typeof error.data.message === "object") {
+          throw new Error(error.data.message[0]);
+        } else {
+          throw new Error(error.data.message);
+        }
+      } else {
+        alert("Category Deleted");
+      }
+    } catch (error: any) {
+      alert(error.message);
+      console.error(error);
+    } finally {
+      setAllowUpdate!(false)
+    }
+  };
+  
 
-  return { createCategory, initialValues, validationSchema, updateCategory };
+  return { createCategory, initialValues, validationSchema, updateCategory, deleteCategory };
 }
 
 export default CategoryLogic;

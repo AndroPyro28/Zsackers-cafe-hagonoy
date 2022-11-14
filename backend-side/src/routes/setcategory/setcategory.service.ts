@@ -28,4 +28,10 @@ export class SetCategoryService {
         if(!updatedSetCategory) throw new ForbiddenException('Error: something went wrong')
         return updatedSetCategory
     }
+
+    async deleteSetcategory(id: number) {
+        const deleteSetCategory = await this.setCategoryModel.deleteSetcategory(id);
+        if(!deleteSetCategory) throw new ForbiddenException('Error: something went wrong...')
+        return deleteSetCategory;
+    }
 }

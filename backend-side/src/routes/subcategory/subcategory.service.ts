@@ -28,4 +28,10 @@ export class SubcategoryService {
         if(!updatedcategory) throw new ForbiddenException('Error: something went wrong')
         return updatedcategory
     }
+
+    async deleteSubcategory(id: number) {
+        const deletedCategory = await this.subCategoryModel.deleteCategory(id)
+        if(!deletedCategory) throw new ForbiddenException('Error: something went wrong')
+        return deletedCategory
+    }
 }

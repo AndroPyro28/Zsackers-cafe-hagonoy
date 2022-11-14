@@ -26,9 +26,21 @@ const setCategoryApi = privateApi.injectEndpoints({
             }),
             invalidatesTags: (result, error, arg) => [{type:"SetCategory"}, {type:'Subcategory'}, {type:'Category'}]
         }),
+        deleteSetCategory: builder.mutation<void, number>({
+            query: (id) => ({
+                url: `setcategory/${id}`,
+                method:"DELETE",
+            }),
+            invalidatesTags: (result, error, arg) => [{type:"SetCategory"}, {type:'Subcategory'}, {type:'Category'}]
+        }),
     }),
     overrideExisting: false
 })
 export default setCategoryApi;
 
-export const { useCreateSetCategoryMutation, useGetAllSetCategoryQuery, useUpdateSetCategoryMutation } = setCategoryApi
+export const { 
+    useCreateSetCategoryMutation, 
+    useGetAllSetCategoryQuery, 
+    useUpdateSetCategoryMutation,
+    useDeleteSetCategoryMutation
+} = setCategoryApi

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto';
@@ -32,5 +32,13 @@ export class CategoryController {
         @Body('category') category: string
     ) {
         return this.categoryService.updateCategory(id, category)
+    }
+
+    @Delete(':id')
+    @Roles(['ADMIN'])
+    async deleteCategory(
+        @Param('id', ParseIntPipe) id: number,
+    ) {
+        return this.categoryService.deleteCategory(id)
     }
 }

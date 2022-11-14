@@ -28,4 +28,10 @@ export class CategoryService {
         if(!updatedCategory) throw new ForbiddenException('Error Occured maybe this category is already taken')
         return updatedCategory
     }
+
+    async deleteCategory(id: number) {
+        const deletedCategory = await this.categoryModel.deleteCategory(id);
+        if(!deletedCategory) throw new ForbiddenException('Error: something went wrong');
+        return deletedCategory;
+    }
 }

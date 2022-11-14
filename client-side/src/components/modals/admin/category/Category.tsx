@@ -18,7 +18,7 @@ function Category({data}: {data: CategoryInterface}) {
     const {date, time} = dateAndTimeParser(data.createdAt)
     const {sub_category} = data;
     const [allowUpdate, setAllowUpdate] = useState(false);
-    const {validationSchema: validationSchemaUpdateCategory, updateCategory } = CategoryLogic({setAllowUpdate})
+    const {validationSchema: validationSchemaUpdateCategory, updateCategory, deleteCategory } = CategoryLogic({setAllowUpdate})
     const initialValuesUpdateCategory = {
       id: data.id,
       category: data.name
@@ -41,12 +41,14 @@ function Category({data}: {data: CategoryInterface}) {
             !allowUpdate && <td>{date} at {time}</td>
           }
           <td>
+            
             {
               !allowUpdate ? <span onClick={() => setAllowUpdate(true)}><i className="fa-solid fa-file-pen"></i></span> : <button type='submit'>
               <i className="fa-solid fa-file-pen"></i>
             </button>
             }
-            <span>
+
+            <span onClick={() => deleteCategory(data.id)}>
             <i className="fa-solid fa-eraser"></i>
             </span>
           </td>

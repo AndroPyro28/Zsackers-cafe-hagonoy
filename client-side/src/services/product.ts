@@ -8,7 +8,7 @@ const productApi = privateApi.injectEndpoints({
                 url: `products?name=${searchName}&&categoryId=${categoryId}&&subcategoryId=${subcategoryId}&&setcategoryId=${setcategoryId}`,
                 method: "GET"
             }),
-            providesTags: (result = [], error, arg) => [{type:'Product', id: arg.searchName}],
+            providesTags: (result = [], error, arg) => [{type:'Product', id: arg.searchName}]
         }),
         createProduct: builder.mutation<void, CreateProduct>({
             query: body => ({

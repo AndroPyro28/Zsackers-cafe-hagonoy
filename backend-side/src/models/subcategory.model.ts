@@ -44,4 +44,17 @@ export class Subcategory {
             console.error(error)
         }
     }
+
+    async deleteCategory(id: number) {
+        try {
+            const deletedSubCategory = await sub_Category.delete({
+                where: {
+                    id
+                }
+            })
+            return deletedSubCategory;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

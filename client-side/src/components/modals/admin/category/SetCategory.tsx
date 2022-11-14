@@ -13,7 +13,7 @@ function SetCategory({ data }: Props) {
   const { date, time } = dateAndTimeParser(data.createdAt)
   const [allowUpdate, setAllowUpdate] = useState(false);
 
-  const { updateSetCategory, validationSchema } = SetCategoryLogic({ setAllowUpdate })
+  const { updateSetCategory, validationSchema, deleteSetCategory } = SetCategoryLogic({ setAllowUpdate })
   const initialValueUpdateSetCategory = {
     id: data.id,
     setcategory: data.name
@@ -40,7 +40,7 @@ function SetCategory({ data }: Props) {
               <i className="fa-solid fa-file-pen"></i>
             </button>
           }
-          <span>
+          <span onClick={() => deleteSetCategory(data.id)}>
             <i className="fa-solid fa-eraser"></i>
           </span>
         </td>

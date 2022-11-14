@@ -1,7 +1,7 @@
 import { ClientRequest } from 'http'
 import * as yup from 'yup'
 import { CreateSubcategory, UpdateSubcategory } from '../../../../model'
-import { useCreateSubcategoryMutation, useUpdateSubcategoryMutation } from '../../../../services/subcategory'
+import { useCreateSubcategoryMutation, useDeleteSubcategoryMutation, useUpdateSubcategoryMutation } from '../../../../services/subcategory'
 
 interface Props {
     categoryId?: number;
@@ -62,12 +62,34 @@ function SubCategoryLogic({categoryId, setAllowUpdate}: Props) {
             setAllowUpdate!(false)
         }
     }
+    const [deleteSubcategoryMutation] = useDeleteSubcategoryMutation()
+    const deleteSubCategory = async (id: number) => {
+        try {
+            const res:any = await deleteSubcategoryMutation(id);
+            const {error, data} = res;
+            if(error) {
+                if (typeof error.data.message === 'object') {
+                    throw new Error(error.data.message[0]);
+                  } else {
+                    throw new Error(error.data.message);
+                  }
+            } else {
+                alert('Subcategory Deleted')
+            }
+        } catch (error: any) {
+            alert(error.message)
+            console.error(error)
+        } finally {
+            setAllowUpdate!(false)
+        }
+    }
 
     return {
     createSubCategory,
     initialValuesCreateSubCategory,
     validationSchema,
-    updateSubCategory
+    updateSubCategory,
+    deleteSubCategory
 }
 }
 

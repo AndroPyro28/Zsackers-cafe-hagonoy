@@ -20,7 +20,7 @@ function SubCategory({ data }: Props) {
   const { initialValuesCreateSetategory, createSetategory, validationSchema } = SetCategoryLogic({ subcategoryId: data.id })
 
   // subcategory concerns
-  const { validationSchema: validationSchemaUpdateSubcategory, updateSubCategory } = SubCategoryLogic({ setAllowUpdate })
+  const { validationSchema: validationSchemaUpdateSubcategory, updateSubCategory, deleteSubCategory } = SubCategoryLogic({ setAllowUpdate })
 
   const initialValuesUpdateSubCategory = {
     id: data.id,
@@ -51,7 +51,7 @@ function SubCategory({ data }: Props) {
                 <i className="fa-solid fa-file-pen"></i>
               </button>
             }
-            <span>
+            <span onClick={() => deleteSubCategory(data.id)}>
               <i className="fa-solid fa-eraser"></i>
             </span>
           </td>

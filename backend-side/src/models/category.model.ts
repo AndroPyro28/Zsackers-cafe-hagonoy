@@ -61,4 +61,17 @@ export class Category {
             console.error(error)
         }
     }
+
+    async deleteCategory(id: number) {
+        try {
+            const deletedCategory = await category.delete({
+                where: {
+                    id
+                }
+            })
+            return deletedCategory;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

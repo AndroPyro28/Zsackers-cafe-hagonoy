@@ -39,9 +39,9 @@ function Product({ data, categories }: Props) {
     stock,
     image_url:imageFile,
     image_id: data.image_id,
-    categoryId,
+    categoryId: data.categoryId,
     subcategoryId: data.subcategoryId,
-    setcategoryId,
+    setcategoryId: data.setcategoryId,
   } 
 
   return (
@@ -49,8 +49,8 @@ function Product({ data, categories }: Props) {
       <TableRow>
         <td className="image"> <div className='image-border'><img src={imageUrl} /></div></td>
         <td className="name">{productName}</td>
-        <td className="category">{category.name}</td>
-        <td className="subcategory">{sub_category.name}</td>
+        <td className="category">{category?.name}</td>
+        <td className="subcategory">{sub_category?.name}</td>
         <td className="price">{productPriceFormatter(price + '')}</td>
         <td className="stock">Qty: {stock} </td>
         <td className="action" onClick={() => setToggle(prev => !prev)}><i className="fa-solid fa-chevron-down"></i></td>
@@ -86,15 +86,15 @@ function Product({ data, categories }: Props) {
               }
             
               const fetchCategories = categories?.map((category) => (
-                <option value={category.id} key={category.id}>{category.name}</option>
+                <option value={category?.id} key={category?.id}>{category?.name}</option>
               ))
             
               const fetchSubCategories = findCategory()?.sub_category.map((subcategory) => (
-                <option value={subcategory.id} key={subcategory.id}>{subcategory.name}</option>
+                <option value={subcategory?.id} key={subcategory?.id}>{subcategory?.name}</option>
               ))
             
               const fetchSetCategories = findSubcategory()?.set_category.map((setcategory) => (
-                <option value={setcategory.id} key={setcategory.id}>{setcategory.name}</option>
+                <option value={setcategory?.id} key={setcategory?.id}>{setcategory?.name}</option>
               ))
               return <ProductBottomSide>
                 <LeftProductContent disableUpdate={disableUpdate}>
@@ -115,18 +115,17 @@ function Product({ data, categories }: Props) {
                 <RightProductContent>
                   <ItemRowInfoContainer>
                     <ItemRowInfo>
-                      <label htmlFor="">
-                        {productName}</label>
+                      <label htmlFor="productName">Name</label>
                       <Field name="productName" id="productName"  disabled={disableUpdate} />
                       <ErrorMessage name="productName" component={'div'} className="error__message" />
                     </ItemRowInfo>
                     <ItemRowInfo>
-                      <label htmlFor="">Price</label>
+                      <label htmlFor="price">Price</label>
                       <Field name="price" id="price" type="number" disabled={disableUpdate} />
                       <ErrorMessage name="price" component={'div'} className="error__message" />
                     </ItemRowInfo>
                     <ItemRowInfo>
-                      <label htmlFor="">Stock</label>
+                      <label htmlFor="stock">Stock</label>
                       <Field name="stock" id="stock" type="number" disabled={disableUpdate} />
                       <ErrorMessage name="stock" component={'div'} className="error__message" />
                     </ItemRowInfo>
@@ -135,8 +134,8 @@ function Product({ data, categories }: Props) {
                   <ItemRowInfoContainer>
 
                   <ItemRowInfo>
-                      <label htmlFor="">Category</label>
-                      <Field as={'select'} name="categoryId" disabled={disableUpdate} >
+                      <label htmlFor="categoryId">Category</label>
+                      <Field as={'select'} name="categoryId" id="categoryId" disabled={disableUpdate} >
                         <option value="">Select Category</option>
                         {fetchCategories}
                       </Field>
@@ -144,8 +143,8 @@ function Product({ data, categories }: Props) {
                     </ItemRowInfo>
 
                     <ItemRowInfo>
-                      <label htmlFor="">Setcategory</label>
-                      <Field as={'select'} name="subcategoryId" disabled={disableUpdate} >
+                      <label htmlFor="subcategoryId">Setcategory</label>
+                      <Field as={'select'} name="subcategoryId" id="subcategoryId" disabled={disableUpdate} >
                         <option value="">Select Subcategory</option>
                         {fetchSubCategories}
                       </Field>
@@ -153,8 +152,8 @@ function Product({ data, categories }: Props) {
                     </ItemRowInfo>
                     
                     <ItemRowInfo>
-                      <label htmlFor="">Setcategory</label>
-                      <Field as={'select'} name={'setcategoryId'} disabled={disableUpdate} >
+                      <label htmlFor="setcategoryId">Setcategory</label>
+                      <Field as={'select'} name={'setcategoryId'} id="setcategoryId" disabled={disableUpdate} >
                         <option value="">Select Setcategory</option>
                         {fetchSetCategories}
                       </Field>

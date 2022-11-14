@@ -42,4 +42,17 @@ export class SetCategory {
             console.error(error)
         }
     }
+
+    async deleteSetcategory(id: number) {
+        try {
+            const deletedSetCategory = await set_Category.delete({
+                where: {
+                    id
+                }
+            })
+            return deletedSetCategory;
+        } catch (error) {
+            console.error(error)
+        }
+    }
 }

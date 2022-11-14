@@ -47,11 +47,11 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
     stock: yup.number()
     .required('Product stock is required field')
     .min(0, 'Product stock must be minimum of 0'),
-    categoryId: yup.number()
+    categoryId: yup.number().typeError('Category is required field')
     .required('Category is required field'),
-    subcategoryId: yup.number()
+    subcategoryId: yup.number().typeError('Subcategory is required field')
     .required('Subcategory is required field'),
-    setcategoryId: yup.number()
+    setcategoryId: yup.number().typeError('Setcategory is required field')
     .required('Setcategory is required field'),
     image_url: yup
       .mixed()
@@ -66,7 +66,6 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
   const [updateProduct] = useUpdateProductMutation()
   const onSubmit = async (values: UpdateProduct) => {
     try {
-        console.log(values);
         const res: any = await updateProduct({...values, 
             price: Number(values.price), 
             stock: Number(values.stock),

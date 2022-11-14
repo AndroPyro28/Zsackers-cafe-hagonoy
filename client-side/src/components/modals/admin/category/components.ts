@@ -9,6 +9,7 @@ export const CategoryModalBackdrop = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.548);
+  z-index: 1;
 `
 
 export const CategoryModalContainer = styled(motion.div)`
