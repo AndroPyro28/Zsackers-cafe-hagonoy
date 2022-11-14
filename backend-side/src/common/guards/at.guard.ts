@@ -17,6 +17,6 @@ export class AtGuard extends AuthGuard('jwt_access_token') {
         ]);
     
         return isPublic ?? super.canActivate(context);
-        // when isPublic is true it will escape the authentication else super.canActivate(context) will do the authentication
+        // when isPublic is true it will skip the authentication else super.canActivate(context) will do the authentication
       }
 }
