@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { SetCategory } from 'src/models/set-category.model';
+import { SetCategory } from 'src/models';
 import { createSetCategoryDto } from './dto';
 
 @Injectable()
