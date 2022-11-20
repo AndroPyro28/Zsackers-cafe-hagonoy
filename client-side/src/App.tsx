@@ -8,12 +8,12 @@ import Login from './pages/public/login/Login';
 import Signup from './pages/public/signup/Signup';
 import Inventory from './pages/admin/inventory/Inventory';
 import AdminRoutes  from './routes/AdminRoutes';
-import { useGetMeQuery } from './services/user';
-import {useDispatch, useSelector} from "react-redux";
-import { authenticationFailed, authenticationSuccess } from './features';
-import Cookies from 'js-cookie';
-
+import CustomerRoutes from './routes/CustomerRoutes';
+import Store from './pages/customer/store/Store';
+import StaffRoutes from './routes/StaffRoutes';
+import Pos from './pages/staff/pos/Pos';
 function App() {
+
   const router = createBrowserRouter([
     {
       element: <PublicRoutes />,
@@ -45,7 +45,27 @@ function App() {
           path: 'inventory'
         }
       ]
-    }
+    },
+    {
+      element: <CustomerRoutes />,
+      path: '/customer',
+      children: [
+        {
+          element: <Store />,
+          path: 'store'
+        }
+      ]
+    },
+    {
+      element: <StaffRoutes />,
+      path: '/staff',
+      children: [
+        {
+            path:'pos',
+            element: <Pos />
+        }
+      ]
+    },
   ])
   
 

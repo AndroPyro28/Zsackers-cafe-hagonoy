@@ -12,7 +12,7 @@ export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @Get()
-    @Roles(['ADMIN'])
+    @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
     @HttpCode(HttpStatus.OK)
     async getAllCategories(@Query('search') search: string ) {
         return this.categoryService.getAllCategories(search)

@@ -7,8 +7,9 @@ export const InventoryCreateModalBackdrop = styled(motion.div)`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height:100vh;
   background: rgba(0, 0, 0, 0.548);
+  z-index: 1;
 `
 
 export const FormFormik = styled(Form)`
@@ -17,6 +18,8 @@ export const FormFormik = styled(Form)`
     width: 40vw;
     background: white;
     position: absolute;
+    overflow-y: auto;
+
     top: 0;
     left: 0;
     right: 0;
@@ -40,7 +43,7 @@ export const FormFormik = styled(Form)`
 
     & > h1 {
         text-align: center;
-        margin-block: 20px;
+        margin-block: 10px;
         font-size: 1.8em;
         
     }
@@ -57,13 +60,18 @@ export const FormFieldContainer = styled.div`
 `
 export const FieldInputContainer = styled.div`
     flex: 2;
-    & > input, select{
+    & > input, select, textarea{
         width: 100%;
         padding: 5px 10px;
         font-size: 0.8em;
         border-radius: 5px;
         border: solid 1px gray;
         outline: none;
+        resize: none;
+    }
+
+    & > textarea {
+        height: 70px;
     }
 
     & > .error__message {

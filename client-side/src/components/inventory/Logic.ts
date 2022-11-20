@@ -53,13 +53,18 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
     .required('Subcategory is required field'),
     setcategoryId: yup.number().typeError('Setcategory is required field')
     .required('Setcategory is required field'),
+    details: yup.string()
+    .typeError('details is required field').
+    // required('Product name is required field').
+    min(6, 'Product details must be atleast 6 characters'),
+    // .matches(/^[A-Za-z\s]*$/, "Must container letters only"),
     image_url: yup
       .mixed()
-      .required("Image is required field")
+    //   .required("Image is required field")
       .test(
         "type",
         "Invalid file format selection",
-        (value) => value && SUPPORTED_FORMATS.includes(value.type)
+        (value) => value ? SUPPORTED_FORMATS.includes(value.type) : true
       ),
   });
 
@@ -72,6 +77,7 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
             categoryId: Number(values.categoryId),
             setcategoryId: Number(values.setcategoryId),
             subcategoryId: Number(values.subcategoryId),
+            details: values.details,
             image_url: imageUrl!
         });
         const {error, data} = res;

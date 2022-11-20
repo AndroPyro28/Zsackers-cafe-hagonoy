@@ -31,7 +31,7 @@ export class ProductController {
   }
 
   @Get()
-  @Roles(['ADMIN'])
+  @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
   @HttpCode(HttpStatus.OK)
   async getAllProducts(
     @Query('name') productName: string,

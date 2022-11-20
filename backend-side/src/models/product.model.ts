@@ -14,6 +14,7 @@ export class Product {
           image_url: body.image_url,
           stock: body.productStock,
           image_id: body.image_id,
+          details: body.details,
           categoryId: Number(body.categoryId),
           subcategoryId: Number(body.subcategoryId),
           setcategoryId: Number(body.setcategoryId),

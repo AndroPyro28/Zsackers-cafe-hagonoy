@@ -1,3 +1,4 @@
+import { createLanguageService } from "typescript";
 import * as yup from "yup";
 import { CreateProduct } from "../../../../model";
 import { useCreateProductMutation } from "../../../../services";
@@ -33,6 +34,7 @@ function Logic() {
     productName: '',
     productPrice: '',
     productStock: '',
+    details: '',
     image: '',
     categoryId: '',
     subcategoryId: '',
@@ -63,13 +65,18 @@ function Logic() {
     .required('Subcategory is required field'),
     setcategoryId: yup.number()
     .required('Setcategory is required field'),
+    details: yup.string()
+    .typeError('details is required field')
+    // required('Product details is required field').
+    .min(6, 'Product details must be atleast 6 characters'),
+    // .matches(/^[A-Za-z\s]*$/, "Must container letters only"),
     image: yup
       .mixed()
-      .required("Image is required field")
+      // .required("Image is required field")
       .test(
         "type",
         "Invalid file format selection",
-        (value) => value && SUPPORTED_FORMATS.includes(value.type)
+        (value) =>  value ? SUPPORTED_FORMATS.includes(value.type) : true
       ),
   });
   return {

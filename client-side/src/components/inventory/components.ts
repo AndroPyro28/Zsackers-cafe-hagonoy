@@ -82,17 +82,26 @@ export const ItemRowInfo = styled.div`
         color: gray;
         margin: 10px 0px;
     }
-    & > input, select {
+    & > input, select, textarea {
         width: 90%;
         border: none;
         border-bottom: solid 1px gray;
         outline: none;
         padding: 5px 10px;
         background: none;
+        resize: none;
         &:disabled {
             color: gray;
             font-style: italic;
         }
+    }
+
+    & > textarea {
+        border: solid 1px gray !important;
+        width: 96%;
+        border-radius: 10px;
+        height: 90px;
+
     }
 
     & > select {

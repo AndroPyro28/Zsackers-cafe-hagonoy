@@ -6,8 +6,11 @@ export const GlobalStyles = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         text-decoration: none;
-        color: black;
+        /* color: black; */
         font-family: 'poppins', 'roboto', sans-serif;
+    }
+    a {
+        color: black;
     }
 `
 export const AppMain = styled.main`

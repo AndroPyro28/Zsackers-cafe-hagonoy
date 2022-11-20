@@ -7,6 +7,7 @@ export interface CreateProduct {
     productPrice: string,
     productStock: string | number,
     image: null | any,
+    details: string
     categoryId: string,
     subcategoryId: string
     setcategoryId: string
@@ -18,6 +19,7 @@ export interface Product {
     price: number;
     createdAt: string;
     updatedAt: string;
+    details: string
     image_url: string;
     image_id: string;
     stock: number;
@@ -34,6 +36,7 @@ export interface UpdateProduct {
     id: number,
     productName: string,
     price: number,
+    details: string,
     stock: number,
     image_url: string,
     image_id:string,

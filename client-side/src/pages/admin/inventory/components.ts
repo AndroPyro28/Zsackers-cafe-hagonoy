@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
     body {
-        background: rgb(179,202,179);
+        background: rgb(232,241,243);
     }
 `;
 export const InventoryLayout = styled.section`
@@ -112,7 +112,7 @@ export const FilterItemsContainer = styled.div`
     }
 
   & button {
-    color: white;
+    /* color: white;
     border: none;
     outline: none;
     border-radius: 10px;
@@ -126,7 +126,7 @@ export const FilterItemsContainer = styled.div`
     }
     &:hover {
       background: rgb(1, 59, 77);
-    }
+    } */
   }
 
   & > .pagination {
@@ -154,6 +154,8 @@ export const FilterItemsContainer = styled.div`
       cursor: pointer;
       transition: all 0.3s ease-in;
       padding: 8px;
+      background: rgb(1, 59, 77);
+
       @media (max-width:1200px) {
         font-size: 1em;
         padding: 6px;
@@ -161,7 +163,7 @@ export const FilterItemsContainer = styled.div`
     }
 
     & > :is(.left, .right):hover {
-      background: rgb(1, 59, 77);
+      /* background: rgb(1, 59, 77); */
     }
   }
 `;
@@ -528,7 +530,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 10px;
-  & button {
+  & > button {
     color: white;
     height: fit-content;
     border: none;
@@ -539,10 +541,14 @@ export const ButtonContainer = styled.div`
     width: fit-content;
     margin: 10px;
     transition: all 0.3s ease-in-out;
-    background: rgb(51,102,51);
+    background: rgb(1, 59, 77);
 
     & .plus {
       color: white !important;
+    }
+
+    &:hover {
+      background: rgb(1, 59, 77);
     }
     @media (max-width:800px) {
       padding: 10px 20px;

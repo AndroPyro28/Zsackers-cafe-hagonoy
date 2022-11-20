@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {InventoryRightContentContainer, FilterItemsContainer, FilterContainer, ButtonContainer, TableRow, T_HEAD, ProductListContainer} from "../../pages/admin/inventory/components"
+import { InventoryRightContentContainer, FilterItemsContainer, FilterContainer, ButtonContainer, TableRow, T_HEAD, ProductListContainer } from "../../pages/admin/inventory/components"
 import CategoryModal from '../modals/admin/category/CategoryModal'
 import ProductCreateModal from '../modals/admin/product/ProductCreateModal'
 import InventoryTableRow from '../table/InventoryTableRow'
@@ -7,7 +7,7 @@ import Product from './Product'
 import FilterItems from './FilterItems'
 import { useGetAllCategoryQuery, useGetAllProductQuery } from '../../services'
 
-function InventoryRightContent({searchName, setSearchName}: {searchName: string, setSearchName: React.Dispatch<React.SetStateAction<string>>}) {
+function InventoryRightContent({ searchName, setSearchName }: { searchName: string, setSearchName: React.Dispatch<React.SetStateAction<string>> }) {
 
   const [openCreateProductModal, setOpenCreateProductModal] = useState<boolean>(false)
   const [viewCategory, setViewCategory] = useState<boolean>(false)
@@ -17,10 +17,11 @@ function InventoryRightContent({searchName, setSearchName}: {searchName: string,
 
   const { data: categories, refetch: refetchCategory } = useGetAllCategoryQuery('', {
     refetchOnFocus: true,
-    refetchOnReconnect: true
+    refetchOnReconnect: true,
+    pollingInterval: 10
   })
 
-  const {data: products, isLoading, error, refetch:refetechProduct} = useGetAllProductQuery({
+  const { data: products, isLoading, error, refetch: refetechProduct } = useGetAllProductQuery({
     searchName,
     categoryId,
     subcategoryId,
@@ -35,17 +36,17 @@ function InventoryRightContent({searchName, setSearchName}: {searchName: string,
     setterSubCategoryId(0)
     setterSetCategoryId(0)
     setSearchName('')
-    }, [categoryId])
+  }, [categoryId])
 
-    useEffect(() => {
-      refetchCategory()
-      refetechProduct()
-    }, [])
+  useEffect(() => {
+    refetchCategory()
+    refetechProduct()
+  }, [])
 
-  if(isLoading) return <></>
+  if (isLoading) return <></>
 
   const fetchProducts = products?.map((product) => (
-    <Product key={product.id} data={product} categories={categories!}/>
+    <Product key={product.id} data={product} categories={categories!} />
   ))
 
   return (
@@ -55,28 +56,28 @@ function InventoryRightContent({searchName, setSearchName}: {searchName: string,
       }
 
       {
-        viewCategory && <CategoryModal setViewCategory={setViewCategory}/>
+        viewCategory && <CategoryModal setViewCategory={setViewCategory} />
       }
-    
-    {
-      categories && <FilterItems 
-      setOpenCreateProductModal={setOpenCreateProductModal}
-      setViewCategory={setViewCategory}
-      categoryId={categoryId}
-      subcategoryId={subcategoryId}
-      setcategoryId={setcategoryId}
-      setterCategoryId={setterCategoryId}
-      setterSubCategoryId={setterSubCategoryId}
-      setterSetCategoryId={setterSetCategoryId}
-      categories={categories}
-      />
-    }
+
+      {
+        categories && <FilterItems
+          setOpenCreateProductModal={setOpenCreateProductModal}
+          setViewCategory={setViewCategory}
+          categoryId={categoryId}
+          subcategoryId={subcategoryId}
+          setcategoryId={setcategoryId}
+          setterCategoryId={setterCategoryId}
+          setterSubCategoryId={setterSubCategoryId}
+          setterSetCategoryId={setterSetCategoryId}
+          categories={categories}
+        />
+      }
       <InventoryTableRow />
-      
+
       <ProductListContainer>
-        { fetchProducts }
+        {fetchProducts}
       </ProductListContainer>
-      
+
     </InventoryRightContentContainer>
   )
 }

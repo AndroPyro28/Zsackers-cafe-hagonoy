@@ -15,39 +15,39 @@ function Product({ data, categories }: Props) {
   const [imageFile, setImageFile] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<any>(null);
   const [disableUpdate, setDisableUpdate] = useState(true)
-  const { handleDelete, onSubmit, validationSchema } = Logic({imageUrl, setDisableUpdate, imageFile})
+  const { handleDelete, onSubmit, validationSchema } = Logic({ imageUrl, setDisableUpdate, imageFile })
 
-  const getBase64FromUrl = async (url:string) => {
+  const getBase64FromUrl = async (url: string) => {
     const data = await fetch(url);
     const blob = await data.blob();
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => {
-        if(!imageFile) {
-          setImageFile(blob)
-          setImageUrl(reader.result)
-        }
-      };
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      if (!imageFile) {
+        setImageFile(blob)
+        setImageUrl(reader.result)
+      }
+    };
   };
 
   getBase64FromUrl(data.image_url)
-
   const initialValues = {
     id,
     productName,
     price,
     stock,
-    image_url:imageFile,
+    details: data.details || '',
+    image_url: imageFile,
     image_id: data.image_id,
     categoryId: data.categoryId,
     subcategoryId: data.subcategoryId,
     setcategoryId: data.setcategoryId,
-  } 
+  }
 
   return (
     <ProductContainer>
       <TableRow>
-        <td className="image"> <div className='image-border'><img src={imageUrl} /></div></td>
+        <td className="image"> <div className='image-border'>{imageUrl?.length > 0 && <img src={imageUrl} />} </div></td>
         <td className="name">{productName}</td>
         <td className="category">{category?.name}</td>
         <td className="subcategory">{sub_category?.name}</td>
@@ -67,8 +67,8 @@ function Product({ data, categories }: Props) {
                 if (!e.target.files) return;
                 const file = e.target.files[0]
                 formik.setTouched({
-                    ...formik.touched,
-                    image_url: true,
+                  ...formik.touched,
+                  image_url: true,
                 });
                 formik.setFieldValue("image_url", file);
                 const fileReader = new FileReader();
@@ -76,7 +76,7 @@ function Product({ data, categories }: Props) {
                 fileReader.onloadend = () => {
                   setImageUrl(fileReader.result)
                 }
-            };
+              };
               const findCategory = () => {
                 return categories?.find(value => value.id === Number(formik.values.categoryId))
               }
@@ -84,29 +84,32 @@ function Product({ data, categories }: Props) {
               const findSubcategory = () => {
                 return findCategory()?.sub_category?.find(value => value.id === Number(formik.values.subcategoryId))
               }
-            
+
               const fetchCategories = categories?.map((category) => (
                 <option value={category?.id} key={category?.id}>{category?.name}</option>
               ))
-            
+
               const fetchSubCategories = findCategory()?.sub_category.map((subcategory) => (
                 <option value={subcategory?.id} key={subcategory?.id}>{subcategory?.name}</option>
               ))
-            
+
               const fetchSetCategories = findSubcategory()?.set_category.map((setcategory) => (
                 <option value={setcategory?.id} key={setcategory?.id}>{setcategory?.name}</option>
               ))
               return <ProductBottomSide>
                 <LeftProductContent disableUpdate={disableUpdate}>
                   <label htmlFor='image_url'>
-                    <img src={imageUrl} />
+                    {
+
+                      imageUrl?.length > 0 ? <img src={imageUrl} /> : <>no photos</>
+                    }
                   </label>
                   <ErrorMessage name="image_url" component={'div'} className="error__message" />
-                  <input name="image_url" style={{display:'none'}} type="file" id="image_url" disabled={disableUpdate} onChange={onUploadChange} />
+                  <input name="image_url" style={{ display: 'none' }} type="file" id="image_url" disabled={disableUpdate} onChange={onUploadChange} />
                   <ActionButtons>
                     {
                       disableUpdate ? <input type="button" value={'Edit'} onClick={() => setDisableUpdate(false)} /> :
-                      <button>Save</button>
+                        <button>Save</button>
                     }
                     <button onClick={() => handleDelete(id)}>Delete</button>
                   </ActionButtons>
@@ -116,24 +119,24 @@ function Product({ data, categories }: Props) {
                   <ItemRowInfoContainer>
                     <ItemRowInfo>
                       <label htmlFor="productName">Name</label>
-                      <Field name="productName" id="productName"  disabled={disableUpdate} />
+                      <Field name="productName" placeholder="Product name" id="productName" disabled={disableUpdate} />
                       <ErrorMessage name="productName" component={'div'} className="error__message" />
                     </ItemRowInfo>
                     <ItemRowInfo>
                       <label htmlFor="price">Price</label>
-                      <Field name="price" id="price" type="number" disabled={disableUpdate} />
+                      <Field name="price"  placeholder="Product price" id="price" type="number" disabled={disableUpdate} />
                       <ErrorMessage name="price" component={'div'} className="error__message" />
                     </ItemRowInfo>
                     <ItemRowInfo>
                       <label htmlFor="stock">Stock</label>
-                      <Field name="stock" id="stock" type="number" disabled={disableUpdate} />
+                      <Field name="stock" id="stock"  placeholder="Product stock" type="number" disabled={disableUpdate} />
                       <ErrorMessage name="stock" component={'div'} className="error__message" />
                     </ItemRowInfo>
 
                   </ItemRowInfoContainer>
                   <ItemRowInfoContainer>
 
-                  <ItemRowInfo>
+                    <ItemRowInfo>
                       <label htmlFor="categoryId">Category</label>
                       <Field as={'select'} name="categoryId" id="categoryId" disabled={disableUpdate} >
                         <option value="">Select Category</option>
@@ -150,7 +153,7 @@ function Product({ data, categories }: Props) {
                       </Field>
                       <ErrorMessage name="subcategoryId" component={'div'} className="error__message" />
                     </ItemRowInfo>
-                    
+
                     <ItemRowInfo>
                       <label htmlFor="setcategoryId">Setcategory</label>
                       <Field as={'select'} name={'setcategoryId'} id="setcategoryId" disabled={disableUpdate} >
@@ -160,11 +163,19 @@ function Product({ data, categories }: Props) {
                       <ErrorMessage name="setcategoryId" component={'div'} className="error__message" />
                     </ItemRowInfo>
                   </ItemRowInfoContainer>
+
+                  <ItemRowInfoContainer>
+                    <ItemRowInfo>
+                      <label htmlFor="details">details</label>
+                      <Field as={'textarea'} placeholder="Product details" name={'details'} id="details" disabled={disableUpdate} >
+                      </Field>
+                      <ErrorMessage name="details" component={'div'} className="error__message" />
+                    </ItemRowInfo>
+                  </ItemRowInfoContainer>
                 </RightProductContent>
               </ProductBottomSide>
             }
           }
-
         </Formik>
       }
     </ProductContainer>

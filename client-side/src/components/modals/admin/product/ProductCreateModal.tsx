@@ -8,6 +8,7 @@ import { IconContainer } from '../../../../appComponents';
 interface Props {
     setOpenCreateProductModal: React.Dispatch<React.SetStateAction<boolean>>
 }
+
 function ProductCreateModal({ setOpenCreateProductModal }: Props) {
     const { onSubmit, initialValues, validationSchema } = Logic()
     const { data: categories } = useGetAllCategoryQuery('');
@@ -54,7 +55,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </IconContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productName">`Product Name`</label>
+                                <label htmlFor="productName">`Name`</label>
                                 <FieldInputContainer>
                                     <Field name="productName" id="productName" type="text" placeholder="Product Name" />
                                     <ErrorMessage name="productName" component={'div'} className="error__message" />
@@ -62,7 +63,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productPrice">`Product Price (₱)` </label>
+                                <label htmlFor="productPrice">`Price (₱)` </label>
                                 <FieldInputContainer>
                                     <Field name="productPrice" id="productPrice" type="number" placeholder="₱ 00.00" />
                                     <ErrorMessage name="productPrice" component={'div'} className="error__message" />
@@ -70,7 +71,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productStock">`Product Stock (QTY)` </label>
+                                <label htmlFor="productStock">`Stock (QTY)` </label>
                                 <FieldInputContainer>
                                     <Field name="productStock" id="productStock" type="number" placeholder="Current Stock" />
                                     <ErrorMessage name="productStock" component={'div'} className="error__message" />
@@ -122,9 +123,17 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                                 </FieldInputContainer>
                             </FormFieldContainer>
 
+                            <FormFieldContainer>
+                                <label htmlFor="details">`Details (optional)` </label>
+                                <FieldInputContainer>
+                                    <Field name="details" id="details" as="textarea" placeholder="Details..." />
+                                    <ErrorMessage name="details" component={'div'} className="error__message" />
+                                </FieldInputContainer>
+                            </FormFieldContainer>
+
 
                             <FormFieldContainer>
-                                <label htmlFor="image">`Image`</label>
+                                <label htmlFor="image">`Image (optional)`</label>
                                 <FieldInputContainer>
                                     <input name="image" type="file" id="image" onChange={onUploadChange} />
                                     <ErrorMessage name="image" component={'div'} className="error__message" />

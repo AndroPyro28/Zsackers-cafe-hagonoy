@@ -26,6 +26,13 @@ export const AdminGlobalStyles = createGlobalStyle`
   }
 `
 export const AdminRoutesContainer = styled.section`
-  
    
+`
+
+export const CustomerRoutesContainer = styled.section`
+  padding-top: 90px;
+`
+
+export const StaffRoutesContainer = styled.section`
+
 `

@@ -1,8 +1,10 @@
 import React from 'react'
-import {InventoryLeftContentContainer, SearchItemContainer,
-    ProductStatisticContainer,
-    ProductStatistic} from "../../pages/admin/inventory/components"
-function InventoryLeftContent({setSearchName}: {setSearchName: React.Dispatch<React.SetStateAction<string>>}) {
+import {
+  InventoryLeftContentContainer, SearchItemContainer,
+  ProductStatisticContainer,
+  ProductStatistic
+} from "../../pages/admin/inventory/components"
+function InventoryLeftContent({ setSearchName }: { setSearchName: React.Dispatch<React.SetStateAction<string>> }) {
   return (
     <InventoryLeftContentContainer>
       <h1>Search for items</h1>
@@ -13,7 +15,7 @@ function InventoryLeftContent({setSearchName}: {setSearchName: React.Dispatch<Re
         <input
           type="text"
           placeholder="Search by name..."
-          onChange={(e: React.ChangeEvent< HTMLInputElement >) => setSearchName(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)}
         />
         <i className="fa-solid fa-magnifying-glass"></i>
       </SearchItemContainer>

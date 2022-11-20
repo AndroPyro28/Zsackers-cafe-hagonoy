@@ -9,7 +9,7 @@ const userApi = privateApi.injectEndpoints({
                 url: `auth/me`,
                 method:"GET",
             }),
-            providesTags: (result, error, arg) => [{type: 'User', id: "query"}]
+            providesTags: (result, error, arg) => [{type: 'User', id: "query"}],
         }),
     }),
     overrideExisting: false

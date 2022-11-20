@@ -4,21 +4,18 @@ import {GetCurrentUser} from '../services/user'
 import { AdminGlobalStyles, AdminRoutesContainer } from './components'
 
 function AdminRoutes() {
-  const {data:user, isLoading} = GetCurrentUser()
+  const {data:user, isLoading, isError} = GetCurrentUser()
 
 
   if(isLoading) {
     return <></>
   }
-  if(!user) {
-    return <Navigate to="/" />
-  }
-  if(user.role === 'CUSTOMER') {
-    return <Navigate to={'/customer'} />
-  }
-  if(user.role === 'STAFF') {
-    return <Navigate to={'/staff'} />
-  }
+  if(!user || isError) return <Navigate to="/login" />
+  
+  if(user.role === 'CUSTOMER') return <Navigate to={'/customer'} />
+
+  if(user.role === 'STAFF') return <Navigate to={'/staff'} />
+  
 
   return (
     <AdminRoutesContainer>

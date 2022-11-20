@@ -18,6 +18,10 @@ export class CreateProductDto {
     @IsNumberString()
     subcategoryId: string;
 
+    @IsOptional()
+    @IsString()
+    details: string;
+
     @IsNotEmpty()
     @IsNumberString()
     setcategoryId: string;
@@ -43,6 +47,10 @@ export class UpdateProduct {
     @IsNotEmpty()
     @IsNumber()
     stock: number;
+
+    @IsOptional()
+    @IsString()
+    details: string;
 
     @IsString()
     @IsNotEmpty()
