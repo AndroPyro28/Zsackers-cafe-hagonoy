@@ -24,7 +24,7 @@ export class Category {
                 where: {
                     name: {
                         contains: search
-                    }
+                    },
                 },
                 include: {
                     sub_category: {

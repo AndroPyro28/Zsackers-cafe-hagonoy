@@ -11,8 +11,12 @@ export const StoreContainer = styled.div`
 export const ProductList = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 350px;
+    grid-auto-rows: 320px;
     background: rgb(232,241,243);
-    gap: 25px;
-    padding: 50px 20px;
+    gap: 30px;
+    padding: 50px 40px;
+`
+
+export const ProductDetailsContainer = styled.div`
+    display: flex;
 `

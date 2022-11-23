@@ -48,15 +48,37 @@ export class Product {
       const products = await product.findMany({
         where: {
           AND: conditionArr,
-          archive: false
+          archive: false,
         },
         include: {
           set_category: true,
           category: true,
           sub_category: true,
         },
+        orderBy: {
+          createdAt: 'desc'
+        }
       });
       return products;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getProductById(id: number) {
+    try {
+      const result = await product.findUnique({
+        where: {
+          id,
+        },
+        include:{
+          set_category: true,
+          category: true,
+          sub_category: true,
+          cart_product: true
+        }
+      })
+      return result;
     } catch (error) {
       console.error(error);
     }

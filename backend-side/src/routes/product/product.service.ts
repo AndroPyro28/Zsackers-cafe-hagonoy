@@ -34,6 +34,11 @@ export class ProductService {
         return products;
     }
 
+    async getProductById(id: number) {
+        const product = await this.productModel.getProductById(id);
+        return product;
+    }
+
     async archiveProductById(id: number) {
       const archivedProduct = await this.productModel.archiveProductById(id)
       return archivedProduct

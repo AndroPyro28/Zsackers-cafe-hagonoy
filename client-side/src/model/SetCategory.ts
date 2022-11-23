@@ -2,7 +2,8 @@ export interface SetCategory {
     id: number;
     name: string;
     updatedAt: string | Date
-    createdAt:string
+    createdAt:string;
+    premium: boolean
 }
 
 export interface createSetCategory {

@@ -13,7 +13,7 @@ interface Props {
   setterSetcategoryId: React.Dispatch<React.SetStateAction<number>>
 }
 
-function Filter({ setterCategoryId, categoryId, subcategoryId, setterSubcategoryId, searchName, setSearchName }: Props) {
+function Filter({ setterCategoryId, categoryId, subcategoryId, setcategoryId, setterSubcategoryId, searchName, setSearchName }: Props) {
 
   const { data: categories, error } = useGetAllCategoryQuery('')
 
@@ -54,25 +54,30 @@ function Filter({ setterCategoryId, categoryId, subcategoryId, setterSubcategory
 
       <Filters>
         <div className='filter__container'>
-          <div className='filter'>
-            <label htmlFor="">Select</label>
-            <select name="" id="" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setterSubcategoryId(Number(e.target.value))}>
-              <option>Subcategory</option>
-              {fetchSubCategories}
-            </select>
-          </div>
+          {
+            Boolean(categoryId) && <div className='filter'>
+              <label htmlFor="">Select</label>
+              <select name="" id="" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setterSubcategoryId(Number(e.target.value))}>
+                <option>Subcategory</option>
+                {fetchSubCategories}
+              </select>
+            </div>
+          }
 
-          <div className='filter'>
-            <label htmlFor="">Select</label>
-            <select name="" id="">
-              <option>Setcategory</option>
-              {fetchSetCategories}
-            </select>
-          </div>
+          {
+            Boolean(subcategoryId) && <div className='filter'>
+              <label htmlFor="">Select</label>
+              <select name="" id="">
+                <option>Setcategory</option>
+                {fetchSetCategories}
+              </select>
+            </div>
+          }
+
         </div>
         <div className='filter__container'>
           <div className='filter'>
-            <label htmlFor="" style={{color: searchName.length > 0 ? 'black' : 'gray'}}> <i className="fa-solid fa-magnifying-glass" ></i> </label> 
+            <label htmlFor="" style={{ color: searchName.length > 0 ? 'black' : 'gray' }}> <i className="fa-solid fa-magnifying-glass" ></i> </label>
             <input type="text" placeholder='Search by name...' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} value={searchName} />
           </div>
         </div>

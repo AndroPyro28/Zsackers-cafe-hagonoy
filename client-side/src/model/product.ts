@@ -30,6 +30,7 @@ export interface Product {
     sub_category: Subcategory;
     set_category: SetCategory;
     archive: boolean;
+    cart_product: any[]
 }
 
 export interface UpdateProduct {
@@ -50,4 +51,8 @@ export interface Search {
     categoryId: number;
     setcategoryId: number;
     subcategoryId:number;
+}
+
+export interface getBySubcategory {
+    subcategoryId: number;
 }

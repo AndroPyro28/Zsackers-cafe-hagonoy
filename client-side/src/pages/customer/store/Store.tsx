@@ -4,6 +4,7 @@ import Filter from '../../../components/store/Filter'
 import { useGetAllProductQuery } from '../../../services';
 import { StoreContainer, StoreGlobalStyles, ProductList } from './components'
 import Product from '../../../components/store/Product';
+import ProductDetails from '../../../components/modals/customer/product-detail/ProductDetails';
 
 function Store() {
 
@@ -20,6 +21,7 @@ function Store() {
     searchName,
   })
 
+  const [productId, setProductId] = useState<number>(0)
   
 
   useEffect(() => {
@@ -31,13 +33,16 @@ function Store() {
   if (isLoading) return <></>
 
   const fetchProducts = products?.map(product => (
-    <Product data={product} key={product.id} />
+    <Product data={product} key={product.id} setProductId={setProductId} />
   ))
 
   return (
     <StoreContainer>
       <Banner />
       <StoreGlobalStyles />
+      {
+        productId > 0 &&  <ProductDetails productId={productId}/>
+      }
       <Filter
         setterCategoryId={setterCategoryId}
         setSearchName={setSearchName}

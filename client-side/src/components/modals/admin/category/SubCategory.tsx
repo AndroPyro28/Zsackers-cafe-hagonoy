@@ -41,21 +41,27 @@ function SubCategory({ data }: Props) {
               <ErrorMessage name="subcategory" component={'div'} className="error__message" />
             </FieldInputContainer> : <td>{data.name} </td>
           }
-
           {
             !allowUpdate && <td>{date} at {time}</td>
           }
           <td>
             {
-              !allowUpdate ? <span onClick={() => setAllowUpdate(true)}><i className="fa-solid fa-file-pen"></i></span> : <button type='submit'>
-                <i className="fa-solid fa-file-pen"></i>
+              !allowUpdate ? <span onClick={() => setAllowUpdate(true)}>
+                <i className="fa-solid fa-file-pen"></i></span> :
+                 <button type='submit'> <i className="fa-solid fa-file-pen"></i>
               </button>
             }
+
             <span onClick={() => deleteSubCategory(data.id)}>
               <i className="fa-solid fa-eraser"></i>
             </span>
           </td>
-          <td><span className="subcategories__button" onClick={() => setShowSetCategory(prev => !prev)}><i className={showSetCategory ? "fa-solid fa-chevron-down" : "fa-sharp fa-solid fa-chevron-up"}></i></span></td>
+
+          <td><span className="subcategories__button" 
+          onClick={() => setShowSetCategory(prev => !prev)}>
+            <i className={showSetCategory ? "fa-solid fa-chevron-down" : 
+            "fa-sharp fa-solid fa-chevron-up"}></i>
+            </span></td>
         </SubCategoryData>
       </Formik>
       {
@@ -81,13 +87,14 @@ function SubCategory({ data }: Props) {
                         <Field name="setcategory" type="text" placeholder="Name (e.g strawberry, chocolate, etc)" />
                         <ErrorMessage name="setcategory" className='error__message' component={'div'} />
                       </div>
-
+                      <div className='input-field left'>
+                        <label htmlFor=""><Field name="premium" type="checkbox" /> premium  </label>
+                     </div>
                       <button style={{ width: '200px' }}>Create setcategory</button>
                     </CategoryInputField>
                   </LeftForm>
                 }
               }
-
             </Formik>
           </CreateSubCategoryContainer>
         </>

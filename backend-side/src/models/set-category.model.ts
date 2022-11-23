@@ -1,14 +1,15 @@
 import { Injectable } from "@nestjs/common";
-import { createSetCategoryDto } from "src/routes/setcategory/dto";
+import { CreateSetCategoryDto, UpdateSetCategoryDto } from "src/routes/setcategory/dto";
 import { set_Category } from "./root.model";
 @Injectable()
 
 export class SetCategory {
-    async createSetCategory(body:createSetCategoryDto) {
+    async createSetCategory(body:CreateSetCategoryDto) {
         try {
             const newSetCategory = await set_Category.create({
                 data: {
                     name: body.setcategory,
+                    premium: Boolean(body.premium),
                     subcategoryId: body.subcategoryId
                 }
             })
@@ -27,14 +28,15 @@ export class SetCategory {
         }
     }
 
-    async updateSetcategory(id: number, setcategory: string) {
+    async updateSetcategory(id: number, body: UpdateSetCategoryDto) {
         try {
             const updatedSetCategory = await set_Category.update({
                 where: {
                     id
                 },
                 data: {
-                    name: setcategory
+                    name: body.setcategory,
+                    premium: Boolean(body.premium),
                 }
             })
             return updatedSetCategory;

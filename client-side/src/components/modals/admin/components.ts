@@ -60,6 +60,12 @@ export const FormFieldContainer = styled.div`
 `
 export const FieldInputContainer = styled.div`
     flex: 2;
+    
+
+    &.setcategory {
+        display: flex;
+        justify-content: space-evenly;
+    }
     & > input, select, textarea{
         width: 100%;
         padding: 5px 10px;

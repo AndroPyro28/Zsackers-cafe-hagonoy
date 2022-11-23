@@ -1,6 +1,6 @@
 import { Controller, HttpCode, Post, HttpStatus, Body, Patch, Param, ParseIntPipe, Delete } from '@nestjs/common';
 import { Roles } from 'src/common/decorators';
-import { createSetCategoryDto } from './dto';
+import { CreateSetCategoryDto, UpdateSetCategoryDto } from './dto';
 import { SetCategoryService } from './setcategory.service';
 
 @Controller('setcategory')
@@ -14,7 +14,7 @@ export class SetCategoryController {
     @Post()
     @Roles(['ADMIN'])
     @HttpCode(HttpStatus.CREATED)
-    async createFlavorCategory(@Body() body: createSetCategoryDto) {
+    async createFlavorCategory(@Body() body: CreateSetCategoryDto) {
         return this.setCategoryService.createSetCategory(body)
     }
 
@@ -28,9 +28,9 @@ export class SetCategoryController {
     @Roles(['ADMIN'])
     async updateSetcategory(
         @Param('id', ParseIntPipe) id: number,
-        @Body('setcategory') setcategory: string
+        @Body() body: UpdateSetCategoryDto
     ) {
-         return this.setCategoryService.updateSetcategory(id, setcategory)
+         return this.setCategoryService.updateSetcategory(id, body)
     }
 
     @Delete(':id')

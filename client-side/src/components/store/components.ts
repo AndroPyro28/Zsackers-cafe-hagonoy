@@ -80,6 +80,9 @@ export const Filters = styled.section`
         outline: none;
         padding: 0px 5px;
       }
+      & > select {
+        text-align: center;
+      }
     }
   }
 `;

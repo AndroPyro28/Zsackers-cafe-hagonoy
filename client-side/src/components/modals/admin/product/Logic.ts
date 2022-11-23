@@ -63,8 +63,8 @@ function Logic() {
     .required('Category is required field'),
     subcategoryId: yup.number()
     .required('Subcategory is required field'),
-    setcategoryId: yup.number()
-    .required('Setcategory is required field'),
+    setcategoryId: yup.number(),
+    // .required('Setcategory is required field'),
     details: yup.string()
     .typeError('details is required field')
     // required('Product details is required field').

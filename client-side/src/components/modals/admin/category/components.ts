@@ -199,6 +199,7 @@ export const LeftForm = styled(Form)`
 
 export const CategoryInputField = styled.div`
 display: flex;
+align-items: center;
 gap:20px;
 
 & > .input-field {
@@ -212,8 +213,12 @@ gap:20px;
         }
     }
     &.left {
+        & > label {
+            font-size: 0.8em;
+        }
         & > input {
-            width: 210px;
+            width: 200px;
+
         }
     }
     & > input {

@@ -51,8 +51,8 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
     .required('Category is required field'),
     subcategoryId: yup.number().typeError('Subcategory is required field')
     .required('Subcategory is required field'),
-    setcategoryId: yup.number().typeError('Setcategory is required field')
-    .required('Setcategory is required field'),
+    setcategoryId: yup.number().typeError('Setcategory is required field'),
+    // .required('Setcategory is required field'),
     details: yup.string()
     .typeError('details is required field').
     // required('Product name is required field').

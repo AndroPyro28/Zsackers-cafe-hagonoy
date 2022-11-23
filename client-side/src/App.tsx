@@ -1,6 +1,6 @@
 import './App.css';
 import {AppMain, GlobalStyles} from "./appComponents"
-import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import {createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom"
 import PublicRoutes from './routes/PublicRoutes';
 import Index from './pages/public/index/Index';
 import About from './pages/public/about/About';
@@ -15,13 +15,13 @@ import Pos from './pages/staff/pos/Pos';
 function App() {
 
   const router = createBrowserRouter([
-    {
+    { // public
       element: <PublicRoutes />,
       path:"/",
       children: [
         {
+          index: true,
           element: <Index />,
-          path: ''
         },
         {
           element: <About />,
@@ -36,27 +36,42 @@ function App() {
           path:'signup'
         }
       ]
-    }, {
+    },
+    { // admin 
       element: <AdminRoutes />,
       path: '/admin',
       children: [
         {
-          element: <Inventory />,
-          path: 'inventory'
+          path: 'inventory',
+          children: [
+            {
+              element: <Inventory />,
+              index: true
+            }
+          ]
         }
       ]
     },
-    {
+    { // customer
       element: <CustomerRoutes />,
       path: '/customer',
       children: [
         {
-          element: <Store />,
-          path: 'store'
+          path: 'store',
+          children: [
+            {
+              element: <Store />,
+              index: true,
+            }, 
+            // {
+            //   path:":id",
+            //   element:<ProductDetails />
+            // },
+          ]
         }
       ]
     },
-    {
+    { // staff
       element: <StaffRoutes />,
       path: '/staff',
       children: [
@@ -68,7 +83,6 @@ function App() {
     },
   ])
   
-
   return (
     <AppMain>
       <GlobalStyles />

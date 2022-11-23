@@ -16,20 +16,27 @@ function SetCategory({ data }: Props) {
   const { updateSetCategory, validationSchema, deleteSetCategory } = SetCategoryLogic({ setAllowUpdate })
   const initialValueUpdateSetCategory = {
     id: data.id,
-    setcategory: data.name
+    setcategory: data.name,
+    premium: data.premium
   }
   return (
     <Formik
       initialValues={initialValueUpdateSetCategory}
       validationSchema={validationSchema}
       onSubmit={updateSetCategory}
-    >
-      <SetCategoryContainer>
+    >{
+      (formik) => {
+        return <SetCategoryContainer>
         {
-          allowUpdate ? <FieldInputContainer>
+          allowUpdate ? <FieldInputContainer className='setcategory'>
             <Field type="text" name="setcategory" placeholder="setcategory name" />
             <ErrorMessage name="setcategory" component={'div'} className="error__message" />
           </FieldInputContainer> : <td>{data.name} </td>
+        }
+        {
+          allowUpdate &&  <FieldInputContainer className='setcategory'>
+            <label htmlFor=""><Field type="checkbox" name="premium" checked={formik.values.premium === true} /> premium </label>
+          </FieldInputContainer>
         }
         {
           !allowUpdate && <td>{date} at {time}</td>
@@ -45,6 +52,9 @@ function SetCategory({ data }: Props) {
           </span>
         </td>
       </SetCategoryContainer>
+      }
+    }
+      
     </Formik>
 
   )

@@ -146,7 +146,7 @@ function Product({ data, categories }: Props) {
                     </ItemRowInfo>
 
                     <ItemRowInfo>
-                      <label htmlFor="subcategoryId">Setcategory</label>
+                      <label htmlFor="subcategoryId">Subcategory</label>
                       <Field as={'select'} name="subcategoryId" id="subcategoryId" disabled={disableUpdate} >
                         <option value="">Select Subcategory</option>
                         {fetchSubCategories}

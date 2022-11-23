@@ -47,6 +47,13 @@ export class ProductController {
     });
   }
 
+  @Get(':id')
+  @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
+  @HttpCode(HttpStatus.OK)
+  async getProductById(@Param('id', ParseIntPipe) id: number){
+    return this.productService.getProductById(id);
+  }
+
   @Put(':id')
   @Roles(['ADMIN'])
   @HttpCode(HttpStatus.OK)

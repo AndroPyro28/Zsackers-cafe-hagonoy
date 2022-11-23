@@ -63,7 +63,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productPrice">`Price (₱)` </label>
+                                <label htmlFor="productPrice">`Price` <sup>(₱)</sup> </label>
                                 <FieldInputContainer>
                                     <Field name="productPrice" id="productPrice" type="number" placeholder="₱ 00.00" />
                                     <ErrorMessage name="productPrice" component={'div'} className="error__message" />
@@ -71,7 +71,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productStock">`Stock (QTY)` </label>
+                                <label htmlFor="productStock">`Stock <sup>(QTY)</sup>` </label>
                                 <FieldInputContainer>
                                     <Field name="productStock" id="productStock" type="number" placeholder="Current Stock" />
                                     <ErrorMessage name="productStock" component={'div'} className="error__message" />
@@ -109,7 +109,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="setcategoryId">`SetCategory`</label>
+                                <label htmlFor="setcategoryId">`Setcategory <sup>(optional)</sup>`</label>
                                 <FieldInputContainer>
                                     <Field name="setcategoryId" id="setcategoryId" as="select" placeholder="Setcategory">
                                         <option value="">Select setcategory</option>
@@ -124,7 +124,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="details">`Details (optional)` </label>
+                                <label htmlFor="details">`Details <sup>(optional)</sup> ` </label>
                                 <FieldInputContainer>
                                     <Field name="details" id="details" as="textarea" placeholder="Details..." />
                                     <ErrorMessage name="details" component={'div'} className="error__message" />
@@ -133,7 +133,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
 
 
                             <FormFieldContainer>
-                                <label htmlFor="image">`Image (optional)`</label>
+                                <label htmlFor="image">`Image <sup>(optional)</sup> `</label>
                                 <FieldInputContainer>
                                     <input name="image" type="file" id="image" onChange={onUploadChange} />
                                     <ErrorMessage name="image" component={'div'} className="error__message" />
