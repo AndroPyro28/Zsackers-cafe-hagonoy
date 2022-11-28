@@ -55,7 +55,7 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
     .required('Subcategory is required field'),
     setcategoryId:  yup.number().typeError('Subcategory is required field')
     .required('Subcategory is required field'),
-    productId: yup.number(),
+    // productId: yup.number(),
     details: yup.string()
     .typeError('details is required field').
     // required('Product name is required field').
@@ -79,7 +79,7 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
             stock: Number(values.stock),
             quantity: Number(values.quantity),
             categoryId: Number(values.categoryId),
-            productId: Boolean(values.productId) ? Number(values.productId) : null,
+            // productId: Boolean(values.productId) ? Number(values.productId) : null,
             subcategoryId: Number(values.subcategoryId),
             setcategoryId: Number(values.setcategoryId),
             details: values.details,

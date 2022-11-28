@@ -49,7 +49,7 @@ function Product({ data, categories }: Props) {
     categoryId: data.categoryId,
     subcategoryId: data.subcategoryId,
     setcategoryId: data.setcategoryId,
-    productId: data.productId || 0,
+    // productId: data.productId || 0,
   }
 
   const { data: products, refetch: refetechProduct } = useGetAllProductQuery({
@@ -208,14 +208,15 @@ function Product({ data, categories }: Props) {
                     </ItemRowInfo>
 
 
-                    <ItemRowInfo>
+                    {/* <ItemRowInfo>
                       <label htmlFor="productId">Belongs to</label>
                       <Field as={'select'} name={'productId'} id="productId" disabled={disableUpdate} >
                         <option value="">Select Product</option>
                         {fetchSelectProductList}
                       </Field>
                       <ErrorMessage name="productId" component={'div'} className="error__message" />
-                    </ItemRowInfo>
+                    </ItemRowInfo> */}
+
                   </ItemRowInfoContainer>
 
                   <ItemRowInfoContainer>

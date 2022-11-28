@@ -12,7 +12,7 @@ export interface CreateProduct {
     categoryId: string,
     subcategoryId: string;
     setcategoryId:string;
-    productId: number | string | null
+    // productId: number | string | null
 }
 
 export interface Product {
@@ -29,7 +29,7 @@ export interface Product {
     categoryId: number;
     subcategoryId: number;
     setcategoryId:number;
-    productId: number | string | null
+    // productId: number | string | null
     category: Category;
     sub_category: Subcategory;
     set_category: SetCategory;
@@ -50,7 +50,7 @@ export interface UpdateProduct {
     categoryId: number,
     subcategoryId: number,
     setcategoryId:number;
-    productId: number | string | null
+    // productId: number | string | null
 }
 
 export interface Search {

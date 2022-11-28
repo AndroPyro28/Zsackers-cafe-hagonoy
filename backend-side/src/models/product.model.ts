@@ -53,7 +53,6 @@ export class Product {
           archive: false,
         },
         include: {
-          products: true,
           category: true,
           sub_category: true,
         },
@@ -74,14 +73,6 @@ export class Product {
           id,
         },
         include:{
-          products: {
-            where: {
-              archive: false
-            },
-            include: {
-              sub_category: true
-            }
-          },
           category: true,
           sub_category: true,
         }

@@ -114,32 +114,47 @@ model Set_Category {
   subcategory   Sub_Category @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
   subcategoryId Int
   Product       Product[]
+
   @@map("set_category")
 }
 
 model Product {
-  id             Int                   @id @default(autoincrement())
-  productName    String
-  price          Int
-  quantity       Int                   @default(1)
-  details        String?               @db.LongText
-  createdAt      DateTime              @default(now())
-  updatedAt      DateTime              @updatedAt
-  cart_product   Cart_Product[]
-  stock          Int                   @default(0)
-  image_url      String?
-  image_id       String?
-  category       Category?             @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  categoryId     Int?
-  sub_category   Sub_Category?         @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
-  subcategoryId  Int?
-  archive        Boolean               @default(false)
-  Product_Flavor Cart_Product_Flavor[]
-  productId      Int?
-  Product        Product?              @relation("products", fields: [productId], references: [id], onDelete: SetNull)
-  products       Product[]             @relation("products")
-  Set_Category   Set_Category?         @relation(fields: [setcategoryId], references: [id])
-  setcategoryId Int?
+  id              Int                   @id @default(autoincrement())
+  productName     String
+  price           Int
+  quantity        Int                   @default(1)
+  details         String?               @db.LongText
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  cart_product    Cart_Product[]
+  stock           Int                   @default(0)
+  image_url       String?
+  image_id        String?
+  category        Category?             @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId      Int?
+  sub_category    Sub_Category?         @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+  subcategoryId   Int?
+  archive         Boolean               @default(false)
+  Product_Flavor  Cart_Product_Flavor[]
+  productId       Int?
+  // Product        Product?              @relation("products", fields: [productId], references: [id], onDelete: SetNull)
+  // products       Product[]             @relation("products")
+  set_category    Set_Category?         @relation(fields: [setcategoryId], references: [id])
+  setcategoryId   Int?
+  product_bundle  bundle[]              @relation("product_bundle")
+  product_variant bundle[]              @relation("product_variant")
 
   @@map("products")
+}
+
+model bundle {
+  id                 Int      @id @default(autoincrement())
+  product_bundle     Product? @relation("product_bundle", fields: [product_bundle_id], references: [id])
+  product_bundle_id  Int
+  product_variant    Product? @relation("product_variant", fields: [product_variant_id], references: [id])
+  product_variant_id Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("bundles")
 }

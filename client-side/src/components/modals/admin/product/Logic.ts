@@ -12,7 +12,7 @@ function Logic() {
         fileReader.onloadend = async () => {
           const res: any = await createProduct({
             ...values,
-            productId: Boolean(values.productId) ? values.productId : null,
+            // productId: Boolean(values.productId) ? values.productId : null,
             image: fileReader.result,
           });
 
@@ -31,7 +31,7 @@ function Logic() {
       } else {
         const res: any = await createProduct({
           ...values,
-          productId: Boolean(values.productId) ? values.productId : null,
+          // productId: Boolean(values.productId) ? values.productId : null,
           image: null,
         });
 
@@ -63,7 +63,7 @@ function Logic() {
     categoryId: "",
     subcategoryId: "",
     setcategoryId: "",
-    productId: 0,
+    // productId: 0,
   };
 
   const SUPPORTED_FORMATS = [
@@ -94,7 +94,7 @@ function Logic() {
     categoryId: yup.number().required("Category is required field"),
     subcategoryId: yup.number().required("Subcategory is required field"),
     setcategoryId: yup.number().required("Setcategory is required field"),
-    productId: yup.number(),
+    // productId: yup.number(),
     details: yup
       .string()
       .typeError("details is required field")
