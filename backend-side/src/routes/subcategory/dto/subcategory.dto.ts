@@ -1,10 +1,12 @@
-import { IsNotEmpty, IsNumber, IsNumberString, Min, MinLength } from "class-validator";
+import { IsBoolean, IsNotEmpty, IsNumber, IsNumberString, IsOptional, Min, MinLength } from "class-validator";
 
 export class CreateSubcategoryDto {
     @IsNotEmpty()
     @MinLength(3, {message: 'subcategory must be atleast 3 characters'})
     subcategory: string;
-
+    // @IsOptional()
+    // @IsBoolean()
+    // premium: boolean;
     @IsNotEmpty()
     @IsNumber()
     categoryId: number
@@ -15,7 +17,7 @@ export class UpdateSubCategoryDto {
     @MinLength(3, {message: 'subcategory must be atleast 3 characters'})
     subcategory: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    id: number
+    // @IsOptional()
+    // @IsBoolean()
+    // premium: boolean;
 }

@@ -1,7 +1,9 @@
 import { ErrorMessage, Field, Formik } from 'formik'
 import { useState } from 'react'
+import findCategory from '../../helpers/findCategory'
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { Category, Product as ProductInterface } from '../../model'
+import { useGetAllProductQuery } from '../../services'
 import { TableRow } from '../table/components'
 import { ActionButtons, ItemRowInfo, ItemRowInfoContainer, LeftProductContent, ProductBottomSide, ProductContainer, RightProductContent } from './components'
 import Logic from './Logic'
@@ -11,11 +13,14 @@ interface Props {
 }
 function Product({ data, categories }: Props) {
   const [toggle, setToggle] = useState(false)
-  const { productName, price, category, sub_category, stock, image_url, id, categoryId, setcategoryId, subcategoryId } = data;
+  const { productName, price, category, sub_category, stock, image_url, id, categoryId: category_id, subcategoryId: subcategory_id, quantity, setcategoryId: setcategory_id } = data;
   const [imageFile, setImageFile] = useState<any>(null);
   const [imageUrl, setImageUrl] = useState<any>(null);
   const [disableUpdate, setDisableUpdate] = useState(true)
   const { handleDelete, onSubmit, validationSchema } = Logic({ imageUrl, setDisableUpdate, imageFile })
+  const [categoryId, setterCategoryId] = useState(category_id)
+  const [subcategoryId, setterSubcategoryId] = useState(subcategory_id)
+  const [setcategoryId, setterSetcategoryId] = useState(setcategory_id)
 
   const getBase64FromUrl = async (url: string) => {
     const data = await fetch(url);
@@ -31,18 +36,35 @@ function Product({ data, categories }: Props) {
   };
 
   getBase64FromUrl(data.image_url)
+
   const initialValues = {
     id,
     productName,
     price,
     stock,
+    quantity,
     details: data.details || '',
     image_url: imageFile,
     image_id: data.image_id,
     categoryId: data.categoryId,
     subcategoryId: data.subcategoryId,
     setcategoryId: data.setcategoryId,
+    productId: data.productId || 0,
   }
+
+  const { data: products, refetch: refetechProduct } = useGetAllProductQuery({
+    searchName: '',
+    categoryId,
+    subcategoryId: 0,
+    setcategoryId: 0
+  }, {
+    refetchOnFocus: true,
+    refetchOnReconnect: true
+  });
+
+  const fetchSelectProductList = products?.map(product => (
+    <option value={product.id}>{product.productName}</option>
+  ))
 
   return (
     <ProductContainer>
@@ -77,6 +99,7 @@ function Product({ data, categories }: Props) {
                   setImageUrl(fileReader.result)
                 }
               };
+
               const findCategory = () => {
                 return categories?.find(value => value.id === Number(formik.values.categoryId))
               }
@@ -96,11 +119,28 @@ function Product({ data, categories }: Props) {
               const fetchSetCategories = findSubcategory()?.set_category.map((setcategory) => (
                 <option value={setcategory?.id} key={setcategory?.id}>{setcategory?.name}</option>
               ))
+
+              if (!isNaN(Number(formik.values.categoryId))) {
+                setterCategoryId(Number(formik.values.categoryId))
+              } else {
+                setterCategoryId(0)
+              }
+
+              if (!isNaN(Number(formik.values.subcategoryId))) {
+                setterSubcategoryId(Number(formik.values.subcategoryId))
+              } else {
+                setterSubcategoryId(0)
+              }
+
+              if (!isNaN(Number(formik.values.setcategoryId))) {
+                setterSetcategoryId(Number(formik.values.setcategoryId))
+              } else {
+                setterSetcategoryId(0)
+              }
               return <ProductBottomSide>
                 <LeftProductContent disableUpdate={disableUpdate}>
                   <label htmlFor='image_url'>
                     {
-
                       imageUrl?.length > 0 ? <img src={imageUrl} /> : <>no photos</>
                     }
                   </label>
@@ -109,9 +149,9 @@ function Product({ data, categories }: Props) {
                   <ActionButtons>
                     {
                       disableUpdate ? <input type="button" value={'Edit'} onClick={() => setDisableUpdate(false)} /> :
-                        <button>Save</button>
+                        <button type='submit' value={'Save'}>Save</button>
                     }
-                    <button onClick={() => handleDelete(id)}>Delete</button>
+                    <input type="button" value={'Delete'} onClick={() => handleDelete(id)} />
                   </ActionButtons>
                 </LeftProductContent>
 
@@ -124,15 +164,19 @@ function Product({ data, categories }: Props) {
                     </ItemRowInfo>
                     <ItemRowInfo>
                       <label htmlFor="price">Price</label>
-                      <Field name="price"  placeholder="Product price" id="price" type="number" disabled={disableUpdate} />
+                      <Field name="price" placeholder="Product price" id="price" type="number" disabled={disableUpdate} />
                       <ErrorMessage name="price" component={'div'} className="error__message" />
                     </ItemRowInfo>
                     <ItemRowInfo>
                       <label htmlFor="stock">Stock</label>
-                      <Field name="stock" id="stock"  placeholder="Product stock" type="number" disabled={disableUpdate} />
+                      <Field name="stock" id="stock" placeholder="Product stock" type="number" disabled={disableUpdate} />
                       <ErrorMessage name="stock" component={'div'} className="error__message" />
                     </ItemRowInfo>
-
+                    <ItemRowInfo>
+                      <label htmlFor="quantity">Quantity</label>
+                      <Field name="quantity" id="quantity" placeholder="Serving quantity" type="number" disabled={disableUpdate} />
+                      <ErrorMessage name="quantity" component={'div'} className="error__message" />
+                    </ItemRowInfo>
                   </ItemRowInfoContainer>
                   <ItemRowInfoContainer>
 
@@ -156,15 +200,28 @@ function Product({ data, categories }: Props) {
 
                     <ItemRowInfo>
                       <label htmlFor="setcategoryId">Setcategory</label>
-                      <Field as={'select'} name={'setcategoryId'} id="setcategoryId" disabled={disableUpdate} >
+                      <Field as={'select'} name="setcategoryId" id="setcategoryId" disabled={disableUpdate} >
                         <option value="">Select Setcategory</option>
                         {fetchSetCategories}
                       </Field>
                       <ErrorMessage name="setcategoryId" component={'div'} className="error__message" />
                     </ItemRowInfo>
+
+
+                    <ItemRowInfo>
+                      <label htmlFor="productId">Belongs to</label>
+                      <Field as={'select'} name={'productId'} id="productId" disabled={disableUpdate} >
+                        <option value="">Select Product</option>
+                        {fetchSelectProductList}
+                      </Field>
+                      <ErrorMessage name="productId" component={'div'} className="error__message" />
+                    </ItemRowInfo>
                   </ItemRowInfoContainer>
 
                   <ItemRowInfoContainer>
+
+
+
                     <ItemRowInfo>
                       <label htmlFor="details">details</label>
                       <Field as={'textarea'} placeholder="Product details" name={'details'} id="details" disabled={disableUpdate} >

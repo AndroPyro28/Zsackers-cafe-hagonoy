@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateCategoryDto } from "src/routes/category/dto";
 import { category } from "./root.model";
+
 @Injectable()
 
 export class Category {
@@ -33,7 +34,7 @@ export class Category {
                         },
                         orderBy: [{
                             createdAt: 'desc'
-                        }]
+                        }],
                     },
                 },
                 orderBy: [{

@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { CreateSubcategoryDto } from "src/routes/subcategory/dto";
+import { CreateSubcategoryDto, UpdateSubCategoryDto } from "src/routes/subcategory/dto";
 import { sub_Category } from "./root.model";
 @Injectable()
 
@@ -10,7 +10,6 @@ export class Subcategory {
             const newSubcategory = await sub_Category.create({
                 data: {
                     name: body.subcategory,
-                    // price: body.price,
                     categoryId: body.categoryId
                 }
             })
@@ -29,14 +28,14 @@ export class Subcategory {
         }
     }
 
-    async updateSubcategories(id: number, subcategory: string) {
+    async updateSubcategories(id: number, body: UpdateSubCategoryDto) {
         try {
             const updatedSubCategory = await sub_Category.update({
                 where: {
                     id
                 },
                 data: {
-                    name: subcategory
+                    name: body.subcategory,
                 }
             })
             return updatedSubCategory;

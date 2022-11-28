@@ -9,25 +9,24 @@ import ProductDetails from '../../../components/modals/customer/product-detail/P
 function Store() {
 
   const [categoryId, setterCategoryId] = useState(0);
-  const [setcategoryId, setterSetcategoryId] = useState(0);
   const [subcategoryId, setterSubcategoryId] = useState(0);
+  const [setcategoryId, setterSetcategoryId] = useState(0);
   const [searchName, setSearchName] = useState('')
 
 
   const { data: products, error, isLoading } = useGetAllProductQuery({
     categoryId,
-    setcategoryId,
     subcategoryId,
     searchName,
+    setcategoryId
   })
 
   const [productId, setProductId] = useState<number>(0)
   
 
   useEffect(() => {
-    setterSetcategoryId(0)
     setterSubcategoryId(0)
-    // setSearchName('')
+    setterSetcategoryId(0)
   }, [categoryId])
 
   if (isLoading) return <></>
@@ -43,15 +42,16 @@ function Store() {
       {
         productId > 0 &&  <ProductDetails productId={productId}/>
       }
+
       <Filter
         setterCategoryId={setterCategoryId}
         setSearchName={setSearchName}
         searchName={searchName}
-        setterSetcategoryId={setterSetcategoryId}
         setterSubcategoryId={setterSubcategoryId}
+        setterSetcategoryId={setterSetcategoryId}
         categoryId={categoryId}
-        setcategoryId={setcategoryId}
         subcategoryId={subcategoryId}
+        setcategoryId={setcategoryId}
       />
 
       <ProductList>

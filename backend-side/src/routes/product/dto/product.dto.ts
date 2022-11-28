@@ -5,10 +5,16 @@ export class CreateProductDto {
     productName:string;
 
     @IsNotEmpty()
+    @IsNumber()
     productPrice:number;
 
     @IsNotEmpty()
+    @IsNumber()
     productStock:number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    quantity: number;
 
     @IsNotEmpty()
     @IsNumberString()
@@ -18,15 +24,20 @@ export class CreateProductDto {
     @IsNumberString()
     subcategoryId: string;
 
-    @IsOptional()
-    @IsString()
-    details: string;
-
     @IsNotEmpty()
     @IsNumberString()
     setcategoryId: string;
 
-    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    details: string;
+
+    @IsNumberString()
+    @IsOptional()
+    productId: string;
+
+    @IsString()
+    @IsOptional()
     image: string;
 
     @IsOptional()
@@ -48,6 +59,11 @@ export class UpdateProduct {
     @IsNumber()
     stock: number;
 
+    @IsNotEmpty()
+    @IsNumber()
+    quantity: number;
+    
+
     @IsOptional()
     @IsString()
     details: string;
@@ -68,7 +84,11 @@ export class UpdateProduct {
     @IsNotEmpty()
     subcategoryId: number;
 
-    @IsNumber()
     @IsNotEmpty()
+    @IsNumber()
     setcategoryId: number;
+
+    @IsNumber()
+    @IsOptional()
+    productId: number;
 }

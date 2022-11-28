@@ -13,14 +13,18 @@ export class ProductService {
     constructor(private readonly cloudinary: Cloudinary, private readonly productModel: Product) {}
 
     async createProduct(body: CreateProductDto) {
-        
-        const {secure_url, public_id} = await this.cloudinary.cloudinaryUpload(body.image, 'zsackers_product_image')
-
-        const imageInfo = {
-            image_url: secure_url,
-            image_id: public_id
+        let imageInfo = {
+            image_url: '',
+            image_id: ''
         }
-
+        if(body?.image) {
+            const {secure_url, public_id} = await this.cloudinary.cloudinaryUpload(body.image, 'zsackers_product_image')
+            imageInfo = {
+                image_url: secure_url,
+                image_id: public_id
+            }
+        }
+       
         body = {...body, ...imageInfo};
         const newProduct = await this.productModel.createProduct(body);
 

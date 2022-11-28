@@ -1,33 +1,51 @@
 import React from 'react'
+import findCategory from '../../helpers/findCategory'
+import findSubcategory from '../../helpers/findSubcategory'
 import { Category } from '../../model'
 import { ButtonContainer, FilterContainer, FilterItemsContainer } from '../../pages/admin/inventory/components'
 import Logic from './Logic'
-
 
 interface Props {
   setOpenCreateProductModal: React.Dispatch<React.SetStateAction<boolean>>
   setViewCategory: React.Dispatch<React.SetStateAction<boolean>>
   categoryId: number;
   subcategoryId: number;
-  setcategoryId: number;
   setterCategoryId: React.Dispatch<React.SetStateAction<number>>
   setterSubCategoryId: React.Dispatch<React.SetStateAction<number>>
-  setterSetCategoryId: React.Dispatch<React.SetStateAction<number>>
   categories: Category[]
+  setcategoryId: number;
+setterSetCategoryId: React.Dispatch<React.SetStateAction<number>>
 }
+
 function FilterItems({
   setOpenCreateProductModal,
   setViewCategory,
   categoryId,
-  subcategoryId,
-  setcategoryId,
   setterCategoryId,
+  subcategoryId,
   setterSubCategoryId,
+  setcategoryId,
   setterSetCategoryId,
   categories
 }: Props) {
   const { handleChange } = Logic({});
 
+  // const fetchCategories = categories?.map((category) => (
+  //   <option value={category.id} key={category.id}>{category.name}</option>
+  // ))
+
+  // const category = findCategory(categories, categoryId);
+  
+  // const fetchSubCategories = category?.sub_category?.map((subcategory) => (
+  //   <option value={subcategory?.id} key={subcategory?.id}>{subcategory?.name}</option>
+  // ))
+
+  // const subcategory = findSubcategory(category?.sub_category, subcategoryId)
+
+  // const fetchSetCategories = subcategory?.set_category?.map((setcategory) => (
+  //   <option value={setcategory?.id} key={setcategory?.id}>{setcategory?.name}</option>
+  // ))
+//////////////////////////////////////////////////
   const category = () => {
     return categories?.find(value => value.id === categoryId)
   }

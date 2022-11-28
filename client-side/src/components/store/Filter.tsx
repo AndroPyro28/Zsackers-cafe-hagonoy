@@ -7,13 +7,13 @@ interface Props {
   subcategoryId: number;
   setcategoryId: number;
   searchName: string;
+  setterSetcategoryId: React.Dispatch<React.SetStateAction<number>>
   setSearchName: React.Dispatch<React.SetStateAction<string>>
   setterCategoryId: React.Dispatch<React.SetStateAction<number>>
   setterSubcategoryId: React.Dispatch<React.SetStateAction<number>>
-  setterSetcategoryId: React.Dispatch<React.SetStateAction<number>>
 }
 
-function Filter({ setterCategoryId, categoryId, subcategoryId, setcategoryId, setterSubcategoryId, searchName, setSearchName }: Props) {
+function Filter({ setterCategoryId, categoryId, subcategoryId, setterSubcategoryId, searchName, setSearchName, setterSetcategoryId }: Props) {
 
   const { data: categories, error } = useGetAllCategoryQuery('')
 
@@ -39,6 +39,7 @@ function Filter({ setterCategoryId, categoryId, subcategoryId, setcategoryId, se
     <option value={setcategory.id} key={setcategory.id}>{setcategory.name}</option>
   ))
 
+
   return (
     <FilterContainer>
       <h1>I &nbsp; w a n t &nbsp; t o  &nbsp; e a t . . .</h1>
@@ -63,16 +64,16 @@ function Filter({ setterCategoryId, categoryId, subcategoryId, setcategoryId, se
               </select>
             </div>
           }
-
           {
             Boolean(subcategoryId) && <div className='filter'>
               <label htmlFor="">Select</label>
-              <select name="" id="">
+              <select name="" id="" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setterSetcategoryId(Number(e.target.value))}>
                 <option>Setcategory</option>
                 {fetchSetCategories}
               </select>
             </div>
           }
+
 
         </div>
         <div className='filter__container'>

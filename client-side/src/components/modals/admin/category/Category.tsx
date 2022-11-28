@@ -31,12 +31,14 @@ function Category({data}: {data: CategoryInterface}) {
       validationSchema={validationSchemaUpdateCategory}
       >
       <CategoryContainer>
-      {
+          {
             allowUpdate ? <FieldInputContainer>
             <Field type="text" name="category" placeholder="category name" />
             <ErrorMessage name="category" component={'div'} className="error__message" />
-          </FieldInputContainer> : <td>{data.name} </td>
+           </FieldInputContainer> : <td>{data.name} </td>
           }
+          
+
           {
             !allowUpdate && <td>{date} at {time}</td>
           }
@@ -78,9 +80,6 @@ function Category({data}: {data: CategoryInterface}) {
                   <Field name="subcategory" type="text" placeholder="Name (e.g 1 piece, bundle, etc)" />
                   <ErrorMessage name="subcategory"  className='error__message' component={'div'} />
                 </div>
-                    {/* <div className='input-field left'>
-                        <label htmlFor=""><Field name="premium" type="checkbox" /> premium  </label>
-                     </div> */}
                 <button style={{width:'200px'}}>Create Subcategory</button>
               </CategoryInputField>
             </LeftForm>

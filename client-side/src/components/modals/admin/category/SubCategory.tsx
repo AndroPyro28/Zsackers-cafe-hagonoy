@@ -24,7 +24,8 @@ function SubCategory({ data }: Props) {
 
   const initialValuesUpdateSubCategory = {
     id: data.id,
-    subcategory: data.name
+    subcategory: data.name,
+    premium: data.premium,
   }
 
   return (
@@ -41,6 +42,13 @@ function SubCategory({ data }: Props) {
               <ErrorMessage name="subcategory" component={'div'} className="error__message" />
             </FieldInputContainer> : <td>{data.name} </td>
           }
+
+          {
+          //   allowUpdate ? <FieldInputContainer>
+          //     <label htmlFor=""> <Field type="checkbox" name="premium" /> premium </label>
+          //  </FieldInputContainer> : <td>{Boolean(data.premium) ? <small>premium</small> : <small>regular</small>} </td>
+          }
+  
           {
             !allowUpdate && <td>{date} at {time}</td>
           }
@@ -51,23 +59,22 @@ function SubCategory({ data }: Props) {
                  <button type='submit'> <i className="fa-solid fa-file-pen"></i>
               </button>
             }
-
             <span onClick={() => deleteSubCategory(data.id)}>
               <i className="fa-solid fa-eraser"></i>
             </span>
           </td>
-
           <td><span className="subcategories__button" 
           onClick={() => setShowSetCategory(prev => !prev)}>
             <i className={showSetCategory ? "fa-solid fa-chevron-down" : 
             "fa-sharp fa-solid fa-chevron-up"}></i>
             </span></td>
+            
         </SubCategoryData>
       </Formik>
       {
         showSetCategory && <><SetCategoryListContainer>
           {
-            data?.set_category.map(setCategory => (
+            data?.set_category?.map(setCategory => (
               <SetCategory key={setCategory.id} data={setCategory} />
             ))
           }

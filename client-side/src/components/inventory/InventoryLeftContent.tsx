@@ -12,12 +12,12 @@ function InventoryLeftContent({ setSearchName }: { setSearchName: React.Dispatch
       <small>Name of an item</small>
 
       <SearchItemContainer>
+      <i className="fa-solid fa-magnifying-glass"></i>
         <input
           type="text"
           placeholder="Search by name..."
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)}
         />
-        <i className="fa-solid fa-magnifying-glass"></i>
       </SearchItemContainer>
 
       <ProductStatisticContainer>

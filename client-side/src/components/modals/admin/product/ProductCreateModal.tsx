@@ -1,9 +1,11 @@
 import { FieldInputContainer, FormFieldContainer, FormFormik, InventoryCreateModalBackdrop } from '../components'
 import { Formik, Field, ErrorMessage } from 'formik';
 import Logic from './Logic';
-import { useGetAllCategoryQuery } from '../../../../services';
+import { useGetAllCategoryQuery, useGetAllProductQuery } from '../../../../services';
 import { useEffect, useState } from 'react';
 import { IconContainer } from '../../../../appComponents';
+import findCategory from '../../../../helpers/findCategory';
+import findSubcategory from '../../../../helpers/findSubcategory';
 
 interface Props {
     setOpenCreateProductModal: React.Dispatch<React.SetStateAction<boolean>>
@@ -12,10 +14,24 @@ interface Props {
 function ProductCreateModal({ setOpenCreateProductModal }: Props) {
     const { onSubmit, initialValues, validationSchema } = Logic()
     const { data: categories } = useGetAllCategoryQuery('');
-    const [categoryId, setCategoryId] = useState<number>(0)
-    const [subcategoryId, setSubcategoryId] = useState<number>(0)
+    const [categoryId, setterCategoryId] = useState<number>(0)
+    const [subcategoryId, setterSubcategoryId] = useState<number>(0)
+    const [setcategoryId, setterSetcategoryId] = useState<number>(0)
     const category = categories?.find(value => value.id == categoryId)
     const subcategory = category?.sub_category.find(value => value.id == subcategoryId);
+    
+    const { data: products, isLoading, error, refetch: refetechProduct } = useGetAllProductQuery({
+        searchName: '',
+        categoryId,
+        subcategoryId: 0,
+        setcategoryId: 0
+      }, {
+        refetchOnFocus: true,
+        refetchOnReconnect: true
+      });
+      const fetchSelectProducts = products?.map(product => (
+        <option value={product.id} key={product.id}>{product.productName}</option>
+      ))
     return (
         <InventoryCreateModalBackdrop>
             <Formik
@@ -36,26 +52,31 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                         };
 
                         if (formik.values.categoryId.length > 0 && !isNaN(Number(formik.values.categoryId))) {
-                            setCategoryId(Number(formik.values.categoryId))
+                            setterCategoryId(Number(formik.values.categoryId))
                         } else {
-                            setCategoryId(0)
+                            setterCategoryId(0)
                         }
-
                         if (formik.values.subcategoryId.length > 0 && !isNaN(Number(formik.values.subcategoryId))) {
-                            setSubcategoryId(Number(formik.values.subcategoryId))
+                            setterSubcategoryId(Number(formik.values.subcategoryId))
                         } else {
-                            setSubcategoryId(0)
+                            setterSubcategoryId(0)
                         }
-                        
-                        return <FormFormik autoComplete='off'>
 
+                        if (formik.values.setcategoryId.length > 0 && !isNaN(Number(formik.values.setcategoryId))) {
+                            setterSetcategoryId(Number(formik.values.setcategoryId))
+                        } else {
+                            setterSetcategoryId(0)
+                        }
+
+
+                        return <FormFormik autoComplete='off'>
                             <h1>Add New Product</h1>
                             <IconContainer onClick={() => setOpenCreateProductModal(false)}>
                                 <i className="fa-solid fa-xmark"></i>
                             </IconContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productName">`Name`</label>
+                                <label htmlFor="productName">Name</label>
                                 <FieldInputContainer>
                                     <Field name="productName" id="productName" type="text" placeholder="Product Name" />
                                     <ErrorMessage name="productName" component={'div'} className="error__message" />
@@ -63,7 +84,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productPrice">`Price` <sup>(₱)</sup> </label>
+                                <label htmlFor="productPrice">Price <sup>(₱)</sup> </label>
                                 <FieldInputContainer>
                                     <Field name="productPrice" id="productPrice" type="number" placeholder="₱ 00.00" />
                                     <ErrorMessage name="productPrice" component={'div'} className="error__message" />
@@ -71,7 +92,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="productStock">`Stock <sup>(QTY)</sup>` </label>
+                                <label htmlFor="productStock">Stock </label>
                                 <FieldInputContainer>
                                     <Field name="productStock" id="productStock" type="number" placeholder="Current Stock" />
                                     <ErrorMessage name="productStock" component={'div'} className="error__message" />
@@ -79,7 +100,16 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="categoryId">`Category`</label>
+                                <label htmlFor="quantity">Quantity </label>
+                                <FieldInputContainer>
+                                    <Field name="quantity" id="quantity" type="number" placeholder="Serving quantity" />
+                                    <ErrorMessage name="quantity" component={'div'} className="error__message" />
+                                </FieldInputContainer>
+                            </FormFieldContainer>
+
+
+                            <FormFieldContainer>
+                                <label htmlFor="categoryId">Category</label>
                                 <FieldInputContainer>
                                     <Field name="categoryId" id="categoryId" as="select" placeholder="Current Stock">
                                         <option value="">Select Category</option>
@@ -94,7 +124,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="subcategoryId">`Subcategory`</label>
+                                <label htmlFor="subcategoryId">Subcategory</label>
                                 <FieldInputContainer>
                                     <Field name="subcategoryId" id="subcategoryId" as="select" placeholder="Current Stock">
                                         <option value="">Select subcategory</option>
@@ -109,22 +139,35 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                             </FormFieldContainer>
 
                             <FormFieldContainer>
-                                <label htmlFor="setcategoryId">`Setcategory <sup>(optional)</sup>`</label>
+                                <label htmlFor="setcategoryId">Setcategory</label>
                                 <FieldInputContainer>
-                                    <Field name="setcategoryId" id="setcategoryId" as="select" placeholder="Setcategory">
-                                        <option value="">Select setcategory</option>
+                                    <Field name="setcategoryId" id="setcategoryId" as="select" placeholder="Current Stock">
+                                        <option value="">Select Setcategory</option>
                                         {
-                                           subcategory && subcategory?.set_category?.map(setCategory => (
-                                                <option value={setCategory?.id}>{setCategory?.name}</option>
+                                            subcategory && subcategory?.set_category?.map(setcategory => (
+                                                <option value={setcategory.id}>{setcategory.name}</option>
                                             ))
                                         }
                                     </Field>
                                     <ErrorMessage name="setcategoryId" component={'div'} className="error__message" />
                                 </FieldInputContainer>
                             </FormFieldContainer>
+                            
 
                             <FormFieldContainer>
-                                <label htmlFor="details">`Details <sup>(optional)</sup> ` </label>
+                                <label htmlFor="productId">Belongs to</label>
+                                <FieldInputContainer>
+                                    <Field name="productId" id="productId" as="select" placeholder="Current Stock">
+                                        <option value="">Select product</option>
+                                        {Boolean(formik.values.categoryId) && fetchSelectProducts}
+                                    </Field>
+                                    <ErrorMessage name="productId" component={'div'} className="error__message" />
+                                </FieldInputContainer>
+                            </FormFieldContainer>
+
+
+                            <FormFieldContainer>
+                                <label htmlFor="details">Details <sup>(optional)</sup>  </label>
                                 <FieldInputContainer>
                                     <Field name="details" id="details" as="textarea" placeholder="Details..." />
                                     <ErrorMessage name="details" component={'div'} className="error__message" />
@@ -133,7 +176,7 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
 
 
                             <FormFieldContainer>
-                                <label htmlFor="image">`Image <sup>(optional)</sup> `</label>
+                                <label htmlFor="image">Image <sup>(optional)</sup> </label>
                                 <FieldInputContainer>
                                     <input name="image" type="file" id="image" onChange={onUploadChange} />
                                     <ErrorMessage name="image" component={'div'} className="error__message" />

@@ -60,8 +60,8 @@ export const FormFieldContainer = styled.div`
 `
 export const FieldInputContainer = styled.div`
     flex: 2;
-    
-
+    display: flex;
+    flex-direction: column;
     &.setcategory {
         display: flex;
         justify-content: space-evenly;
@@ -84,5 +84,10 @@ export const FieldInputContainer = styled.div`
         color: maroon;
         text-align: center;
         font-size: 0.9em;
+    }
+
+    & > label {
+        align-items: center;
+        text-transform: capitalize;
     }
 `

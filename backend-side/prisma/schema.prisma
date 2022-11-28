@@ -110,11 +110,10 @@ model Set_Category {
   name          String
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @updatedAt
-  premium       Boolean       @default(false)
+  premium       Boolean      @default(false)
   subcategory   Sub_Category @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
   subcategoryId Int
   Product       Product[]
-
   @@map("set_category")
 }
 
@@ -122,6 +121,7 @@ model Product {
   id             Int                   @id @default(autoincrement())
   productName    String
   price          Int
+  quantity       Int                   @default(1)
   details        String?               @db.LongText
   createdAt      DateTime              @default(now())
   updatedAt      DateTime              @updatedAt
@@ -133,10 +133,13 @@ model Product {
   categoryId     Int?
   sub_category   Sub_Category?         @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
   subcategoryId  Int?
-  set_category   Set_Category?         @relation(fields: [setcategoryId], references: [id], onDelete: SetNull)
-  setcategoryId  Int?
   archive        Boolean               @default(false)
   Product_Flavor Cart_Product_Flavor[]
+  productId      Int?
+  Product        Product?              @relation("products", fields: [productId], references: [id], onDelete: SetNull)
+  products       Product[]             @relation("products")
+  Set_Category   Set_Category?         @relation(fields: [setcategoryId], references: [id])
+  setcategoryId Int?
 
   @@map("products")
 }

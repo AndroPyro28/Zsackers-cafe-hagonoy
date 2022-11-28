@@ -34,10 +34,10 @@ function SetCategory({ data }: Props) {
           </FieldInputContainer> : <td>{data.name} </td>
         }
         {
-          allowUpdate &&  <FieldInputContainer className='setcategory'>
-            <label htmlFor=""><Field type="checkbox" name="premium" checked={formik.values.premium === true} /> premium </label>
-          </FieldInputContainer>
-        }
+            allowUpdate ? <FieldInputContainer>
+              <label htmlFor=""> <Field type="checkbox" name="premium" /> premium </label>
+           </FieldInputContainer> : <td>{Boolean(data.premium) ? <small>premium</small> : <small>regular</small>} </td>
+          }
         {
           !allowUpdate && <td>{date} at {time}</td>
         }

@@ -100,12 +100,13 @@ export const ProductFlavors = styled.div`
     width: 100%;
     flex-direction: column;
     align-items: center;
+
+    & > h2 {
+        margin: 30px;
+        color: gray;
+    }
 `
 export const Flavors = styled.div`
-    /* display: flex; */
-    /* align-items: center; */
-    /* height: 100%; */
-    /* flex-direction: column; */
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: 220px;

@@ -4,6 +4,7 @@ export interface SubCategory {
     id: number;
     name: string;
     price: bigint;
+    premium: boolean;
     createdAt: string;
     updatedAt: string;
 }

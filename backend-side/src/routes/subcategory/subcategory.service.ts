@@ -1,10 +1,9 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Subcategory } from 'src/models';
-import { CreateSubcategoryDto } from './dto';
+import { CreateSubcategoryDto, UpdateSubCategoryDto } from './dto';
 
 @Injectable()
 export class SubcategoryService {
-
     /**
      *
      */
@@ -23,8 +22,8 @@ export class SubcategoryService {
         return subcategories
     }
 
-    async updateSubcategory(id: number, subcategory: string) {
-        const updatedcategory = await this.subCategoryModel.updateSubcategories(id, subcategory)
+    async updateSubcategory(id: number, body: UpdateSubCategoryDto) {
+        const updatedcategory = await this.subCategoryModel.updateSubcategories(id, body)
         if(!updatedcategory) throw new ForbiddenException('Error: something went wrong')
         return updatedcategory
     }

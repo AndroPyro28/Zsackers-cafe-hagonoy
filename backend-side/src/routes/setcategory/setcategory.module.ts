@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { SetCategory } from 'src/models/set-category.model';
+import { SetCategory } from 'src/models';
 import { SetCategoryController } from './setcategory.controller';
 import { SetCategoryService } from './setcategory.service';
 
@@ -7,4 +7,4 @@ import { SetCategoryService } from './setcategory.service';
   controllers: [SetCategoryController],
   providers: [SetCategoryService, SetCategory]
 })
-export class SetCategoryModule {}
+export class SetcategoryModule {}

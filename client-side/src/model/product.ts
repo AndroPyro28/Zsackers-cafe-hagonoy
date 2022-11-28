@@ -7,10 +7,12 @@ export interface CreateProduct {
     productPrice: string,
     productStock: string | number,
     image: null | any,
+    quantity: number | string;
     details: string
     categoryId: string,
-    subcategoryId: string
-    setcategoryId: string
+    subcategoryId: string;
+    setcategoryId:string;
+    productId: number | string | null
 }
 
 export interface Product {
@@ -19,16 +21,19 @@ export interface Product {
     price: number;
     createdAt: string;
     updatedAt: string;
+    quantity: number | string;
     details: string
     image_url: string;
     image_id: string;
     stock: number;
     categoryId: number;
-    setcategoryId: number;
     subcategoryId: number;
+    setcategoryId:number;
+    productId: number | string | null
     category: Category;
     sub_category: Subcategory;
     set_category: SetCategory;
+    products: Product[];
     archive: boolean;
     cart_product: any[]
 }
@@ -39,18 +44,20 @@ export interface UpdateProduct {
     price: number,
     details: string,
     stock: number,
+    quantity: number | string;
     image_url: string,
     image_id:string,
     categoryId: number,
     subcategoryId: number,
-    setcategoryId: number,
+    setcategoryId:number;
+    productId: number | string | null
 }
 
 export interface Search {
     searchName:string;
     categoryId: number;
-    setcategoryId: number;
     subcategoryId:number;
+    setcategoryId:number;
 }
 
 export interface getBySubcategory {

@@ -1,4 +1,3 @@
-import { m } from "framer-motion";
 import { privateApi } from "../app/baseApi";
 import {
   CreateProduct,

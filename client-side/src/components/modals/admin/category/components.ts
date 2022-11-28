@@ -149,7 +149,8 @@ export const SubCategoryData = styled(Form)`
 display: flex;
 width: 100%;
 align-items: center;
-& > td {
+justify-content: space-evenly;
+& > * {
     flex: 1;
     font-size: 0.9em;
     text-overflow: ellipsis;
@@ -160,6 +161,12 @@ align-items: center;
         margin: 10px;
         font-size: 1.3em;
         cursor: pointer;
+    }
+
+    & > small {
+        font-style: italic;
+        font-weight: bold;
+        text-transform: capitalize;
     }
     & > button {
         margin: 10px;
@@ -201,7 +208,6 @@ export const CategoryInputField = styled.div`
 display: flex;
 align-items: center;
 gap:20px;
-
 & > .input-field {
     display: flex;
     flex-direction:column;
@@ -215,6 +221,10 @@ gap:20px;
     &.left {
         & > label {
             font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: capitalize;
         }
         & > input {
             width: 200px;
@@ -297,6 +307,11 @@ export const SetCategoryContainer = styled(Form)`
         cursor: pointer;
         border: none;
         background: none;
+    }
+    & > small {
+        font-style: italic;
+        font-weight: bold;
+        text-transform: capitalize;
     }
 }
 `

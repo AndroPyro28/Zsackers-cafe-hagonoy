@@ -25,7 +25,7 @@ function InventoryRightContent({ searchName, setSearchName }: { searchName: stri
     searchName,
     categoryId,
     subcategoryId,
-    setcategoryId,
+    setcategoryId
   }, {
     refetchOnFocus: true,
     refetchOnReconnect: true
@@ -34,8 +34,8 @@ function InventoryRightContent({ searchName, setSearchName }: { searchName: stri
   useEffect(() => {
     // to reset all the filter
     setterSubCategoryId(0)
-    setterSetCategoryId(0)
     setSearchName('')
+    setterSetCategoryId(0)
   }, [categoryId])
 
   useEffect(() => {
@@ -65,13 +65,14 @@ function InventoryRightContent({ searchName, setSearchName }: { searchName: stri
           setViewCategory={setViewCategory}
           categoryId={categoryId}
           subcategoryId={subcategoryId}
-          setcategoryId={setcategoryId}
           setterCategoryId={setterCategoryId}
           setterSubCategoryId={setterSubCategoryId}
-          setterSetCategoryId={setterSetCategoryId}
           categories={categories}
+          setcategoryId={setcategoryId}
+          setterSetCategoryId={setterSetCategoryId}
         />
       }
+      
       <InventoryTableRow />
 
       <ProductListContainer>

@@ -36,14 +36,14 @@ export class ProductController {
   async getAllProducts(
     @Query('name') productName: string,
     @Query('categoryId', ParseIntPipe) categoryId: number,
-    @Query('setcategoryId', ParseIntPipe) setcategoryId: number,
     @Query('subcategoryId', ParseIntPipe) subcategoryId: number,
+    @Query('setcategoryId', ParseIntPipe) setcategoryId: number,
   ) {
     return this.productService.getAllProducts({
       productName,
       categoryId,
-      setcategoryId,
       subcategoryId,
+      setcategoryId
     });
   }
 

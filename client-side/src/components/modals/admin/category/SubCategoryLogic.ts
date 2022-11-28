@@ -16,6 +16,7 @@ function SubCategoryLogic({categoryId, setAllowUpdate}: Props) {
     const [createSubCategoryMutation, {isLoading}] = useCreateSubcategoryMutation()
     const createSubCategory = async (values: any, {resetForm}:any) => {
         try {
+            console.log(values);
             const res: any = await createSubCategoryMutation({...values, categoryId})
             const {error, data} = res;
             if(error) {
@@ -39,7 +40,6 @@ function SubCategoryLogic({categoryId, setAllowUpdate}: Props) {
         subcategory: yup.string()
         .required('subcategory required field')
         .min(3, 'must be atleast 3 characters'),
-       
     })
     const [updateSubcategoryMutation] = useUpdateSubcategoryMutation()
     const updateSubCategory = async (values: UpdateSubcategory, {resetForm}:any) => {

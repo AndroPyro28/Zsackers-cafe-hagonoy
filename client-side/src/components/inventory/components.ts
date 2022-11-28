@@ -19,7 +19,7 @@ export const ProductBottomSide = styled(Form)`
 
     & .error__message {
         color: maroon;
-        font-size: 0.9em;
+        font-size: 0.8em;
     }
     & > * {
         

@@ -13,11 +13,13 @@ export class Product {
           price: body.productPrice,
           image_url: body.image_url,
           stock: body.productStock,
+          quantity: body.quantity,
           image_id: body.image_id,
           details: body.details,
           categoryId: Number(body.categoryId),
           subcategoryId: Number(body.subcategoryId),
           setcategoryId: Number(body.setcategoryId),
+          productId: Boolean(body.productId) ? Number(body.productId) : null,
         },
       });
       return newProduct;
@@ -42,7 +44,7 @@ export class Product {
         },
         search.setcategoryId !== 0 && {
           setcategoryId: search.setcategoryId
-        },
+         },
        ];
       const conditionArr = arr.filter(value => typeof value === 'object')
       const products = await product.findMany({
@@ -51,7 +53,7 @@ export class Product {
           archive: false,
         },
         include: {
-          set_category: true,
+          products: true,
           category: true,
           sub_category: true,
         },
@@ -72,10 +74,16 @@ export class Product {
           id,
         },
         include:{
-          set_category: true,
+          products: {
+            where: {
+              archive: false
+            },
+            include: {
+              sub_category: true
+            }
+          },
           category: true,
           sub_category: true,
-          cart_product: true
         }
       })
       return result;
@@ -107,8 +115,8 @@ export class Product {
           id
         },
         data: {
-          ...body
-        }
+          ...body,
+        },
       })
       return updated;
     } catch (error) {
