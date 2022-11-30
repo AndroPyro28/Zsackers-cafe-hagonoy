@@ -19,7 +19,7 @@ export class Product {
           categoryId: Number(body.categoryId),
           subcategoryId: Number(body.subcategoryId),
           setcategoryId: Number(body.setcategoryId),
-          productId: Boolean(body.productId) ? Number(body.productId) : null,
+          // productId: Boolean(body.productId) ? Number(body.productId) : null,
         },
       });
       return newProduct;

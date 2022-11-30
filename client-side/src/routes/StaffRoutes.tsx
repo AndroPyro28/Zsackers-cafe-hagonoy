@@ -1,9 +1,9 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
-import { GetCurrentUser } from '../services'
+import { useGetCurrentUser } from '../services'
 import {StaffRoutesContainer} from './components'
 function StaffRoutes() {
-    const {data:user, isLoading, isError} = GetCurrentUser()
+    const {data:user, isLoading, isError} = useGetCurrentUser()
 
     if(isLoading) return <></>
 

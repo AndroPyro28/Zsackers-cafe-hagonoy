@@ -528,7 +528,7 @@ export const InfoRow = styled.div`
 
 export const ButtonContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin: 10px;
   & > button {
     color: white;

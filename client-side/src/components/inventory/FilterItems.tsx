@@ -95,14 +95,7 @@ function FilterItems({
         </select>
       </FilterContainer>
 
-      <ButtonContainer>
-          <button onClick={() => setViewCategory(true)}>
-            View category
-          </button>
-        <button onClick={() => setOpenCreateProductModal(true)}>
-          Add products <i className="fa-solid fa-plus plus"></i>
-        </button>
-      </ButtonContainer>
+      
 
       <div className="pagination">
         <i className="fa-solid fa-chevron-left left" onClick={() => alert("")}></i>

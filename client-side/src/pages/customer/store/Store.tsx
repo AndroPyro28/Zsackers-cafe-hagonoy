@@ -13,7 +13,6 @@ function Store() {
   const [setcategoryId, setterSetcategoryId] = useState(0);
   const [searchName, setSearchName] = useState('')
 
-
   const { data: products, error, isLoading } = useGetAllProductQuery({
     categoryId,
     subcategoryId,
@@ -22,7 +21,6 @@ function Store() {
   })
 
   const [productId, setProductId] = useState<number>(0)
-  
 
   useEffect(() => {
     setterSubcategoryId(0)
@@ -34,6 +32,8 @@ function Store() {
   const fetchProducts = products?.map(product => (
     <Product data={product} key={product.id} setProductId={setProductId} />
   ))
+
+  
 
   return (
     <StoreContainer>

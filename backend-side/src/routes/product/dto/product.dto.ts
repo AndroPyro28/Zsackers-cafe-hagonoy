@@ -62,18 +62,17 @@ export class UpdateProduct {
     @IsNotEmpty()
     @IsNumber()
     quantity: number;
-    
 
     @IsOptional()
     @IsString()
     details: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     image_url: string;
 
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     image_id:string;
 
     @IsNumber()

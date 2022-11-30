@@ -20,18 +20,6 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
     const category = categories?.find(value => value.id == categoryId)
     const subcategory = category?.sub_category.find(value => value.id == subcategoryId);
     
-    const { data: products, isLoading, error, refetch: refetechProduct } = useGetAllProductQuery({
-        searchName: '',
-        categoryId,
-        subcategoryId: 0,
-        setcategoryId: 0
-      }, {
-        refetchOnFocus: true,
-        refetchOnReconnect: true
-      });
-      const fetchSelectProducts = products?.map(product => (
-        <option value={product.id} key={product.id}>{product.productName}</option>
-      ))
     return (
         <InventoryCreateModalBackdrop>
             <Formik
@@ -153,19 +141,6 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                                 </FieldInputContainer>
                             </FormFieldContainer>
                             
-
-                            <FormFieldContainer>
-                                <label htmlFor="productId">Belongs to</label>
-                                <FieldInputContainer>
-                                    <Field name="productId" id="productId" as="select" placeholder="Current Stock">
-                                        <option value="">Select product</option>
-                                        {Boolean(formik.values.categoryId) && fetchSelectProducts}
-                                    </Field>
-                                    <ErrorMessage name="productId" component={'div'} className="error__message" />
-                                </FieldInputContainer>
-                            </FormFieldContainer>
-
-
                             <FormFieldContainer>
                                 <label htmlFor="details">Details <sup>(optional)</sup>  </label>
                                 <FieldInputContainer>
@@ -173,7 +148,6 @@ function ProductCreateModal({ setOpenCreateProductModal }: Props) {
                                     <ErrorMessage name="details" component={'div'} className="error__message" />
                                 </FieldInputContainer>
                             </FormFieldContainer>
-
 
                             <FormFieldContainer>
                                 <label htmlFor="image">Image <sup>(optional)</sup> </label>

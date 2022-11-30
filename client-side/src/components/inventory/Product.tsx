@@ -45,7 +45,7 @@ function Product({ data, categories }: Props) {
     quantity,
     details: data.details || '',
     image_url: imageFile,
-    image_id: data.image_id,
+    image_id: data.image_id || '',
     categoryId: data.categoryId,
     subcategoryId: data.subcategoryId,
     setcategoryId: data.setcategoryId,

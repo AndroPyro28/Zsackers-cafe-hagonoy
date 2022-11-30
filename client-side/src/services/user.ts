@@ -16,10 +16,7 @@ const userApi = privateApi.injectEndpoints({
 })
 export default userApi;
 
-export const GetCurrentUser = () => {
-    return useSelector(userApi.endpoints.getMe.select())
-}
+export const useGetCurrentUser = () => useSelector(userApi.endpoints.getMe.select())
 
- 
 
 export const { useGetMeQuery } = userApi

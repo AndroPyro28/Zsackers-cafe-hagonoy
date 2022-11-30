@@ -1,6 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,17 +16,17 @@ enum ROLE {
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  email             String   @unique
+  id                Int             @id @default(autoincrement())
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  email             String          @unique
   password          String
   hashUpdatePWToken String?
-  isVerify          Boolean? @default(false)
+  isVerify          Boolean?        @default(false)
   role              ROLE
-
-  profile       Profile?
-  order_details Order_Details[]
+  profile           Profile?
+  order_details     Order_Details[]
+  Cart_Product      Cart_Product[]
 
   @@map("users")
 }
@@ -59,24 +58,27 @@ model Order_Details {
 }
 
 model Cart_Product {
-  id                  Int                   @id @default(autoincrement())
-  quantity            Int
-  product             Product               @relation(fields: [productId], references: [id])
-  productId           Int
-  order_details       Order_Details         @relation(fields: [orderId], references: [id])
-  orderId             Int
-  Cart_Product_Flavor Cart_Product_Flavor[]
+  id            Int            @id @default(autoincrement())
+  quantity      Int?           @default(1)
+  product       Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId     Int
+  order_details Order_Details? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId       Int?
+  isArchive     Boolean?       @default(false)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        Int
+  // Cart_Product_Flavor Cart_Product_Flavor[]
 
   @@map("cart_products")
 }
 
 model Cart_Product_Flavor {
-  id              Int          @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   // quantity        BigInt
-  cart_product    Cart_Product @relation(fields: [cart_product_id], references: [id])
-  cart_product_id Int
-  product         Product      @relation(fields: [productId], references: [id])
-  productId       Int
+  // cart_product    Cart_Product @relation(fields: [cart_product_id], references: [id])
+  // cart_product_id Int
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
 
   @@map("cart_product_flavor")
 }
@@ -88,6 +90,7 @@ model Category {
   updatedAt    DateTime       @updatedAt
   sub_category Sub_Category[]
   Product      Product[]
+  Bundle       Bundle[]
 
   @@map("category")
 }
@@ -101,6 +104,7 @@ model Sub_Category {
   categoryId   Int
   Product      Product[]
   set_category Set_Category[]
+  Bundle       Bundle[]
 
   @@map("sub_category")
 }
@@ -114,47 +118,67 @@ model Set_Category {
   subcategory   Sub_Category @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
   subcategoryId Int
   Product       Product[]
+  Bundle        Bundle[]
 
   @@map("set_category")
 }
 
 model Product {
-  id              Int                   @id @default(autoincrement())
-  productName     String
-  price           Int
-  quantity        Int                   @default(1)
-  details         String?               @db.LongText
-  createdAt       DateTime              @default(now())
-  updatedAt       DateTime              @updatedAt
-  cart_product    Cart_Product[]
-  stock           Int                   @default(0)
-  image_url       String?
-  image_id        String?
-  category        Category?             @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  categoryId      Int?
-  sub_category    Sub_Category?         @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
-  subcategoryId   Int?
-  archive         Boolean               @default(false)
-  Product_Flavor  Cart_Product_Flavor[]
-  productId       Int?
+  id             Int                   @id @default(autoincrement())
+  productName    String
+  price          Int
+  quantity       Int                   @default(1)
+  details        String?               @db.LongText
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  cart_product   Cart_Product[]
+  stock          Int                   @default(0)
+  image_url      String?
+  image_id       String?
+  category       Category?             @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId     Int?
+  sub_category   Sub_Category?         @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+  subcategoryId  Int?
+  archive        Boolean               @default(false)
+  Product_Flavor Cart_Product_Flavor[]
+  // productId       Int?
   // Product        Product?              @relation("products", fields: [productId], references: [id], onDelete: SetNull)
   // products       Product[]             @relation("products")
-  set_category    Set_Category?         @relation(fields: [setcategoryId], references: [id])
-  setcategoryId   Int?
-  product_bundle  bundle[]              @relation("product_bundle")
-  product_variant bundle[]              @relation("product_variant")
+  set_category   Set_Category?         @relation(fields: [setcategoryId], references: [id])
+  setcategoryId  Int?
+  // product_bundle  bundle[]              @relation("product_bundle")
+  // product_variant bundle[]              @relation("product_variant")
+  // Bundle_Product  Bundle_Product[]
+  bundle_product Bundle_Product[]
 
   @@map("products")
 }
 
-model bundle {
-  id                 Int      @id @default(autoincrement())
-  product_bundle     Product? @relation("product_bundle", fields: [product_bundle_id], references: [id])
-  product_bundle_id  Int
-  product_variant    Product? @relation("product_variant", fields: [product_variant_id], references: [id])
-  product_variant_id Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+model Bundle {
+  id             Int              @id @default(autoincrement())
+  name           String           @default("")
+  price          Int?             @default(0)
+  quantity       Int              @default(1)
+  image_url      String?
+  image_id       String?
+  category       Category?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  categoryId     Int?
+  sub_category   Sub_Category?    @relation(fields: [subcategoryId], references: [id], onDelete: SetNull)
+  subcategoryId  Int?
+  set_category   Set_Category?    @relation(fields: [setcategoryId], references: [id])
+  setcategoryId  Int?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  Bundle_Product Bundle_Product[]
   @@map("bundles")
+}
+
+model Bundle_Product {
+  id         Int      @id @default(autoincrement())
+  product    Product? @relation(fields: [product_id], references: [id])
+  product_id Int
+  bundle     Bundle?  @relation(fields: [bundle_id], references: [id])
+  bundle_id  Int?
+
+  @@map("bundle_products")
 }

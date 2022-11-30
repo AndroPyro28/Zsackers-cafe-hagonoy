@@ -36,6 +36,8 @@ export const Cart = styled.div`
     padding: 5px 20px;
     border: solid 2px black;
     border-radius: 10px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
     & > .title {
         padding-inline:10px;
         font-size: 0.9em;
@@ -46,6 +48,16 @@ export const Cart = styled.div`
         border-radius: 10px;
         color: white;
         font-size: 0.9em;
+    }
+
+    &:hover {
+        background: rgb(56,77,38);
+        color: white !important;
+        border-color: transparent;
+        & > .cart__number {
+            color: white !important;
+            /* background: rgb(56,77,38); */
+        }
     }
 `
 export const User = styled.div`

@@ -43,7 +43,7 @@ function ProductDetails({ productId }: { productId: number }) {
                         </Others>
                     </Details>
                 </ProductDetail>
-                <Variants variants={product!.products}/>
+                {/* <Variants variants={product!.products}/> */}
             </ProductDetailsContainer>
         </ModalBackdrop>
     )

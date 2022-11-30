@@ -1,10 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom'
 import AdminNavbar from '../components/admin-navbar/AdminNavbar'
-import {GetCurrentUser} from '../services/user'
+import { useGetCurrentUser } from '../services'
+
 import { AdminGlobalStyles, AdminRoutesContainer } from './components'
 
 function AdminRoutes() {
-  const {data:user, isLoading, isError} = GetCurrentUser()
+  const {data:user, isLoading, isError} = useGetCurrentUser()
 
 
   if(isLoading) {

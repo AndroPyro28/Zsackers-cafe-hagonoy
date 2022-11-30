@@ -3,8 +3,8 @@ import {motion} from 'framer-motion'
 
 export const ProductDetailsContainer = styled(motion.div)`
     height: 95vh;
-    width: 65vw;
-    /* width: 35vw; if no variants */ 
+    max-width: 65vw;
+    width: 35vw; 
     background: white;
     position: absolute;
     top: 0;
@@ -86,6 +86,7 @@ export const AddToCartBtn = styled.button`
 export const ProductDetail = styled.div`
     height: 100%;
     width: 100%;
+    max-width: 35vw;
     flex: 3;
     display: flex;
     flex-direction: column;

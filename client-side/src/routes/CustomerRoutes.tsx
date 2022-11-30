@@ -1,10 +1,14 @@
 import { Navigate, Outlet } from 'react-router-dom'
+import store from '../app/store'
 import CustomerNavbar from '../components/customer-navbar/CustomerNavbar'
-import { GetCurrentUser } from '../services'
+import { useGetCurrentUser } from '../services'
+import cartProduct from '../services/cart-products'
 import { CustomerRoutesContainer } from './components'
 
 function CustomerRoutes() {
-    const {data:user, isLoading, isError} = GetCurrentUser()
+    const {data:user, isLoading, isError} = useGetCurrentUser()
+
+    store.dispatch(cartProduct.endpoints.getCartProducts.initiate());
 
     if(isLoading) return <></>
 
