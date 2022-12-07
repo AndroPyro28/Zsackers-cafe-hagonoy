@@ -66,6 +66,22 @@ export class Product {
     }
   }
 
+  async getProductsByArrayOfId(arrayId: number[]) {
+    try {
+      const result = await product.findMany({
+        where: {
+          id: {
+            in: arrayId
+          },
+          archive: false
+        }
+      })
+      return result;
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async getProductById(id: number) {
     try {
       const result = await product.findUnique({
