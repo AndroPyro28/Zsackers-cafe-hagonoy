@@ -11,6 +11,7 @@ interface Props {
         product: Product
     }
 }
+
 function CartItem({ data }: Props) {
     const { product, quantity, id } = data;
     const { updateCartQuantity } = Logic()

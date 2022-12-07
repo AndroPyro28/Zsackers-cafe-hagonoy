@@ -34,7 +34,8 @@ export const Search = styled.div`
 export const CategoryList = styled.div`
     display: flex;
     margin: 10px;
-    justify-content: space-evenly;
+    justify-content: flex-start;
+    gap: 10px;
 `
 
 export const Category = styled.span`
@@ -45,6 +46,14 @@ export const Category = styled.span`
     text-align: center;
     border: solid 1px rgb(56,77,38);
     color: rgb(56,77,38);
+    background: ${({active}: {active: boolean}) => active ? 'black' : 'white'};
+    color: ${({active}: {active: boolean}) => active ? 'white' : 'rgb(56,77,38)'};
+    cursor: pointer;
+    transition:  all .3s ease-in-out;
+    &:hover {
+        background: black;
+        color: white;
+    }
 `
 
 export const SubSetCategory = styled.div`
@@ -103,7 +112,7 @@ export const Price = styled.span`
 export const ProductsContent = styled.div`
     display: flex;
     flex-direction: column;
-    flex: 3;
+    flex: 2.5;
     /* background: rgb(232,241,243); */
     min-height: 100vh;
 `
@@ -140,7 +149,10 @@ export const OrderContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    & > .image {
+
+    & > td {
+        flex: 1;
+        & > .image {
         width: 80px;
         height: 80px;
     }
@@ -153,6 +165,11 @@ export const OrderContainer = styled.div`
         border-radius: 20px;
         font-size: 1.1em;
     }
+    & >.name {
+        width: fit-content;
+    }
+    }
+    
 `
 
 export const OrderSummary = styled.div`
