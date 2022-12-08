@@ -7,6 +7,7 @@ import CartItem from './CartItem';
 import {CartPopupBox, CartPopupBoxContainer, CartSummary, ProductListContainer, SummaryRow} from './components'
 import Logic from './Logic';
 function CartPopup() {
+  
   const { data: cartProducts } = useGetCartProducts();
   const navigate = useNavigate()
 
@@ -36,7 +37,7 @@ function CartPopup() {
             <span style={{fontWeight:"600"}}> {productPriceFormatter( totalAmount + '')}</span>
           </SummaryRow>
 
-          <button onClick={() => navigate("/customer/cart")}>Checkout</button>
+          <button onClick={() => navigate("/customer/checkout")}>Checkout</button>
         </CartSummary>
       </CartPopupBoxContainer>
     </CartPopupBox>

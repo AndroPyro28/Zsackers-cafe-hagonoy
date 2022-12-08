@@ -23,8 +23,10 @@ const cartProductApi = privateApi.injectEndpoints({
       providesTags: (result, error, arg) => [
         { type: "Cart-Product", id: "LIST" },
       ],
-      transformResponse: (cartProducts: CartProduct[]) =>
-        cartProducts.filter((cartProduct) => !cartProduct.product.archive),
+      transformResponse: (cartProducts: CartProduct[]) => {
+        return cartProducts
+        .filter((cartProduct) => !cartProduct.product.archive)
+      },
     }),
     updateQuantity: builder.mutation<void, UpdateQuantity>({
       query: ({id, action}) => ({

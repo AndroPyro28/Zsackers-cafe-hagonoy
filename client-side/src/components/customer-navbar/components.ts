@@ -7,6 +7,7 @@ export const CustomerNavbarContainer = styled.div`
     top: 0;
     left: 0;
     width: 100%;
+    z-index: 1;
     background: white;
     /* box-shadow: 1px 3px 5px #EAEAEA; */
 `

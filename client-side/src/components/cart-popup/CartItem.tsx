@@ -1,15 +1,11 @@
 import React from 'react'
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
-import { Product } from '../../model'
+import { CartProduct } from '../../model'
 import { ProductContainer, ProductName, ProductPrice, ProductQuantity } from './components'
 import Logic from './Logic'
 
 interface Props {
-    data: {
-        id: number,
-        quantity: number,
-        product: Product
-    }
+    data: CartProduct
 }
 
 function CartItem({ data }: Props) {

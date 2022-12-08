@@ -4,7 +4,7 @@ import { useUpdateQuantityMutation } from '../../services/cart-products'
 function Logic() {
 
     const [updateQuantityMutation] = useUpdateQuantityMutation()
-    const updateCartQuantity = async (id: number, action: string) => {
+    const updateCartQuantity = async (id: number, action: 'increment' | 'decrement') => {
         try {
             const result = await updateQuantityMutation({id, action})
         } catch (error) {

@@ -49,7 +49,7 @@ export const CartPopupBox = styled.div`
 export const CartPopupBoxContainer = styled.div`
  position: relative;
    height: 100%;
-   z-index: 1;
+   z-index: 10000;
    & > h1 {
      margin: 20px;
      text-align: start;
