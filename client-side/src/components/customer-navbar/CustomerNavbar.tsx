@@ -1,13 +1,17 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import CartPopup from '../cart-popup/CartPopup'
 import { Cart, CustomerLinks, CustomerNavbarContainer, Photo, PhotoBorder, User, UserProfile } from './components'
 
 function CustomerNavbar() {
 
     const [openCart, setOpenCart] = useState(false)
+
+    const {pathname} = useLocation()
+
+
     return (
-        <CustomerNavbarContainer>
+        <CustomerNavbarContainer url={pathname}>
             <CustomerLinks>
                 <NavLink to={''}> <i className="fa-solid fa-house"></i> Home</NavLink>
                 <NavLink to={'store'}><i className="fa-solid fa-store"></i> Store</NavLink>

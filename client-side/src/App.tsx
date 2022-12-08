@@ -13,6 +13,8 @@ import Store from './pages/customer/store/Store';
 import StaffRoutes from './routes/StaffRoutes';
 import Pos from './pages/staff/pos/Pos';
 import Checkout from './pages/customer/checkout/Checkout';
+import Payment from './pages/customer/payment/Payment';
+
 function App() {
 
   const router = createBrowserRouter([
@@ -75,6 +77,15 @@ function App() {
           children: [
             {
               element: <Checkout />,
+              index: true
+            }
+          ]
+        },
+        {
+          path: 'payment',
+          children: [
+            {
+              element: <Payment />,
               index: true
             }
           ]

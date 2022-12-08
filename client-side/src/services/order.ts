@@ -3,7 +3,7 @@ import { CreateOrder } from "../model";
 
 const orderApi = privateApi.injectEndpoints({
   endpoints: (builder) => ({
-    createOrder: builder.mutation<void, CreateOrder>({
+    checkoutOrder: builder.mutation<void, CreateOrder>({
       query: (body) => ({
         url: `order/checkout`,
         method: "POST",
@@ -11,6 +11,13 @@ const orderApi = privateApi.injectEndpoints({
       }),
     //   invalidatesTags: (result, error, arg) => [{ type: "Category" }],
     }),
+    createOrder: builder.mutation<void, CreateOrder>({
+      query: (body) => ({
+        url: `order/payment`,
+        method: "POST",
+        body,
+      }),
+    })
     
   }),
   overrideExisting: false,
@@ -18,5 +25,6 @@ const orderApi = privateApi.injectEndpoints({
 export default orderApi;
 
 export const {
-  useCreateOrderMutation,
+  useCheckoutOrderMutation,
+  useCreateOrderMutation
 } = orderApi;

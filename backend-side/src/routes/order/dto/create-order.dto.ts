@@ -1,6 +1,6 @@
 import { Product } from "@prisma/client";
 import { Type } from "class-transformer";
-import {ArrayMinSize, IsArray, IsNotEmpty, IsNotEmptyObject, IsNumber, IsNumberString, IsString, ValidateNested} from 'class-validator'
+import {ArrayMinSize, IsArray, IsNotEmpty, IsNotEmptyObject, IsNumber, IsNumberString, IsOptional, IsString, ValidateNested} from 'class-validator'
 class CartProducts {
     @IsNotEmpty()
     product: Product;
@@ -34,4 +34,7 @@ export class CreateOrderDto {
     @IsNotEmpty()
     @IsNumber()
     totalAmount: number;
+    
+    @IsOptional()
+    order_id: string;
 }

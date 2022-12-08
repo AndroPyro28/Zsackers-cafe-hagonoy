@@ -115,6 +115,25 @@ export class Product {
     }
   }
 
+  async updateProductsStocks(products: {id: number, quantity: number}[]) {
+    try {
+      products.forEach(async (p) => {
+       await product.update({
+          where: {
+            id: p.id
+          },
+          data: {
+            stock: {
+              decrement: p.quantity
+            }
+          },
+        })
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async updateProduct(id: number, body: UpdateProduct) {
     try {
       const updated = await product.update({

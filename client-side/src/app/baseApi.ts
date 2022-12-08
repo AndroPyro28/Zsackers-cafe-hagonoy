@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 export const publicApi = createApi({
     reducerPath: `publicApi`,
     baseQuery: fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_DEV_URL,
+      baseUrl:/* process.env.REACT_APP_DEV_URL */ 'http://localhost:3001/api/',
     }),
     endpoints: () => ({}),
     tagTypes: ["Signup", "Signin"],
@@ -13,7 +13,7 @@ export const publicApi = createApi({
   export const privateApi = createApi({
     reducerPath: `privateApi`,
     baseQuery: fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_DEV_URL,
+      baseUrl:/* process.env.REACT_APP_DEV_URL */ 'http://localhost:3001/api/',
       prepareHeaders: (headers) => {
         headers.set("Authorization", `Bearer ${Cookies.get("access_token")}`);
         return headers;

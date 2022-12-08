@@ -19,7 +19,7 @@ import { Response } from 'express';
 
 @Controller('order')
 export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(private readonly orderService: OrderService) { }
 
   @Post('/checkout')
   @Roles(['CUSTOMER'])
@@ -35,7 +35,7 @@ export class OrderController {
       paymentType,
       cartProducts,
       checkouturl: '',
-      address, 
+      address,
       contact,
       order_id: '',
     };
@@ -70,10 +70,19 @@ export class OrderController {
     if (paymentType === 'cod') {
       res.json({
         ...returnJson,
-        checkouturl: `${process.env.CLIENT_URL}/customer/payment`,
+        checkouturl: `http://localhost:3000/customer/payment`,
         order_id: uuid(),
       });
     }
+  }
+
+  @Post('/payment')
+  @Roles(['CUSTOMER'])
+  async payment(
+    @Body() createOrderDto: CreateOrderDto,
+    @GetCurrentUser('id') userId: number,
+  ) {
+    return this.orderService.payment(createOrderDto, userId)
   }
 
   @Get()

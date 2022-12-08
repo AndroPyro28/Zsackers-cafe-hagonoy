@@ -2,11 +2,12 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
 import { ValidateCheckoutMiddleware } from './middleware';
-import { Product } from 'src/models';
+import { CartProduct, Product } from 'src/models';
+import { OrderDetails } from 'src/models/order-details.model';
 
 @Module({
   controllers: [OrderController],
-  providers: [OrderService, Product]
+  providers: [OrderService, Product, OrderDetails, CartProduct]
 })
 export class OrderModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
@@ -14,6 +15,10 @@ export class OrderModule implements NestModule {
     .forRoutes(
       {
         path: 'order/checkout',
+        method: RequestMethod.POST
+      },
+      {
+        path: 'order/payment',
         method: RequestMethod.POST
       }
     )

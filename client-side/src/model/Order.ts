@@ -6,4 +6,5 @@ export interface CreateOrder {
    cartProducts: CartProduct[];
    paymentType: string;
    totalAmount: number;
+   order_id?: string
 }

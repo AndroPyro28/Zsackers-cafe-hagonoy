@@ -10,6 +10,7 @@ function Logic({setCurrentField}: any) {
         try {
         const res = await signupMutation(values);
         const { error }: any = res;
+        console.log(res)
         if(error) {
             return alert(error.data.message)
         }

@@ -9,6 +9,7 @@ export class CartProduct {
       const cartProducts = await cart_Product.findMany({
         where: {
           userId,
+          isArchive: false
         },
         select: {
           id: true,
@@ -39,6 +40,23 @@ export class CartProduct {
     }
   }
 
+  async updateManyCartProductsWithOrder(cartProductsIds: number[], orderId: number) {
+    try {
+      const update = await cart_Product.updateMany({
+        where: {
+          id: {
+            in: cartProductsIds
+          }
+        },
+        data: {
+          orderId,
+          isArchive: true
+        }
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
   async addToCart(productId: number, userId: number) {
     try {
       const isAlreadyInCart = await cart_Product.findFirst({

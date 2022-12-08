@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+const excludeRoutes = [
+    '/customer/payment'
+]
+
 export const CustomerNavbarContainer = styled.div`
     display: flex;
     height: 90px;
@@ -10,6 +14,7 @@ export const CustomerNavbarContainer = styled.div`
     z-index: 1;
     background: white;
     /* box-shadow: 1px 3px 5px #EAEAEA; */
+    display: ${({url} : {url: string}) => excludeRoutes.includes(url) ? 'none' : 'flex'};
 `
 
 export const CustomerLinks = styled.div`

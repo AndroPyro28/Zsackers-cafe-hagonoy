@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import * as yup from "yup";
 import { getCartProducts } from "../../../../features";
-import { useCreateOrderMutation } from "../../../../services/order";
+import { useCheckoutOrderMutation } from "../../../../services/order";
 
 interface Props {
   paymentType: string;
@@ -34,13 +34,13 @@ function Logic({ paymentType, totalAmount }: Props) {
   });
 
   const cartProducts = useSelector(getCartProducts);
-  const [createOrderMutation] = useCreateOrderMutation();
+  const [checkoutOrderMutation] = useCheckoutOrderMutation();
   const onSubmit = async (values: any) => {
     try {
       const { barangay, houseNo, street, contact, city, province } = values;
       const address = `${houseNo} ${street} ${barangay} ${city} ${province}`;
 
-      const result: any = await createOrderMutation({
+      const result: any = await checkoutOrderMutation({
         contact,
         address,
         cartProducts,
@@ -49,6 +49,10 @@ function Logic({ paymentType, totalAmount }: Props) {
       });
 
       const { checkouturl, order_id, proceedPayment } = result.data;
+
+      if (!proceedPayment) {
+        return alert('Out of stock');
+      }
       localStorage.setItem(
         "onCheckoutProducts",
         JSON.stringify({
@@ -56,16 +60,14 @@ function Logic({ paymentType, totalAmount }: Props) {
           address,
           cartProducts,
           paymentType,
+          order_id,
           totalAmount: totalAmount * 0.1 + totalAmount,
           proceedPayment
         })
 
       );
-      console.log(checkouturl)
-      console.log('hello')
       window.location.assign(checkouturl)
 
-      // const res = await
     } catch (error) {
       console.error(error);
     }
