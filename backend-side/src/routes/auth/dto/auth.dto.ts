@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsEmail, IsNumberString } from "class-validator"
+import { ROLE } from "@prisma/client";
+import { IsNotEmpty, IsEmail, IsNumberString, IsOptional } from "class-validator"
 import { Match } from "src/common/decorators";
 
-type ROLE = "ADMIN" | "STAFF" | "CUSTOMER"
 export class SignupDto {
     @IsNotEmpty()
     firstname: string;
@@ -28,7 +28,12 @@ export class SignupDto {
 
     @IsNotEmpty()
     address: string;
+
+    @IsNotEmpty()
+    role: ROLE;
 }
+
+
 
 export class SigninDto {
     @IsNotEmpty()

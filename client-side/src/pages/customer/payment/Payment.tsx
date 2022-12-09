@@ -33,7 +33,6 @@ function Payment() {
       totalAmount,
       order_id,
     })
-    alert('success payment api')
     localStorage.removeItem("onCheckoutProducts");
 
   }

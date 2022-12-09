@@ -6,6 +6,7 @@ export interface Signup {
     contact: string;
     password: string;
     confirmPassword: string;
+    role: ROLE
 }
 
 export interface Signin {

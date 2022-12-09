@@ -4,15 +4,15 @@ import { user } from './root.model';
 
 @Injectable()
 export class User {
-  async createUser(body: SignupDto) {
+  async createUser(body: SignupDto){
     try {
-      const { firstname, lastname, contact, address, email, password } =
+      const { firstname, lastname, contact, address, email, password, role } =
         body;
       const newUser = await user.create({
         data: {
           email,
           password,
-          role: "CUSTOMER",
+          role,
           profile: {
             create: { firstname, lastname, contact, address },
           },

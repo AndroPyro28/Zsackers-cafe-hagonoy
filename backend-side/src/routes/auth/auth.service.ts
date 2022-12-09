@@ -4,19 +4,19 @@ import { SigninDto, SignupDto } from './dto/auth.dto';
 import * as argon from 'argon2'
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from './types';
+import { ArgonHelper } from 'src/common/helpers/argon.helper';
 @Injectable()
 export class AuthService {
 
     constructor(
         private readonly userModel: User,
-        private readonly jwtService: JwtService
+        private readonly jwtService: JwtService,
+        private readonly argonhelper: ArgonHelper
         ) {}
 
     async signup(body: SignupDto) {
-        const hashPw = await argon.hash(body.password);
-        body.password = hashPw
+        body.password = await this.argonhelper.hash(body.password)
         const newUser = await this.userModel.createUser(body);
-
         if(!newUser) throw new ForbiddenException('Email already exist');
 
         return {

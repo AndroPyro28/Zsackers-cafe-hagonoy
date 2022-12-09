@@ -10,7 +10,6 @@ function Logic({setCurrentField}: any) {
         try {
         const res = await signupMutation(values);
         const { error }: any = res;
-        console.log(res)
         if(error) {
             return alert(error.data.message)
         }
@@ -28,7 +27,8 @@ function Logic({setCurrentField}: any) {
         address: '',
         contact: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        role: 'CUSTOMER'
     } as Signup
 
     const validationSchema = yup.object({

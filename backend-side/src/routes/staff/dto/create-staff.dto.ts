@@ -1,5 +1,7 @@
-import { IsEmail, IsNotEmpty, IsNumberString } from "class-validator";
-import { Match } from "src/common/decorators";
+import { ROLE } from "@prisma/client";
+import { IsEmail, IsNotEmpty, IsNumberString, IsOptional } from "class-validator";
+
+
 
 export class CreateStaffDto {
 
@@ -12,20 +14,14 @@ export class CreateStaffDto {
     @IsNotEmpty()
     @IsEmail()
     email: string;
-
-    @IsNotEmpty()
-    password: string;
-
-    @IsNotEmpty()
-    @Match('password', {
-        message: 'password and password confirmation do not match'
-    })
-    confirmPassword: string;
-
+    
     @IsNotEmpty()
     @IsNumberString()
     contact:string;
 
     @IsNotEmpty()
     address: string;
+
+    @IsNotEmpty()
+    role: ROLE;
 }
