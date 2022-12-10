@@ -15,6 +15,7 @@ export interface Signin {
 }
 
 type ROLE = "ADMIN" | "STAFF" | "CUSTOMER"
+type STATUSES = "INACTIVE" | "ACTIVE"
 
 interface profile {
     id:number
@@ -32,5 +33,6 @@ export interface User {
     email: string  
     isVerify: boolean      
     role:     ROLE    
+    status: STATUSES
     profile: profile
 }

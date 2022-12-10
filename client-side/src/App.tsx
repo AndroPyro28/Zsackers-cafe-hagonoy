@@ -14,6 +14,7 @@ import StaffRoutes from './routes/StaffRoutes';
 import Pos from './pages/staff/pos/Pos';
 import Checkout from './pages/customer/checkout/Checkout';
 import Payment from './pages/customer/payment/Payment';
+import Employees from './pages/admin/employees/Employees';
 
 function App() {
 
@@ -49,6 +50,15 @@ function App() {
           children: [
             {
               element: <Inventory />,
+              index: true
+            }
+          ]
+        },
+        {
+          path: 'employees',
+          children: [
+            {
+              element: <Employees />,
               index: true
             }
           ]

@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { ArgonHelper } from 'src/common/helpers/argon.helper';
 import { sendEmailModel, SMTP } from 'src/common/utils';
-import { User } from 'src/models';
+import { Profile, Staff, User } from 'src/models';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { UpdateStaffDto } from './dto/update-staff.dto';
 
@@ -14,6 +14,8 @@ export class StaffService {
     private readonly userModel: User,
     private readonly argonHelper: ArgonHelper,
     private readonly Smtp: SMTP,
+    private readonly staffModel: Staff,
+    private readonly profileModel: Profile,
   ) {}
 
   async create(createStaffDto: CreateStaffDto) {
@@ -58,19 +60,30 @@ export class StaffService {
     return newUser;
   }
 
-  findAll() {
-    return `This action returns all staff`;
+  async findAll() {
+    const allStaff = await this.staffModel.findAll();
+    return allStaff;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} staff`;
   }
 
-  update(id: number, updateStaffDto: UpdateStaffDto) {
-    return `This action updates a #${id} staff`;
+  async update(id: number, status: "INACTIVE" | "ACTIVE") {
+
+    const updatedStaff = await this.staffModel.updateOne(id, status);
+
+    if(!updatedStaff) throw new ForbiddenException('Error occured!');
+
+    return updatedStaff
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} staff`;
+  async remove(id: number) {
+    const deleteStaffProfile = await this.profileModel.deleteOne(id);
+    const deletedStaff = await this.staffModel.deleteOne(id);
+
+    if(!deletedStaff) throw new ForbiddenException('Error occured!');
+
+    return deletedStaff;
   }
 }

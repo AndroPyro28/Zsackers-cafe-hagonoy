@@ -10,40 +10,38 @@ const mailTransporter = nodemailer.createTransport({
   },
 });
 
-  export interface sendEmailModel {
-    subject: string,
-    content: string,
-    emailTo: string
+export interface sendEmailModel {
+  subject: string,
+  content: string,
+  emailTo: string
+}
+
+@Injectable()
+export class SMTP {
+  constructor() { }
+
+  sendEmail({
+    subject,
+    content,
+    emailTo,
+  }: sendEmailModel) {
+
+    const details = {
+      from: process.env.NODEMAILER_GMAIL,
+      to: emailTo,
+      subject,
+      text: subject,
+      html: content,
+    };
+
+    mailTransporter.sendMail(details, (err, info) => {
+      if (err) {
+        console.log(err);
+        return false;
+      } else {
+        console.log("Email sent: " + info.response);
+        return true;
+      }
+    })
   }
-
-  @Injectable()
-  export class SMTP {
-    constructor() {}
-
-    sendEmail({
-        subject,
-        content,
-        emailTo,
-    }: sendEmailModel) {
-
-      
-
-        const details = {
-            from: process.env.NODEMAILER_GMAIL,
-            to: emailTo,
-            subject,
-            text: subject,
-            html: content,
-          };
-
-          mailTransporter.sendMail(details, (err, info) => {
-            if (err) {
-              console.log(err);
-              return false;
-            } else {
-              console.log("Email sent: " + info.response);
-              return true;
-            }
-          })
-    }
-  }
+}

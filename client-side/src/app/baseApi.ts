@@ -20,5 +20,5 @@ export const publicApi = createApi({
       },
     }),
     endpoints: () => ({}),
-    tagTypes: ['Category', 'Subcategory', 'Product', 'SetCategory', 'User', 'Cart-Product'],
+    tagTypes: ['Category', 'Subcategory', 'Product', 'SetCategory', 'User', 'Cart-Product', 'Staff'],
   });

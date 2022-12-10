@@ -17,6 +17,9 @@ function AdminNavbar() {
             <NavLink to={''}>
             <i className="fa-solid fa-truck-fast"></i> Orders
             </NavLink>
+            <NavLink to={'employees'}>
+            <i className="fa-solid fa-users"></i> Employees
+            </NavLink>
         </AdminLinks>
         <UserProfile>
             <img src="/assets/arthur estrada profile.jpg" alt="" />
