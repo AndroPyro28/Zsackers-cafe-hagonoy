@@ -1,6 +1,6 @@
 import { privateApi } from "../app/baseApi";
 import { User } from "../model";
-import { updateStaff } from "../model/Staff";
+import { createStaff, updateStaff } from "../model/Staff";
 
 const staffApi = privateApi.injectEndpoints({
     endpoints: builder => ({
@@ -10,6 +10,14 @@ const staffApi = privateApi.injectEndpoints({
                 method:"GET",
             }),
             providesTags: (result, error, arg) => [{type: 'Staff', id: "query"}],
+        }),
+        createStaff: builder.mutation<void, createStaff>({
+            query: (body) => ({
+                url: `staff`,
+                method:"POST",
+                body
+            }),
+            invalidatesTags: (result, error, arg) => [{type: 'Staff'}],
         }),
         updateStaff: builder.mutation<void, updateStaff>({
             query: ({id, status}) => ({
@@ -36,4 +44,4 @@ export default staffApi;
 
 
 
-export const { useGetStaffsQuery, useUpdateStaffMutation, useDeleteStaffMutation} = staffApi
+export const { useGetStaffsQuery, useUpdateStaffMutation, useDeleteStaffMutation, useCreateStaffMutation} = staffApi

@@ -22,7 +22,45 @@ padding-inline:20px;
 export const UserProfile = styled.div`
 height: 50px;
 display: flex;
+align-items: center;
+margin-right: 50px;
+gap: 10px;
 & > img {
     width: 50px;
 }
+
+& > .user-firstname {
+    font-size: 0.9em;
+}
+`
+
+export const DropDown = styled.div`
+    & .i {
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 50%;
+        &:hover {
+            background: #eaeaea;
+        }
+    }
+`
+
+export const DropdownContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    margin-left: -60px;
+    margin-top: 10px;
+    background: white;
+    gap: 5px;
+    border: solid 1px gray;
+    border-radius: 10px;
+    overflow: hidden;
+    & > a {
+    width: 100%;
+    padding: 10px 30px;
+        &:hover { 
+            background: #EAEAEA;
+        }
+    }
 `

@@ -26,8 +26,11 @@ export class User {
 
   async findUserByEmail(email: string) {
     try {
-      const currentUser = await user.findUnique({
-        where: { email },
+      const currentUser = await user.findFirst({
+        where: { 
+          email,
+          status:'ACTIVE'
+         },
         include: {
           profile: true,
         },

@@ -32,13 +32,26 @@ function Logic({setCurrentField}: any) {
     } as Signup
 
     const validationSchema = yup.object({
-        firstname: yup.string().required('Firstname is required').matches(/^[A-Za-z\s]*$/, "Must container letters only").min(3,'Firstname must be at least 3 characters'),
-        lastname: yup.string().required('Lastname is required').matches(/^[A-Za-z\s]*$/, "Must container letters only").min(3,'Lastname must be at least 3 characters'),
-        email: yup.string().required('Email is required').email('This must be a valid email'),
-        address: yup.string().required('Address is required'),
-        contact: yup.string().required('Contact is required').matches(/^[0-9]*$/, "Digits only"),
-        password: yup.string().required("Password is required").min(6),
-        confirmPassword: yup.string().required('Password confirmation is required').when("password", (password, field) =>  password ? 
+        firstname: yup.string()
+        .required('Firstname is required')
+        .matches(/^[A-Za-z\s]*$/, "Must container letters only")
+        .min(3,'Firstname must be at least 3 characters'),
+        lastname: yup.string().required('Lastname is required')
+        .matches(/^[A-Za-z\s]*$/, "Must container letters only")
+        .min(3,'Lastname must be at least 3 characters'),
+        email: yup.string()
+        .required('Email is required')
+        .email('This must be a valid email'),
+        address: yup.string()
+        .required('Address is required'),
+        contact: yup.string()
+        .required('Contact is required').matches(/^[0-9]*$/, "Digits only"),
+        password: yup.string()
+        .required("Password is required")
+        .min(6),
+        confirmPassword: yup.string()
+        .required('Password confirmation is required')
+        .when("password", (password, field) =>  password ? 
         field.required('Confirmation password is required').oneOf(
             [yup.ref("password")],
             "Password and confirmation password do not match"

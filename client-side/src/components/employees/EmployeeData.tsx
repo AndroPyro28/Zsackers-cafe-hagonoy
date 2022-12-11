@@ -22,7 +22,6 @@ function EmployeeData({data}: Props) {
         status,
         id: data.id
       })
-      console.log(res)
     } catch (error) {
       console.error(error)
     }
@@ -31,7 +30,6 @@ function EmployeeData({data}: Props) {
   const handleDelete = async (id: number) => {
     try {
       const res: any = await deleteStaff(id);
-      console.log(res)
     } catch (error) {
       console.error(error)
     }

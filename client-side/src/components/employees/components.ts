@@ -18,6 +18,9 @@ export const TD = styled.td`
     }
     &.email, &.contact{
         font-weight:  500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     &.created {

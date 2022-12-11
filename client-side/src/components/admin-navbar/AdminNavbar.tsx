@@ -1,7 +1,16 @@
-import React from 'react'
 import { NavLink } from 'react-router-dom'
-import {AdminNavbarContainer, AdminLinks, UserProfile} from "./components"
+import { useGetCurrentUser } from '../../services'
+import { Photo, PhotoBorder } from '../customer-navbar/components'
+import {AdminNavbarContainer, AdminLinks, UserProfile, DropDown, DropdownContent} from "./components"
+import { useDispatch } from 'react-redux'
+import { logout } from '../../features'
+import { useState } from 'react'
 function AdminNavbar() {
+
+  const {data: user} = useGetCurrentUser()
+  const dispatch = useDispatch()
+  const handleLogout = () => dispatch(logout())
+  const [toggleDropDown, setToggleDropdown] = useState(false)
   return (
     <AdminNavbarContainer>
         <AdminLinks>
@@ -22,7 +31,27 @@ function AdminNavbar() {
             </NavLink>
         </AdminLinks>
         <UserProfile>
-            <img src="/assets/arthur estrada profile.jpg" alt="" />
+          <PhotoBorder>
+            <Photo src="/assets/arthur estrada profile.jpg" alt="" />
+          </PhotoBorder>
+          <span className='user-firstname'>{user?.profile.firstname}</span>
+          <DropDown>
+            <div onClick={() => setToggleDropdown(prev => !prev)}>
+            <i className="fa-solid fa-chevron-down i"></i>
+            </div>
+
+        {
+          toggleDropDown && <DropdownContent>
+          <NavLink to={'profile'}>
+            Profile
+          </NavLink>
+          <a href="#" onClick={handleLogout}>
+            Logout
+          </a>
+        </DropdownContent>
+        }
+            
+          </DropDown>
         </UserProfile>
     </AdminNavbarContainer>
   )

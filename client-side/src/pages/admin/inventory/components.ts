@@ -30,16 +30,19 @@ export const InventoryLeftContentContainer = styled.div`
   & > h1 {
     font-weight: 500;
     font-size: 1.2em;
-    color: white;
+    color: black;
+
   }
 
   & > small {
-    color: white;
+    color: gray;
+
   }
 `;
 export const SearchItemContainer = styled.div`
   padding: 5px 10px;
   display: flex;
+  width: 100%;
   align-items: center;
   border: solid 1px gray;
   border-radius: 10px;
@@ -53,7 +56,7 @@ export const SearchItemContainer = styled.div`
 
   & > input {
     padding: 5px 10px;
-    width: 90%;
+    width: 100%;
     border: none;
     outline: none;
     background: none;

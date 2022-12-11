@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import Cookies from "js-cookie";
 
 const userSlice = createSlice({
     name: "User",
@@ -11,11 +12,16 @@ const userSlice = createSlice({
         },
         authenticationFailed: (state, action) => {
             return action.payload
+        },
+        logout: () => {
+             Cookies.remove('access_token')
+             console.log('hello')
+             window.location.reload()
         }
     },
 })
 
-export const {authenticationSuccess, authenticationFailed} =  userSlice.actions;
+export const {authenticationSuccess, authenticationFailed, logout } =  userSlice.actions;
 
 
 

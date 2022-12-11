@@ -15,7 +15,8 @@ import Pos from './pages/staff/pos/Pos';
 import Checkout from './pages/customer/checkout/Checkout';
 import Payment from './pages/customer/payment/Payment';
 import Employees from './pages/admin/employees/Employees';
-
+import {ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 function App() {
 
   const router = createBrowserRouter([
@@ -117,6 +118,7 @@ function App() {
   return (
     <AppMain>
       <GlobalStyles />
+      <ToastContainer autoClose={2500} />
       <RouterProvider router={router} />
     </AppMain>
   );

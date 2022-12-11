@@ -3,6 +3,7 @@ import { Signin } from '../../../model'
 import { useSigninMutation } from '../../../services'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 function Logic() {
   const [signinMutation] = useSigninMutation()
@@ -22,6 +23,7 @@ function Logic() {
           window.location.assign(`/${data.role}`);
         }
       } catch (error: any) {
+        toast(error.message, {type:'warning'})
         console.error(error.message)
       }
     }

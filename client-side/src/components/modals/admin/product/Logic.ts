@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { CreateProduct } from "../../../../model";
 import { useCreateProductMutation } from "../../../../services";
-
+import {toast} from 'react-toastify'
 function Logic() {
   const [createProduct] = useCreateProductMutation();
   const onSubmit = async (values: CreateProduct, { resetForm }: any) => {
@@ -44,11 +44,11 @@ function Logic() {
           }
         } else {
           resetForm(initialValues);
-          alert("Product Created");
+          toast("Product Created", {type: 'success'});
         }
       }
     } catch (error: any) {
-      alert(error.message);
+      toast(error.message, {type: 'warning'});
       console.error(error);
     }
   };

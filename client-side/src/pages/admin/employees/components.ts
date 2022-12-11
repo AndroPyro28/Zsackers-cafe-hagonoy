@@ -36,7 +36,17 @@ export const Filters = styled.div`
     display: flex;
     margin: 40px 0px;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
+    padding: 0px 20px;
+    height: 40px;
+    & > button {
+        padding: 0px 15px;
+        color: white;
+        background: rgb(1,59,77);
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+    }
 `
 
 export const SearchBarContainer = styled.div`
