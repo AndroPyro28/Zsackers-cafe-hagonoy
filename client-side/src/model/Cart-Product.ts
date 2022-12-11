@@ -4,7 +4,7 @@ export interface CartProduct {
     id: number;
     product: Product,
     quantity: number;
-    purchase?: boolean 
+    // purchase?: boolean 
 }
 
 export interface UpdateQuantity {

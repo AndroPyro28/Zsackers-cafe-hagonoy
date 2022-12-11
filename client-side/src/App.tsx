@@ -1,6 +1,6 @@
 import './App.css';
 import {AppMain, GlobalStyles} from "./appComponents"
-import {createBrowserRouter, Route, RouterProvider, Routes} from "react-router-dom"
+import {createBrowserRouter, RouterProvider } from "react-router-dom"
 import PublicRoutes from './routes/PublicRoutes';
 import Index from './pages/public/index/Index';
 import About from './pages/public/about/About';
@@ -17,6 +17,8 @@ import Payment from './pages/customer/payment/Payment';
 import Employees from './pages/admin/employees/Employees';
 import {ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import Orders from './pages/admin/orders/Orders';
+import OrderDetails from './pages/admin/order_details/OrderDetails';
 function App() {
 
   const router = createBrowserRouter([
@@ -63,6 +65,19 @@ function App() {
               index: true
             }
           ]
+        },
+        {
+          path: 'orders',
+          children: [
+            {
+              element: <Orders />,
+              index: true
+            },
+            {
+              path:":order_id",
+              element:<OrderDetails />
+            },
+          ]
         }
       ]
     },
@@ -77,10 +92,7 @@ function App() {
               element: <Store />,
               index: true,
             }, 
-            // {
-            //   path:":id",
-            //   element:<ProductDetails />
-            // },
+           
           ]
         },
         {

@@ -7,16 +7,16 @@ import {
   Param,
   Delete,
   Res,
+  Query,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { GetCurrentUser, Roles } from 'src/common/decorators';
-import { User } from 'src/models';
 import UserInteface from 'src/models/user.model';
-import { v4 as uuid } from 'uuid';
 import { Response } from 'express';
-
+import { orderStatus } from '@prisma/client'
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) { }
@@ -28,52 +28,7 @@ export class OrderController {
     @GetCurrentUser() currentUser: UserInteface,
     @Res() res: Response,
   ) {
-    // const { paymentType, totalAmount, cartProducts, address, contact } = createOrderDto;
-
-    // let returnJson: any = {
-    //   proceedPayment: true,
-    //   paymentType,
-    //   cartProducts,
-    //   checkouturl: '',
-    //   address,
-    //   contact,
-    //   order_id: '',
-    // };
-
-    // if (paymentType === 'gcash') {
-    //   const request = require('request');
-    //   var options = {
-    //     method: 'POST',
-    //     url: 'https://g.payx.ph/payment_request',
-    //     formData: {
-    //       'x-public-key': process.env.GCASH_API_KEY,
-    //       amount: `${1}`,
-    //       description: 'Payment for services rendered',
-    //       redirectsuccessurl: `${process.env.CLIENT_URL}/customer/payment`,
-    //       // redirectfailurl: `${process.env.CLIENT_URL_PROD}/customer/cart`,
-    //       customeremail: `${currentUser?.email}`,
-    //       customermobile: `${currentUser?.profile.contact}`,
-    //       customername: `${currentUser?.profile.firstname} ${currentUser?.profile.lastname}`,
-    //       // webhooksuccessurl:`${process.env.SERVER_URI_PROD}/api/customer/paymentsuccess`
-    //     },
-    //   };
-    //   request(options, function (error, response) {
-    //     if (error) throw new Error(error);
-
-    //     const { data } = JSON.parse(response.body);
-
-    //     const { checkouturl, hash } = data;
-
-    //     return res.json({ ...returnJson, checkouturl, order_id: hash });
-    //   });
-    // }
-    // if (paymentType === 'cod') {
-    //   res.json({
-    //     ...returnJson,
-    //     checkouturl: `http://localhost:3000/customer/payment`,
-    //     order_id: uuid(),
-    //   });
-    // }
+    return this.orderService.checkout(createOrderDto, currentUser, res)
   }
 
   @Post('/payment')
@@ -85,19 +40,32 @@ export class OrderController {
     return this.orderService.payment(createOrderDto, userId)
   }
 
-  @Get()
-  findAll() {
-    return this.orderService.findAll();
+  @Get('admin')
+  @Roles(['ADMIN'])
+  findAllByAdmin(
+    @Query('order_status') order_status: string,
+    @Query('search') search: string
+  ) {
+    return this.orderService.findAllByAdmin(order_status, search);
+  }
+
+  @Get('order-id/:order_id')
+  @Roles(['ADMIN', 'CUSTOMER'])
+  findOneByOrderId(
+    @Param('order_id') order_id: string,
+  ) {
+    return this.orderService.findOneByOrderId(order_id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOneById(@Param('id') id: string) {
     return this.orderService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
+  updateStatus(
+    @Param('id', ParseIntPipe) id: number, @Body('deliveryStatus', ParseIntPipe) deliveryStatus: number) {
+    return this.orderService.updateStatus(id, deliveryStatus);
   }
 
   @Delete(':id')

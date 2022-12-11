@@ -81,7 +81,7 @@ function CheckoutModal({paymentType, setOpenCheckoutModal, totalAmount}: Props) 
 
           <CheckoutButtons>
             {/* <button>Cancel</button> */}
-            <button type="submit">Proceed</button>
+            <button type='submit'>Proceed</button>
           </CheckoutButtons>
           </CheckOutModalContainer>
         }

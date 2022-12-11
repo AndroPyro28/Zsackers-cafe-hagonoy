@@ -75,6 +75,10 @@ export const ChekoutButton = styled.button`
   background: rgb(0, 62, 204);
   color: white;
   font-size: 0.9em;
+  cursor: pointer;
+  &:hover {
+    background: black;
+  }
   & > span {
     margin: 0px 10px;
 

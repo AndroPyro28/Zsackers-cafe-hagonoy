@@ -56,6 +56,7 @@ export const DropdownContent = styled.div`
     border: solid 1px gray;
     border-radius: 10px;
     overflow: hidden;
+    z-index: 1;
     & > a {
     width: 100%;
     padding: 10px 30px;

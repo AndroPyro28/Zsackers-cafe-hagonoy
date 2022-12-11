@@ -1,4 +1,5 @@
 import { CartProduct } from "./Cart-Product";
+import { User } from "./User";
 
 export interface CreateOrder {
    address: string;
@@ -7,4 +8,26 @@ export interface CreateOrder {
    paymentType: string;
    totalAmount: number;
    order_id?: string
+}
+type orderStatus = 'pending' | 'onGoing' | 'completed' | 'cancelled' | 'all'
+
+export interface GetOrdersByAdmin {
+   order_status: orderStatus;
+   search: string;
+}
+
+export interface OrderDetails {
+ id: number;
+  order_id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  paymentMethod: string;
+  totalAmount: number;
+  contact: string
+  user: User
+  userId: number
+  address: string; 
+  order_status: orderStatus
+  delivery_status: number;
+  cart_product: CartProduct[ ]
 }

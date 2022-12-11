@@ -51,12 +51,14 @@ model Profile {
 
   enum orderStatus {
     pending
-    ongoing
+    onGoing
     completed
+    cancelled
   }
+
 model Order_Details {
   id              Int            @id @default(autoincrement())
-  order_id        String
+  order_id        String         @unique
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @updatedAt
   paymentMethod   String

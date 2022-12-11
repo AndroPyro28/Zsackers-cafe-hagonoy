@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CartProduct, Product } from 'src/models';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -6,6 +6,7 @@ import { Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import UserInteface from 'src/models/user.model';
 import { OrderDetails } from 'src/models/order-details.model';
+import { orderStatus } from '@prisma/client';
 @Injectable()
 export class OrderService {
   constructor(
@@ -58,7 +59,7 @@ export class OrderService {
       return res.json({
         ...returnJson,
         checkouturl: `http://localhost:3000/customer/payment`,
-        order_id: uuid(),
+        order_id: `${uuid()}`.replace(/\-/g,""),
       });
     }
   }
@@ -79,16 +80,28 @@ export class OrderService {
     }
   }
 
-  findAll() {
-    return `This action returns all order`;
+  findAllByAdmin(order_status: string, search: string) {
+    return this.orderDetailsModel.findAllByAdmin(order_status, search);
   }
 
   findOne(id: number) {
     return `This action returns a #${id} order`;
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async findOneByOrderId (order_id: string) {
+    const orderDetails = await this.orderDetailsModel.findOneByOrderId(order_id);
+    if(!orderDetails) {
+      throw new ForbiddenException('Cannot find order details')
+    }
+
+    return orderDetails
+  }
+
+ async updateStatus(id: number, deliveryStatus: number) {
+    const updatedOrder = await this.orderDetailsModel.updateStatus(id, deliveryStatus);
+
+    if(!updatedOrder) throw new ForbiddenException('Didnt update status');
+    return updatedOrder
   }
 
   remove(id: number) {

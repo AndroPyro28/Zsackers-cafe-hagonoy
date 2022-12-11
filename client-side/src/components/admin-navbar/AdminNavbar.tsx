@@ -23,7 +23,7 @@ function AdminNavbar() {
             <NavLink to={''}>
             <i className="fa-solid fa-chart-pie"></i> Sales
             </NavLink>
-            <NavLink to={''}>
+            <NavLink to={'orders'}>
             <i className="fa-solid fa-truck-fast"></i> Orders
             </NavLink>
             <NavLink to={'employees'}>
