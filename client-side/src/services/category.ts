@@ -8,8 +8,10 @@ const categoryApi = privateApi.injectEndpoints({
         url: `category?search=${search}`,
         method: "GET",
       }),
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result: any, error, arg) => [
         { type: "Category", id: arg },
+        ...result?.map(({id}: any) => ({id, type: 'Category' })),
+
       ],
     }),
     createCategory: builder.mutation<void, CreateCategory>({
@@ -26,14 +28,14 @@ const categoryApi = privateApi.injectEndpoints({
         method: "PATCH",
         body: { ...rest },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Category" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Category", id: arg.id }],
     }),
     deleteCategory: builder.mutation<void, number>({
       query: (id) => ({
         url: `category/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Category" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Category", id: arg }],
     }),
   }),
   overrideExisting: false,

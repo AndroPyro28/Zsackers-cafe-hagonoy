@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { Product as ProductInterface } from '../../model'
+import { useAddToCartMutation } from '../../services/cart-products';
 import { ProductContainer, Image, Name, Price } from './components'
 
 interface Props {
@@ -8,29 +9,15 @@ interface Props {
 }
 function Product({ data }: Props) {
 
-  const handleClick = () => {
-    let storage: { productId: number, quantity: number }[];
-    const sessionStorage = window.sessionStorage.getItem('posItem');
+  const [addToCartMutation] = useAddToCartMutation();
 
-    storage = !Boolean(sessionStorage) || !sessionStorage || sessionStorage == null ? 
-    [] : 
-    JSON.parse(sessionStorage)
+  const handleClick = async () => {
     try {
-      const index = storage.findIndex((posItem) => posItem.productId == data.id);
-      console.log(!index, index)
-      if (index == -1) {
-        storage.push({ productId: data.id, quantity: 1 })
-        window.sessionStorage.setItem('posItem', JSON.stringify(storage))
-      } else {
-        storage[index].quantity += 1;
-        window.sessionStorage.setItem('posItem', JSON.stringify(storage))
-      }
+      const result = await addToCartMutation(data.id);
+      console.log(result)
     } catch (error) {
       console.error(error)
-    } finally {
-      console.log(storage);
     }
-
   }
 
   return (

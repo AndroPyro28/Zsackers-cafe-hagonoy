@@ -84,6 +84,10 @@ export class OrderService {
     return this.orderDetailsModel.findAllByAdmin(order_status, search);
   }
 
+  findAllByCustomer(status: string, userId: number ) {
+    return this.orderDetailsModel.findAllByCustomer(status, userId);
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} order`;
   }

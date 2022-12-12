@@ -1,49 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { useGetAllProductQuery } from '../../services'
+import { useGetCartProductsQuery } from '../../services/cart-products'
 import { CashierContent as CashierContentContainer, Discount, DiscountAmount, Orders, OrderSummary, Subtotal, SubtotalAmount, Summary, Tax, TaxAmount, Total, TotalAmount } from './components'
 import Order from './Order'
 
 function CashierContent() {
 
-  const [posItem, setPosItem] = useState<{ productId: number, quantity: number }[]>([]);
+  const { data: CartProducts, isLoading, isError } = useGetCartProductsQuery()
+  let content;
 
-  useEffect(() => {
-    try {
-      setPosItem(JSON.parse(window.sessionStorage.getItem('posItem')!))
-    } catch (error) {
-      console.error('errrrorrr', error)
-      setPosItem([])
-    }
-  }, [window.sessionStorage.getItem('posItem')])
+  if(isLoading) content = <h3>Loading...</h3>
 
-  const [totalAmount, setTotalAmount] = useState(0);
+  if(isError) content = <h3>Something went wrong...</h3>
+
+  if(CartProducts?.length === 0) content = <h3>No Orders yet</h3>
+  else content = CartProducts?.map((cartProduct) => <Order data={cartProduct} />)
+
 
   return (
     <CashierContentContainer>
       <h1>Current Order</h1>
       <Orders>
-        {
-          posItem?.length > 0 && posItem?.map((item) => <Order data={{ productId: item.productId, quantity: item.quantity }} setTotalAmount={setTotalAmount} key={item.productId} />)
-        }
+        { content }
       </Orders>
 
       <OrderSummary>
         <Summary>
           <Subtotal>Subtotal</Subtotal>
-          <SubtotalAmount>{productPriceFormatter(totalAmount + '')}</SubtotalAmount>
+          <SubtotalAmount>{productPriceFormatter(50 + '')}</SubtotalAmount>
         </Summary>
         <Summary>
           <Tax>Tax</Tax>
-          <TaxAmount>{productPriceFormatter(totalAmount + '')}</TaxAmount>
+          <TaxAmount>{productPriceFormatter(50 + '')}</TaxAmount>
         </Summary>
         <Summary>
           <Discount>Discount</Discount>
-          <DiscountAmount>{productPriceFormatter(totalAmount + '')}</DiscountAmount>
+          <DiscountAmount>{productPriceFormatter(50 + '')}</DiscountAmount>
         </Summary>
         <Summary>
           <Total>Discount</Total>
-          <TotalAmount>{productPriceFormatter(totalAmount + '')}</TotalAmount>
+          <TotalAmount>{productPriceFormatter(50 + '')}</TotalAmount>
         </Summary>
       </OrderSummary>
     </CashierContentContainer>

@@ -1,13 +1,17 @@
 import React from 'react'
+import { Product as ProductModel} from '../../model'
 import { ProductContainer, ProductName, ProductPrice } from './components'
+import { useNavigate } from 'react-router-dom'
+function Product({data}: {data: ProductModel }) {
 
-function Product() {
+  const navigate = useNavigate();
+  
   return (
-    <ProductContainer>
-        <img src="/assets/DOZEN.jpg" />
+    <ProductContainer onClick={() => navigate('/customer/store')}>
+        <img src={data.image_url} />
 
-        <ProductName>One Dozen (Half filled, Half rings)</ProductName>
-        <ProductPrice>Php 450.00</ProductPrice>
+        <ProductName>{data.productName}</ProductName>
+        <ProductPrice>Php {data.price}</ProductPrice>
     </ProductContainer>
   )
 }

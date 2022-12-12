@@ -7,7 +7,6 @@ function Logic() {
     const addToCart = async (productId: number) => {
         try {
             const result = await addToCartMutation(productId);
-            console.log(result);
         } catch (error) {
             console.error(error)
         }

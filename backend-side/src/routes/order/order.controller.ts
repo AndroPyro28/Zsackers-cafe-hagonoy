@@ -22,7 +22,7 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) { }
 
   @Post('/checkout')
-  @Roles(['CUSTOMER'])
+  @Roles(['CUSTOMER', 'STAFF'])
   async checkout(
     @Body() createOrderDto: CreateOrderDto,
     @GetCurrentUser() currentUser: UserInteface,
@@ -31,8 +31,18 @@ export class OrderController {
     return this.orderService.checkout(createOrderDto, currentUser, res)
   }
 
+  @Post('/pos')
+  @Roles(['CUSTOMER', 'STAFF'])
+  async pos(
+    @Body() createOrderDto: CreateOrderDto,
+    @GetCurrentUser() currentUser: UserInteface,
+    @Res() res: Response,
+  ) {
+    return this.orderService.checkout(createOrderDto, currentUser, res)
+  }
+
   @Post('/payment')
-  @Roles(['CUSTOMER'])
+  @Roles(['CUSTOMER', 'STAFF'])
   async payment(
     @Body() createOrderDto: CreateOrderDto,
     @GetCurrentUser('id') userId: number,
@@ -47,6 +57,15 @@ export class OrderController {
     @Query('search') search: string
   ) {
     return this.orderService.findAllByAdmin(order_status, search);
+  }
+
+  @Get('customer')
+  @Roles(['CUSTOMER'])
+  findAllByCustomer(
+    @Query('status') status: string,
+    @GetCurrentUser('id') userId: number
+  ) {
+    return this.orderService.findAllByCustomer(status, userId);
   }
 
   @Get('order-id/:order_id')

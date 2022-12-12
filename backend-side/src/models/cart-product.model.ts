@@ -24,11 +24,11 @@ export class CartProduct {
     }
   }
 
-  async getProductCartById(productId: number) {
+  async getProductCartById(cartProductId: number) {
     try {
       const product = await cart_Product.findFirst({
         where: {
-          id: productId,
+          id: cartProductId,
         },
         include: {
           product: true,
@@ -93,11 +93,11 @@ export class CartProduct {
     }
   }
 
-  async deleteCartProduct(productId: number) {
+  async deleteOneCartProduct(cartProductId: number) {
     try {
       const deletedProduct = await cart_Product.delete({
         where: {
-          id: productId,
+          id: cartProductId,
         },
       });
 
@@ -107,15 +107,15 @@ export class CartProduct {
     }
   }
 
-  async updateCartQuantity(productId: number, userId: number, action: string) {
+  async updateCartQuantity(cartProductId: number, userId: number, action: string) {
     try {
-      const cartProduct = await this.getProductCartById(productId);
+      const cartProduct = await this.getProductCartById(cartProductId);
       if (action === 'decrement') {
         return cartProduct.quantity - 1 <= 0
-          ? await this.deleteCartProduct(productId)
+          ? await this.deleteOneCartProduct(cartProductId)
           : await cart_Product.updateMany({
               where: {
-                id: productId,
+                id: cartProductId,
                 userId,
               },
               data: {
@@ -131,7 +131,7 @@ export class CartProduct {
           ? new Error('Cannot exceed to product stock')
           : await cart_Product.updateMany({
               where: {
-                id: productId,
+                id: cartProductId,
                 userId,
               },
               data: {

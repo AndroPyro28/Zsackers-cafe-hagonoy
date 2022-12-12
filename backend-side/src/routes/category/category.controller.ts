@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post, Query } from '@nestjs/common';
-import { Roles } from 'src/common/decorators';
+import { Public, Roles } from 'src/common/decorators';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto';
 
@@ -12,7 +12,8 @@ export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @Get()
-    @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
+    // @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
+    @Public()
     @HttpCode(HttpStatus.OK)
     async getAllCategories(@Query('search') search: string ) {
         return this.categoryService.getAllCategories(search)

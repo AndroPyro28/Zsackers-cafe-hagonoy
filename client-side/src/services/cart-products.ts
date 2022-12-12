@@ -13,31 +13,42 @@ const cartProductApi = privateApi.injectEndpoints({
           productId,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{type: 'Cart-Product'}],
+      invalidatesTags: (result, error, arg) => [{ type: "Cart-Product"}],
     }),
     getCartProducts: builder.query<CartProduct[], void>({
       query: () => ({
         url: `cart-products`,
         method: "GET",
       }),
-      providesTags: (result, error, arg) => [
+      providesTags: (result: any, error, arg) => [
         { type: "Cart-Product", id: "LIST" },
+        ...result?.map(({id}: any) => ({id, type: 'Cart-Product' })),
       ],
       transformResponse: (cartProducts: CartProduct[]) => {
-        return cartProducts
-        .filter((cartProduct) => !cartProduct.product.archive)
+        return cartProducts.filter(
+          (cartProduct) => !cartProduct.product.archive
+        );
       },
     }),
     updateQuantity: builder.mutation<void, UpdateQuantity>({
-      query: ({id, action}) => ({
+      query: ({ id, action }) => ({
         url: `cart-products/${id}`,
         method: "PATCH",
         body: {
-          action
-        }
+          action,
+        },
       }),
-      invalidatesTags: (result, error, arg) => [{type: 'Cart-Product'}]
-    })
+      invalidatesTags: (result, error, arg) => [{ type: "Cart-Product", id: arg.id }],
+    }),
+    deleteOneCartProduct: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `cart-products/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Cart-Product", id: arg },
+      ],
+    }),
   }),
   overrideExisting: false,
 });
@@ -47,4 +58,9 @@ export const useGetCartProducts = () =>
 
 export default cartProductApi;
 
-export const { useAddToCartMutation, useGetCartProductsQuery, useUpdateQuantityMutation } = cartProductApi;
+export const {
+  useAddToCartMutation,
+  useGetCartProductsQuery,
+  useDeleteOneCartProductMutation,
+  useUpdateQuantityMutation,
+} = cartProductApi;

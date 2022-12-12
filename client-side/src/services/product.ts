@@ -14,8 +14,9 @@ const productApi = privateApi.injectEndpoints({
         url: `products?name=${searchName}&&categoryId=${categoryId}&&subcategoryId=${subcategoryId}&&setcategoryId=${setcategoryId}`,
         method: "GET",
       }),
-      providesTags: (result = [], error, arg) => [
-        { type: "Product", id: arg.searchName },
+      providesTags: (result: any, error, arg) => [
+        { type: "Product",},
+        ...result?.map(({id}: any) => ({id, type: 'Product' })),
       ],
     }),
     getProductsBySubcategory: builder.query<Product[], getBySubcategory>({
@@ -23,8 +24,9 @@ const productApi = privateApi.injectEndpoints({
         url: `products?subcategoryId=${subcategoryId}`,
         method: "GET",
       }),
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result: any, error, arg) => [
         { type: "Product", id: "LIST" },
+        ...result?.map(({id}: any) => ({id, type: 'Product' })),
       ],
     }),
     getProductById: builder.query<Product, number>({
@@ -48,14 +50,14 @@ const productApi = privateApi.injectEndpoints({
         method: "PATCH",
         body: { ...rest },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Product" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Product", id: arg.id }],
     }),
     archiveProduct: builder.mutation<void, number>({
       query: (id) => ({
         url: `products/${id}`,
         method: "PUT",
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Product" }],
+      invalidatesTags: (result, error, arg) => [{ type: "Product", id: arg }],
     }),
   }),
   overrideExisting: false,

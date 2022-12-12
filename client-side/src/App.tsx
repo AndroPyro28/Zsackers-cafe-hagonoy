@@ -19,6 +19,11 @@ import {ToastContainer} from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import Orders from './pages/admin/orders/Orders';
 import OrderDetails from './pages/admin/order_details/OrderDetails';
+import { Children } from 'react';
+import { elements } from 'chart.js';
+import Purchases from './pages/customer/purchases/Purchases';
+import Preparing from './components/purchases/Preparing';
+import ToReceive from './components/purchases/ToReceive';
 function App() {
 
   const router = createBrowserRouter([
@@ -86,13 +91,16 @@ function App() {
       path: '/customer',
       children: [
         {
+          path: '',
+          element: <Index />
+        },
+        {
           path: 'store',
           children: [
             {
               element: <Store />,
               index: true,
             }, 
-           
           ]
         },
         {
@@ -110,6 +118,24 @@ function App() {
             {
               element: <Payment />,
               index: true
+            }
+          ]
+        },
+        {
+          path: 'purchases',
+          element: <Purchases />,
+          children: [
+            {
+              index: true,
+              element: <Preparing />
+            },
+            {
+              path: 'preparing',
+              element: <Preparing />
+            },
+            {
+              path: 'to-receive',
+              element: <ToReceive />
             }
           ]
         }

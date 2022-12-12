@@ -24,7 +24,21 @@ const orderApi = privateApi.injectEndpoints({
         url: `order/admin/?search=${search}&&order_status=${order_status}`,
         method: "GET",
       }),
-      providesTags: (result, error, arg) => [{ type: "Order", id:"LIST" }],
+      providesTags: (result: any, error, arg) => [
+        { type: "Order", id:"LIST" },
+        ...result?.map(({id}: any) => ({id, type: 'Order' })),
+    ],
+    }),
+
+    getOrdersByCustomer: builder.query<OrderDetails[], string>({
+      query: (status) => ({
+        url: `order/customer/?status=${status}`,
+        method: "GET",
+      }),
+      providesTags: (result: any, error, arg) => [
+        { type: "Order", id:"LIST" },
+        ...result?.map(({id}: any) => ({id, type: 'Order' })),
+    ],
     }),
 
     getOrderByOrderId: builder.query<OrderDetails, string>({
@@ -32,7 +46,7 @@ const orderApi = privateApi.injectEndpoints({
         url: `order/order-id/${order_id}`,
         method: "GET",
       }),
-      providesTags: (result, error, arg) => [{ type: "Order", id:"LIST" }],
+      providesTags: (result, error, arg) => [{ type: "Order", id:arg }],
     }),
 
     OrderDetailsNextStage: builder.mutation<OrderDetails, {id: number, deliveryStatus: number}>({
@@ -41,7 +55,7 @@ const orderApi = privateApi.injectEndpoints({
         method: "PATCH",
         body: {deliveryStatus}
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Order"}],
+      invalidatesTags: (result, error, arg) => [{ type: "Order",}],
     }),
 
   }),
@@ -54,5 +68,6 @@ export const {
   useCreateOrderMutation,
   useGetOrdersByAdminQuery,
   useGetOrderByOrderIdQuery,
-  useOrderDetailsNextStageMutation
+  useOrderDetailsNextStageMutation,
+  useGetOrdersByCustomerQuery
 } = orderApi;

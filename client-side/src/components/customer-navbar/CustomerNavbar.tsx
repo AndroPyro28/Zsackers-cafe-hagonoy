@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
+import { useGetCartProducts } from '../../services/cart-products'
 import CartPopup from '../cart-popup/CartPopup'
 import { Cart, CustomerLinks, CustomerNavbarContainer, Photo, PhotoBorder, User, UserProfile } from './components'
 
@@ -9,6 +10,8 @@ function CustomerNavbar() {
 
     const {pathname} = useLocation()
 
+  const { data: cartProducts } = useGetCartProducts();
+    
 
     return (
         <CustomerNavbarContainer url={pathname}>
@@ -21,7 +24,7 @@ function CustomerNavbar() {
                 <Cart onClick={() => setOpenCart(prev => !prev)}>
                     <i className="fa-solid fa-cart-shopping carticon"></i> 
                     <span className='title'>Cart</span> 
-                    <span className='cart__number'>5</span>
+                    <span className='cart__number'>{cartProducts?.length}</span>
                 </Cart>
                     {
                         openCart &&  <CartPopup  /> 

@@ -1,4 +1,5 @@
 import { ClientRequest } from 'http'
+import { toast } from 'react-toastify';
 import * as yup from 'yup'
 import { CreateSubcategory, UpdateSubcategory } from '../../../../model'
 import { useCreateSubcategoryMutation, useDeleteSubcategoryMutation, useUpdateSubcategoryMutation } from '../../../../services/subcategory'
@@ -27,7 +28,7 @@ function SubCategoryLogic({categoryId, setAllowUpdate}: Props) {
                   }
             } else {
                 resetForm(initialValuesCreateSubCategory)
-                alert('Subcategory Created')
+                toast('Subcategory Created', {type: 'success'})
             }
         } catch (error: any) {
             alert(error.message)
@@ -53,7 +54,9 @@ function SubCategoryLogic({categoryId, setAllowUpdate}: Props) {
                     throw new Error(error.data.message);
                   }
             } else {
-                alert('Subcategory Updated')
+                // alert('Subcategory Updated')
+                toast('Subcategory Updated', {type: 'success'})
+
             }
         } catch (error: any) {
             alert(error.message)
@@ -74,7 +77,9 @@ function SubCategoryLogic({categoryId, setAllowUpdate}: Props) {
                     throw new Error(error.data.message);
                   }
             } else {
-                alert('Subcategory Deleted')
+                // alert('Subcategory Deleted');
+                toast('Subcategory Deleted', {type: 'success'})
+                
             }
         } catch (error: any) {
             alert(error.message)

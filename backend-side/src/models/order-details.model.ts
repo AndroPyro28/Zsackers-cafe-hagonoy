@@ -24,7 +24,7 @@ export class OrderDetails {
     }
   }
 
-  async findAllByAdmin(order_status: string, search: string) {
+  async findAllByAdmin(order_status: string, search: string,) {
     try {
       let condition: any = {
         OR: [
@@ -32,7 +32,7 @@ export class OrderDetails {
             order_id: {
               contains: search
             },
-            order_status: 'pending'
+            order_status: 'pending',
           },
           {
             order_id: {
@@ -72,6 +72,90 @@ export class OrderDetails {
       console.error(error)
     }
   }
+
+  async findAllByCustomer(status: string, userId: number) {
+    try {
+      let condition: object = {}
+      if(status === 'preparing') {
+        condition = {
+          OR: [
+            {
+              order_status: 'pending',
+              delivery_status: 0,
+              userId,
+              user: {
+                role: 'CUSTOMER'
+              }
+            },
+            {
+              order_status: 'onGoing',
+              delivery_status: 1,
+              userId,
+              user: {
+                role: 'CUSTOMER'
+              }
+            },
+            {
+              order_status: 'onGoing',
+              delivery_status: 2,
+              userId,
+              user: {
+                role: 'CUSTOMER'
+              }
+            },
+          ]
+        }
+      }
+
+      if(status === 'to-receive') {
+        condition = {
+              order_status: 'onGoing',
+              delivery_status: 3,
+              userId,
+              user: {
+                role: 'CUSTOMER'
+              }
+            }
+      }
+
+      if(status === 'completed') {
+        condition = {
+          order_status: 'completed',
+          delivery_status: 4,
+          userId,
+          user: {
+            role: 'CUSTOMER'
+          }
+        }
+      }
+      const orders = await order_Details.findMany({
+        where: condition,
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              profile: true
+            }
+          },
+          cart_product: {
+            select: {
+              product: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+      return orders
+
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
 
   async findOneByOrderId(order_id: string) {
     console.log(order_id)

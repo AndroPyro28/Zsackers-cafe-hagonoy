@@ -12,7 +12,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { Roles } from 'src/common/decorators';
+import { Public, Roles } from 'src/common/decorators';
 import { CreateProductDto, UpdateProduct } from './dto';
 import { ProductService } from './product.service';
 
@@ -31,7 +31,8 @@ export class ProductController {
   }
 
   @Get()
-  @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
+  // @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
+  @Public()
   @HttpCode(HttpStatus.OK)
   async getAllProducts(
     @Query('name') productName: string,

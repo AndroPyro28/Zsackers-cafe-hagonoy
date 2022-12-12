@@ -9,5 +9,5 @@ export interface CartProduct {
 
 export interface UpdateQuantity {
     id: number;
-    action: string;
+    action: 'decrement' | 'increment';
 }

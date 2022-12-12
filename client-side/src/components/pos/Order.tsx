@@ -1,26 +1,46 @@
+import { prepareDataForValidation } from 'formik'
 import React from 'react'
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
+import { CartProduct } from '../../model'
 import { useGetProductByIdQuery } from '../../services'
+import { useDeleteOneCartProductMutation, useUpdateQuantityMutation } from '../../services/cart-products'
 import { OrderContainer } from './components'
 interface Props {
-  data: {
-    quantity: number,
-    productId: number
-  },
-  setTotalAmount:  React.Dispatch<React.SetStateAction<number>>
+  data: CartProduct,
+  // setTotalAmount: React.Dispatch<React.SetStateAction<number>>
 }
-function Order({ data, setTotalAmount }: Props) {
-  const { quantity, productId } = data;
-  const { data: product, isLoading } = useGetProductByIdQuery(productId);
-  // setTotalAmount(prev => prev + ((quantity * product!.price ?? 0)))
+function Order({ data }: Props) {
 
-  if (isLoading) return <></>
+  const [updateQuantity] = useUpdateQuantityMutation()
+        
+        
+  const [deleteOne] = useDeleteOneCartProductMutation()
+
+  const handleUpdate = async (action: "increment" | "decrement") => {
+    const res = await updateQuantity({
+      id: data.id,
+      action
+    })
+  }
+
+  const handleDelete = async () => {
+    const res = await deleteOne(data.id)
+  }
+  
   return (
     <OrderContainer>
-      <td><img src={product?.image_url} alt="" className='image' /></td>
-      <td><span className='name'>{product?.productName}</span></td>
-      <td><button className='decrement'>-</button> <span className='quantity'>{quantity}</span> <button className='increment'>+</button></td>
-      <td><span className='price'>{productPriceFormatter((quantity * product!.price ?? 0) + '')}</span></td>
+      <td><img src={data?.product.image_url} alt="" className='image' /></td>
+      <td><span className='name'>{data?.product?.productName}</span></td>
+      <td>
+        <button className='decrement' 
+        onClick={() => handleUpdate('decrement')}>-</button> 
+        <span className='quantity'>{data.quantity}</span> 
+        <button className='increment'
+        onClick={() => handleUpdate('increment')}
+        >+</button>
+        </td>
+      <td><span className='price'>{productPriceFormatter((data.quantity * data?.product.price ?? 0) + '')}</span></td>
+      <td className='remove'><span onClick={handleDelete}> Remove </span></td>
     </OrderContainer>
   )
 }

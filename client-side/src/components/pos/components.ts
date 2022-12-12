@@ -91,6 +91,7 @@ export const ProductContainer = styled.div`
     border-radius: 10px;
     align-items: center;
     background: white;
+    cursor: pointer;    
 `
 
 export const Image = styled.img`
@@ -152,10 +153,20 @@ export const OrderContainer = styled.div`
 
     & > td {
         flex: 1;
+        /* gap: 10px; */
         & > .image {
-        width: 80px;
-        height: 80px;
-    }
+            width: 80px;
+            height: 80px;
+        }
+
+
+    &.remove {
+            /* color: maroon; */
+            font-size: 0.7em;
+            color: red;
+            /* font-weight: ; */
+            align-self: flex-start;
+        }
 
     & > button {
         background: #EAEAEA;
@@ -164,6 +175,7 @@ export const OrderContainer = styled.div`
         padding: 5px 10px;
         border-radius: 20px;
         font-size: 1.1em;
+        margin: 5px;
     }
     & >.name {
         width: fit-content;

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { getCartProducts } from '../../features';
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { CartProduct } from '../../model';
@@ -24,7 +25,7 @@ function PaymentSection() {
 
   const handleClick = () => {
     if(checkoutCartProducts.length <= 0 ) {
-      return alert('please checkout a product first')
+      return toast('please checkout a product first', {type: 'info'})
     }
     setOpenCheckoutModal(true)
   } 

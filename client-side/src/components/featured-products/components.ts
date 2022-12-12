@@ -25,7 +25,11 @@ export const Productsidebar = styled.div`
         display: flex;
         text-align: start;
         padding: 15px 50px;
-
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+        &:hover {
+            background: rgb(179,202,179);
+        }
         &.active {
             background: rgb(179,202,179);
         }
@@ -52,6 +56,7 @@ export const ProductList = styled.div`
     grid-auto-rows: 300px;
     gap: 20px;
     padding: 20px;
+    min-height: 900px;
 `
 
 export const ProductContainer = styled.div`
@@ -59,9 +64,14 @@ export const ProductContainer = styled.div`
     flex-direction: column;
     position: relative;
     border-radius: 10px;
+    gap: 10px;
+    cursor: pointer;
      & > img {
         width: 90%;
-        object-fit: contain;
+        max-height: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
      }
 `
 

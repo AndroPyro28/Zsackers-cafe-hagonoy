@@ -1,4 +1,5 @@
 import { ClientRequest } from "http";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import { CreateSubcategory, UpdateSetcategory } from "../../../../model";
 import {
@@ -31,7 +32,7 @@ function SetCategoryLogic({ subcategoryId, setAllowUpdate }: Props) {
         }
       } else {
         resetForm(initialValuesCreateSetategory);
-        alert("Setcategory Created");
+        toast("Setcategory Created", {type: 'success'});
       }
     } catch (error: any) {
       alert(error.message);
@@ -57,7 +58,9 @@ function SetCategoryLogic({ subcategoryId, setAllowUpdate }: Props) {
           throw new Error(error.data.message);
         }
       } else {
-        alert("Setcategory Updated");
+        // alert("Setcategory Updated");
+        toast("Setcategory Updated", {type: 'success'});
+
       }
     } catch (error: any) {
       console.error(error);
@@ -79,7 +82,9 @@ function SetCategoryLogic({ subcategoryId, setAllowUpdate }: Props) {
           throw new Error(error.data.message);
         }
       } else {
-        alert("Setcategory Deleted");
+        // alert("Setcategory Deleted");
+        toast("Setcategory Deleted", {type: 'success'});
+
       }
     } catch (error: any) {
       console.error(error);

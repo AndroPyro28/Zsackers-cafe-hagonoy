@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import { UpdateCategory } from "../../../../model";
 import {
@@ -27,7 +28,7 @@ function CategoryLogic({ setAllowUpdate }: Props) {
         }
       } else {
         resetForm(initialValues);
-        alert("Category Created");
+        toast("Category Created", {type: 'success'});
       }
     } catch (error: any) {
       alert(error.message);
@@ -53,7 +54,9 @@ function CategoryLogic({ setAllowUpdate }: Props) {
           throw new Error(error.data.message);
         }
       } else {
-        alert("Category Updated");
+        // alert("Category Updated");
+        toast("Category Updated", {type: 'success'});
+
       }
     } catch (error: any) {
       alert(error.message);
@@ -74,7 +77,9 @@ function CategoryLogic({ setAllowUpdate }: Props) {
           throw new Error(error.data.message);
         }
       } else {
-        alert("Category Deleted");
+        // alert("Category Deleted");
+        toast("Category Deleted", {type: 'success'});
+
       }
     } catch (error: any) {
       alert(error.message);

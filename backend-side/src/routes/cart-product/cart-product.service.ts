@@ -23,9 +23,13 @@ export class CartProductService {
         return result;
     }
 
-    async updateCartQuantity(productId: number, userId: number, action: string) {
-        const result = await this.cartProductModel.updateCartQuantity(productId, userId, action);
+    async updateCartQuantity(cartProductId: number, userId: number, action: string) {
+        const result = await this.cartProductModel.updateCartQuantity(cartProductId, userId, action);
         if(!result) throw new ForbiddenException('Something went wrong...')
         return result;
+    }
+ 
+    async deleteOneCartProduct(cartProductId: number) {
+        const result = await this.cartProductModel.deleteOneCartProduct(cartProductId);
     }
 }

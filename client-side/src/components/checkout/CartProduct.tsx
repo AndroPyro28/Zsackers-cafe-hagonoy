@@ -5,6 +5,7 @@ import { CartProduct as CartProdutModel } from '../../model'
 import Logic from '../cart-popup/Logic';
 import { CartProductContainer } from './components'
 import {useSelector} from 'react-redux';
+import { useDeleteOneCartProductMutation } from '../../services/cart-products';
 interface Props {
   data: CartProdutModel
 }
@@ -16,6 +17,10 @@ function CartProduct({data}: Props) {
   const isInCheckout = useSelector(state => getCartProductId(state, id));
   const addToCheckout = () => {
     dispatch(checkout(data))
+  }
+  const [deleteOne] = useDeleteOneCartProductMutation()
+  const handleDelete =async () => {
+    const res = await deleteOne(data.id)
   }
 
   return (
@@ -33,7 +38,7 @@ function CartProduct({data}: Props) {
       </td>
       <td className='calculation'>@ {product.price} x {data?.quantity}</td>
       <td className='price'> {productPriceFormatter(product.price * quantity + '')} </td>
-      <td className='remove'>Remove</td>
+      <td className='remove'> <span onClick={handleDelete}>Remove</span>  </td>
     </CartProductContainer>
   )
 }

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import * as yup from "yup";
 import { getCartProducts } from "../../../../features";
 import { useCheckoutOrderMutation } from "../../../../services/order";
-
+import {toast} from 'react-toastify'
 interface Props {
   paymentType: string;
   totalAmount: number;
@@ -49,11 +49,10 @@ function Logic({ paymentType, totalAmount }: Props) {
         totalAmount,
       });
 
-      console.log(result)
 
       const { checkouturl, order_id, proceedPayment } = result.data;
       if (!proceedPayment) {
-        return alert('Out of stock');
+        return toast('Out of stock', {type: 'warning'});
       }
       localStorage.setItem(
         "onCheckoutProducts",
@@ -63,7 +62,7 @@ function Logic({ paymentType, totalAmount }: Props) {
           cartProducts,
           paymentType,
           order_id,
-          totalAmount: totalAmount * 0.1 + totalAmount,
+          totalAmount: totalAmount * 0.01 + totalAmount,
           proceedPayment
         })
 

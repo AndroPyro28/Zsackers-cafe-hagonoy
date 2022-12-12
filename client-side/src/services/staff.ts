@@ -9,7 +9,10 @@ const staffApi = privateApi.injectEndpoints({
                 url: `staff`,
                 method:"GET",
             }),
-            providesTags: (result, error, arg) => [{type: 'Staff', id: "query"}],
+            providesTags: (result: any, error, arg) => [
+                {type: 'Staff', id: "LIST"},
+                ...result?.map(({id}: any) => ({id, type: 'Staff'}))
+            ],
         }),
         createStaff: builder.mutation<void, createStaff>({
             query: (body) => ({
@@ -27,14 +30,14 @@ const staffApi = privateApi.injectEndpoints({
                     status
                 }
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'Staff'}],
+            invalidatesTags: (result, error, arg) => [{type: 'Staff', id: arg.id}],
         }),
         deleteStaff: builder.mutation<void, number>({
             query: id => ({
                 url: `staff/${id}`,
                 method:"DELETE",
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'Staff'}],
+            invalidatesTags: (result, error, arg) => [{type: 'Staff', id: arg}],
         }),
 
     }),

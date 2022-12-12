@@ -179,6 +179,9 @@ export const CartProductContainer = styled.div`
       align-self: flex-start;
       font-size: 0.7em;
       color: red;
+      & > span {
+        cursor: pointer;
+      }
     }
 
     &.calculation,
