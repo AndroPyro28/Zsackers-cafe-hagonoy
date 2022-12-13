@@ -1,18 +1,20 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CartProduct, Product } from 'src/models';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CancelOrderDto, UpdateOrderDto } from './dto/update-order.dto';
 import { Response } from 'express';
 import { v4 as uuid } from 'uuid';
 import UserInteface from 'src/models/user.model';
 import { OrderDetails } from 'src/models/order-details.model';
 import { orderStatus } from '@prisma/client';
+import { VonageApi } from 'src/common/utils/vonage.utils';
 @Injectable()
 export class OrderService {
   constructor(
     private readonly orderDetailsModel: OrderDetails,
     private readonly cartProductModel: CartProduct,
-    private readonly productModel: Product
+    private readonly productModel: Product,
+    private readonly vonageApi: VonageApi
   ) {}
   
   async checkout(createOrderDto: CreateOrderDto,currentUser: UserInteface, res: Response) {
@@ -102,10 +104,70 @@ export class OrderService {
   }
 
  async updateStatus(id: number, deliveryStatus: number) {
+
+  const order = await this.orderDetailsModel.findOrderById(id);
+  let message: string;
+
+  if(deliveryStatus+1 === 1) {
+    message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
+    
+    Your order in transaction: ${order.order_id} in Zsackers Cafe is now being prepared
+
+    -Zsakers cafe
+
+    `
+  }
+
+  if(deliveryStatus+1 === 2) {
+    message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
+         
+      Your order is done packing and ready to dispatch.
+
+      -Zsakers cafe
+`
+  }
+
+  if(deliveryStatus+1 === 3) {
+    message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
+        
+    Your order is in shipping process.
+
+    -Zsakers cafe
+    `
+  }
+
+  if(deliveryStatus+1 === 4) {
+    message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
+    Your order is completed, thank you for ordering our product enjoy!
+    
+    -Zsakers cafe
+    `
+  }
+
+  this.vonageApi.sendSms(order.contact, message)
+ 
     const updatedOrder = await this.orderDetailsModel.updateStatus(id, deliveryStatus);
 
     if(!updatedOrder) throw new ForbiddenException('Didnt update status');
     return updatedOrder
+  }
+
+  async cancelOrder(id: number, cancelOrderDto: CancelOrderDto) {
+    const order = await this.orderDetailsModel.findOrderById(id);
+
+    const message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
+
+    Your order has been cancelled, reason: ${cancelOrderDto.reason}
+
+    -Zsakers cafe
+    `
+    
+    this.vonageApi.sendSms(order.contact, message);
+
+    const cancelOrder = await this.orderDetailsModel.cancelOrder(id, cancelOrderDto);
+
+    if(!cancelOrder) throw new ForbiddenException('Didnt update status');
+    return cancelOrder
   }
 
   remove(id: number) {

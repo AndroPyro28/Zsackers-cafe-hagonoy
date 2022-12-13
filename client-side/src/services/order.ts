@@ -55,7 +55,16 @@ const orderApi = privateApi.injectEndpoints({
         method: "PATCH",
         body: {deliveryStatus}
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Order",}],
+      invalidatesTags: (result, error, arg) => [{ type: "Order"}],
+    }),
+
+    cancelOrder: builder.mutation<OrderDetails, {id: number, reason: string}>({
+      query: ({id, reason}) => ({
+        url: `order/cancel/${id}`,
+        method: "PATCH",
+        body: {reason}
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Order"}],
     }),
 
   }),
@@ -69,5 +78,6 @@ export const {
   useGetOrdersByAdminQuery,
   useGetOrderByOrderIdQuery,
   useOrderDetailsNextStageMutation,
-  useGetOrdersByCustomerQuery
+  useGetOrdersByCustomerQuery,
+  useCancelOrderMutation
 } = orderApi;

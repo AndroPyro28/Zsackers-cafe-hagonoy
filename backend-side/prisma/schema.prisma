@@ -82,6 +82,7 @@ model Order_Details {
   delivery_status Int            @default(0)
   cart_product    Cart_Product[]
   transaction_type transactionType  @default(ONLINE)
+  cancel_reason String  @default("")
   @@map("order_details")
 }
 

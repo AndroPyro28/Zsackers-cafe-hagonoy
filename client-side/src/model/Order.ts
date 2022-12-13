@@ -29,5 +29,6 @@ export interface OrderDetails {
   address: string; 
   order_status: orderStatus
   delivery_status: number;
-  cart_product: CartProduct[ ]
+  cart_product: CartProduct[ ],
+  cancel_reason: string;
 }

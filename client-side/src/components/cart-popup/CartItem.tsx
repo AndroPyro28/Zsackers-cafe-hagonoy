@@ -14,9 +14,9 @@ function CartItem({ data }: Props) {
 
     return (
         <ProductContainer>
-            <img src={product.image_url} />
+            <img src={product?.image_url} />
             <ProductName>
-                <div>{product.productName}</div>
+                <div>{product?.productName}</div>
                 <br />
                 <small>{product?.details}</small>
             </ProductName>

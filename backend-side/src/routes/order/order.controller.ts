@@ -12,11 +12,12 @@ import {
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
+import { CancelOrderDto, UpdateOrderDto } from './dto/update-order.dto';
 import { GetCurrentUser, Roles } from 'src/common/decorators';
 import UserInteface from 'src/models/user.model';
 import { Response } from 'express';
 import { orderStatus } from '@prisma/client'
+
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) { }
@@ -60,7 +61,7 @@ export class OrderController {
   }
 
   @Get('customer')
-  @Roles(['CUSTOMER'])
+  @Roles(['STAFF', 'CUSTOMER'])
   findAllByCustomer(
     @Query('status') status: string,
     @GetCurrentUser('id') userId: number
@@ -77,14 +78,25 @@ export class OrderController {
   }
 
   @Get(':id')
+  @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
   findOneById(@Param('id') id: string) {
     return this.orderService.findOne(+id);
   }
 
   @Patch(':id')
+  @Roles(['ADMIN', 'STAFF'])
   updateStatus(
     @Param('id', ParseIntPipe) id: number, @Body('deliveryStatus', ParseIntPipe) deliveryStatus: number) {
     return this.orderService.updateStatus(id, deliveryStatus);
+  }
+
+  @Patch('cancel/:id')
+  @Roles(['ADMIN', 'STAFF'])
+  cancelOrder(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() cancelOrderDto: CancelOrderDto
+  ) {
+    return this.orderService.cancelOrder(id, cancelOrderDto);
   }
 
   @Delete(':id')

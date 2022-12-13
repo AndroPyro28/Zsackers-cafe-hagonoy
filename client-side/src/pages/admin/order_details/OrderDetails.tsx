@@ -57,8 +57,10 @@ function OrderDetails() {
 
         <Details data={orderData!} />
 
-        {/* <Shipping data={orderData}/> */}
-
+            {
+              orderData?.order_status === 'cancelled' && orderData.delivery_status === -1 &&  <Shipping data={orderData!}/>
+            }
+       
       </CustomerDetailsContainer>
     </>
   )

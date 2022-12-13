@@ -62,7 +62,7 @@ function Logic({ paymentType, totalAmount }: Props) {
           cartProducts,
           paymentType,
           order_id,
-          totalAmount: totalAmount * 0.01 + totalAmount,
+          totalAmount: Math.round(totalAmount * 0.1 + totalAmount),
           proceedPayment
         })
 

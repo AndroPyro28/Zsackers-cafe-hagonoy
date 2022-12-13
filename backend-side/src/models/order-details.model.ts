@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { orderStatus } from '@prisma/client';
 import { CreateOrderDto } from 'src/routes/order/dto/create-order.dto';
+import { CancelOrderDto } from 'src/routes/order/dto/update-order.dto';
 import { order_Details } from './root.model';
 @Injectable()
 export class OrderDetails {
@@ -185,6 +186,25 @@ export class OrderDetails {
     }
   }
 
+  async findOrderById(id: number) {
+    try {
+      const order = await order_Details.findUnique({
+        where: { id },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              profile: true
+            }
+          },
+      }});
+      return order;
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async updateStatus(id: number, deliveryStatus: number) {
     try {
       let orderStatus: orderStatus;
@@ -207,6 +227,21 @@ export class OrderDetails {
           }
         }
       })
+      return updatedOrder
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async cancelOrder(id: number,  cancelOrderDto: CancelOrderDto) {
+    try {
+      const updatedOrder = await order_Details.update({
+        where: { id },
+        data: {
+          delivery_status: -1,
+          order_status: 'cancelled',
+          cancel_reason: cancelOrderDto.reason
+        }})
       return updatedOrder
     } catch (error) {
       console.error(error)

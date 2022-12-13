@@ -16,14 +16,15 @@ import Checkout from './pages/customer/checkout/Checkout';
 import Payment from './pages/customer/payment/Payment';
 import Employees from './pages/admin/employees/Employees';
 import {ToastContainer} from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
 import Orders from './pages/admin/orders/Orders';
 import OrderDetails from './pages/admin/order_details/OrderDetails';
-import { Children } from 'react';
-import { elements } from 'chart.js';
 import Purchases from './pages/customer/purchases/Purchases';
 import Preparing from './components/purchases/Preparing';
 import ToReceive from './components/purchases/ToReceive';
+import PurchaseDetails from './pages/customer/purchase-detail/PurchaseDetails';
+import '@progress/kendo-theme-default/dist/all.css';
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
 
   const router = createBrowserRouter([
@@ -136,8 +137,13 @@ function App() {
             {
               path: 'to-receive',
               element: <ToReceive />
-            }
+            },
+            
           ]
+        },
+        {
+          path: 'purchase-details/:order_id',
+          element: <PurchaseDetails />
         }
       ]
     },

@@ -1,12 +1,28 @@
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { OrderDetails } from '../../model'
 import { Info, Order, ReceivedButton, Row, ViewButton } from './components'
-
+import { useNavigate } from 'react-router-dom'
+import { useOrderDetailsNextStageMutation } from '../../services'
 interface Props {
     data: OrderDetails
 }
 
 function ToReceiveOrder({data}: Props) {
+
+  const navigate = useNavigate()
+
+  const [orderNextStageMutation] = useOrderDetailsNextStageMutation()
+
+  const orderCompleted = async () => {
+    try {
+      const res = await orderNextStageMutation({
+        id: data.id,
+        deliveryStatus: data.delivery_status
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
   return (
     <Order>
     <img src={data?.cart_product[0].product.image_url} />
@@ -54,15 +70,15 @@ function ToReceiveOrder({data}: Props) {
       <Row>
         <ViewButton
           className=""
-        //   onClick={() => navigate(`/customer/purchases/${data.reference}`)}
+        onClick={() => navigate(`/customer/purchase-details/${data.order_id}`)}
         >
           View Order
         </ViewButton>
-        {/* {data.delivery_status === 3 && ( */}
+        {data.delivery_status === 3 && (
           <ReceivedButton
-        //    onClick={orderCompleted}
+           onClick={orderCompleted}
            >Order Received</ReceivedButton>
-        {/* )} */}
+        )} 
       </Row>
     </Info>
   </Order>

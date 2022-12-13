@@ -27,6 +27,8 @@ export const CheckOutModalContainer = styled(Form)`
         width: fit-content;
         right: 15px;
         font-size: 1.1em;
+        cursor: pointer;
+        color: maroon;
     }
     & > h1 {
         width: 85%;
@@ -57,6 +59,11 @@ export const FieldRow = styled.div`
     width: 85%;
     gap: 10px;
     margin-top: 10px;
+
+    & > .aggreement {
+        color: maroon;
+        font-size: 0.9em;
+    }
 `
 
 export const FieldInput = styled.div`
@@ -90,7 +97,11 @@ export const CheckoutButtons= styled.div`
     & > button {
         /* flex: 1; */
         padding: 5px 80px;
-
+        cursor: pointer;
+        &:disabled {
+            color: gray;
+            cursor: default;
+        }
 
     }
 `

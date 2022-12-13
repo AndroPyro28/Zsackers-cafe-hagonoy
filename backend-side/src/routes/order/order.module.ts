@@ -4,10 +4,11 @@ import { OrderController } from './order.controller';
 import { ValidateCheckoutMiddleware } from './middleware';
 import { CartProduct, Product } from 'src/models';
 import { OrderDetails } from 'src/models/order-details.model';
+import { VonageApi } from 'src/common/utils/vonage.utils';
 
 @Module({
   controllers: [OrderController],
-  providers: [OrderService, Product, OrderDetails, CartProduct]
+  providers: [OrderService, Product, OrderDetails, CartProduct, VonageApi]
 })
 export class OrderModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
