@@ -1,5 +1,5 @@
 import { privateApi } from "../app/baseApi";
-import { CreateOrder, GetOrdersByAdmin, OrderDetails } from "../model";
+import { CreateOrder, CreateOrderWalkin, GetOrdersByAdmin, OrderDetails } from "../model";
 
 const orderApi = privateApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,13 +11,21 @@ const orderApi = privateApi.injectEndpoints({
       }),
        invalidatesTags: (result, error, arg) => [{ type: "Order" }],
     }),
-    createOrder: builder.mutation<void, CreateOrder>({
+    createOrderOnline: builder.mutation<void, CreateOrder>({
       query: (body) => ({
         url: `order/payment`,
         method: "POST",
         body,
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Order" }],
+    }),
+    createOrderWalkin: builder.mutation<void, CreateOrderWalkin>({
+      query: (body) => ({
+        url: `order/pos`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Order" }, {type: 'Cart-Product'}],
     }),
     getOrdersByAdmin: builder.query<OrderDetails[], GetOrdersByAdmin>({
       query: ({search, order_status}) => ({
@@ -74,10 +82,11 @@ export default orderApi;
 
 export const {
   useCheckoutOrderMutation,
-  useCreateOrderMutation,
+  useCreateOrderOnlineMutation,
   useGetOrdersByAdminQuery,
   useGetOrderByOrderIdQuery,
   useOrderDetailsNextStageMutation,
   useGetOrdersByCustomerQuery,
-  useCancelOrderMutation
+  useCancelOrderMutation,
+  useCreateOrderWalkinMutation
 } = orderApi;

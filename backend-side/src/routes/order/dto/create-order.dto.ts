@@ -38,3 +38,20 @@ export class CreateOrderDto {
     @IsOptional()
     order_id: string;
 }
+
+export class CreateOrderWalkinDto {
+
+    @IsNotEmpty()
+    @IsArray()
+    @ValidateNested({each: true})
+    @ArrayMinSize(1)
+    @Type(() => CartProducts)
+    cartProducts: CartProducts[]
+
+    @IsNotEmpty()
+    @IsNumber()
+    totalAmount: number;
+    
+    @IsOptional()
+    order_id: string;
+}

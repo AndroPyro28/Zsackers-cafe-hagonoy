@@ -74,15 +74,16 @@ function App() {
         },
         {
           path: 'orders',
+
           children: [
-            {
-              element: <Orders />,
-              index: true
-            },
-            {
-              path:":order_id",
-              element:<OrderDetails />
-            },
+            // {
+            //   element: <Orders />,
+            //   index: true
+            // },
+            // {
+            //   path:":order_id",
+            //   element:<OrderDetails />
+            // },
           ]
         }
       ]

@@ -1,5 +1,17 @@
 import styled from "styled-components";
-
+import {
+    Button,
+    ButtonGroup,
+    DropDownButton,
+    DropDownButtonItem,
+    FloatingActionButton,
+    SplitButton,
+    SplitButtonItem,
+    Toolbar,
+    ToolbarItem,
+    ToolbarSeparator,
+    ChipList,
+  } from "@progress/kendo-react-buttons";
 
 export const FilterItemsContainer = styled.div`
     display: flex;
@@ -140,10 +152,17 @@ export const CashierContent = styled.div`
 export const Orders = styled.div`
     display: flex;
     flex-direction: column;
-    max-height: 50vh;
+    max-height:55vh;
     overflow-y: auto;
     margin: 20px;
     gap: 10px;
+    min-height: 55vh;
+    /* justify-content: center; */
+    & > h3 {
+        color: gray;
+        text-align: center;
+        margin: auto;
+    }
 `
 
 export const OrderContainer = styled.div`
@@ -233,4 +252,93 @@ export const Total = styled.span`
 export const TotalAmount = styled.span`
     font-size: 1.2em;
 
+`
+
+export const PrintReceiptButton = styled.button`
+    padding: 10px 0px;
+`
+
+export const ReceiptContainer = styled.div`
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`
+
+export const ReceiptContent = styled.div`
+    background: #EAEAEA;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 20px;
+
+    & > h3 {
+        text-align: center;
+    }
+`
+
+export const ReceiptHeader = styled.div`
+    text-align: center;
+    margin: 10px;
+`
+
+export const BranchName = styled.h2`
+
+`
+export const Address = styled.div`
+
+`
+export const Contact = styled.div`
+
+`
+
+export const Date = styled.div`
+
+`
+
+export const OrderId = styled.strong`
+    & > span {
+        font-weight: 100;
+    }
+`
+export const ReceiptBody = styled.div`
+    border-top: dashed black 2px;
+    border-bottom: dashed black 2px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+
+`
+
+export const ReceiptProduct = styled.div`
+    display: flex;
+    /* justify-content: space-evenly; */
+    width: 100%;
+    align-items: center;
+    & > span {
+        flex: 1;
+        text-align: center;
+    }
+`
+export const ReceiptFooter = styled.div`
+margin: 10px;
+gap: 10px;
+`
+
+export const SummaryContent= styled.section`
+display: flex;
+justify-content: space-between;
+    & > {
+        &.items-count {
+            font-size: 1000;
+        }
+        &.sub-total {
+            font-weight: 100;
+        }
+        &.total-amount {
+            font-size: 1000;
+        }
+    }
 `

@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CartProduct, Product } from 'src/models';
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderDto, CreateOrderWalkinDto } from './dto/create-order.dto';
 import { CancelOrderDto, UpdateOrderDto } from './dto/update-order.dto';
 import { Response } from 'express';
 import { v4 as uuid } from 'uuid';
@@ -65,6 +65,26 @@ export class OrderService {
       });
     }
   }
+
+  async pos(createOrderDto: CreateOrderWalkinDto, userId: number) {
+    const newOrderDetails = await this.orderDetailsModel.createOrderWalkin(createOrderDto, userId)
+
+    const {cartProducts} = createOrderDto;
+    const cartProductIds = cartProducts.map(cartProduct => cartProduct.id);
+
+    const productIds = cartProducts.map(cartProduct => ({
+      id: cartProduct.product.id,
+      quantity: cartProduct.quantity
+    }));
+
+    const updateProducts = await this.productModel.updateProductsStocks(productIds)
+
+    const updateCartProducts = await this.cartProductModel.updateManyCartProductsWithOrder(cartProductIds, newOrderDetails.id)
+    return {
+      success: true
+    }
+  }
+  
   async payment(createOrderDto: CreateOrderDto, userId: number) {
     const newOrderDetails = await this.orderDetailsModel.createOrder(createOrderDto, userId)
     const {cartProducts} = createOrderDto;

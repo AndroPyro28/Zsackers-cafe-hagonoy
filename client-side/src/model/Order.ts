@@ -9,6 +9,12 @@ export interface CreateOrder {
    totalAmount: number;
    order_id?: string
 }
+
+export interface CreateOrderWalkin {
+   totalAmount: number;
+   order_id: string;
+   cartProducts: CartProduct[];
+}
 type orderStatus = 'pending' | 'onGoing' | 'completed' | 'cancelled' | 'all'
 
 export interface GetOrdersByAdmin {

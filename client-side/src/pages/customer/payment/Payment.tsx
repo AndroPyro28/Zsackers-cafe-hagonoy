@@ -3,12 +3,12 @@ import Cookies from 'js-cookie'
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import productPriceFormatter from '../../../helpers/ProductPriceFormatter'
-import { useCreateOrderMutation } from '../../../services'
+import { useCreateOrderOnlineMutation } from '../../../services'
 import { Line, PaymentData, PaymentSuccessContainer, ProceedButton, Title, TransactionNumber } from './components'
 
 function Payment() {
   const navigate = useNavigate()
-  const [createOrderMutation] = useCreateOrderMutation()
+  const [createOrderMutation] = useCreateOrderOnlineMutation()
   const [loading, setLoading] = useState(true);
 
   const createOrder = async () => {

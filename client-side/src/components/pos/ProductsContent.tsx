@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useGetAllProductQuery } from '../../services';
 import { Products, ProductsContent as ProductsContentContainer } from './components'
 import FilterItems from './FilterItems'
@@ -16,6 +16,11 @@ function ProductsContent() {
     subcategoryId,
     searchName,
   })
+
+  useEffect(() => {
+    setterSetCategoryId(0)
+    setterSubCategoryId(0)
+  }, [categoryId])
   return (
     <ProductsContentContainer>
 

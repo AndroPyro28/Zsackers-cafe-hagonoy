@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { orderStatus } from '@prisma/client';
-import { CreateOrderDto } from 'src/routes/order/dto/create-order.dto';
+import { CreateOrderDto, CreateOrderWalkinDto } from 'src/routes/order/dto/create-order.dto';
 import { CancelOrderDto } from 'src/routes/order/dto/update-order.dto';
 import { order_Details } from './root.model';
+import UserInteface from './user.model';
 @Injectable()
 export class OrderDetails {
   async createOrder(createOrder: CreateOrderDto, userId: number) {
@@ -22,6 +23,26 @@ export class OrderDetails {
       return newOrder;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async createOrderWalkin (createOrder: CreateOrderWalkinDto, userId: number) {
+    try {
+    const { totalAmount, order_id} = createOrder;
+    const newOrder = await order_Details.create({
+      data: {
+        totalAmount,
+        order_id,
+        transaction_type:'WALK_IN',
+        userId: userId,
+        order_status: 'onGoing',
+        delivery_status: 3
+      }
+    })
+
+    return newOrder
+    } catch (error) {
+      console.error(error)
     }
   }
 

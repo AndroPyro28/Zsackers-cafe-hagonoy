@@ -1,48 +1,152 @@
-import React, { useEffect, useState } from 'react'
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
-import { useGetAllProductQuery } from '../../services'
 import { useGetCartProductsQuery } from '../../services/cart-products'
-import { CashierContent as CashierContentContainer, Discount, DiscountAmount, Orders, OrderSummary, Subtotal, SubtotalAmount, Summary, Tax, TaxAmount, Total, TotalAmount } from './components'
+import { Address, BranchName, ReceiptProduct, CashierContent as CashierContentContainer, Contact, Discount, DiscountAmount, Date as DateContent, OrderId, Orders, OrderSummary, PrintReceiptButton, ReceiptBody, ReceiptContainer, ReceiptContent, ReceiptFooter, ReceiptHeader, Subtotal, SubtotalAmount, Summary, Tax, TaxAmount, Total, TotalAmount, SummaryContent, } from './components'
 import Order from './Order'
+import { useRef, useState } from 'react'
+import { v4 as uuid } from 'uuid'
 
+import ReactToPrint from 'react-to-print'
+import PopupCashier from '../modals/staff/PopupCashier'
+import { useCreateOrderWalkinMutation } from '../../services'
+import { create } from 'yup/lib/array'
+import { createRoot } from 'react-dom/client'
 function CashierContent() {
 
-  const { data: CartProducts, isLoading, isError } = useGetCartProductsQuery()
+  const { data: cartProducts, isLoading, isError } = useGetCartProductsQuery()
   let content;
 
-  if(isLoading) content = <h3>Loading...</h3>
+  if (isLoading) content = <h3>Loading...</h3>
 
-  if(isError) content = <h3>Something went wrong...</h3>
+  if (isError) content = <h3>Something went wrong...</h3>
 
-  if(CartProducts?.length === 0) content = <h3>No Orders yet</h3>
-  else content = CartProducts?.map((cartProduct) => <Order data={cartProduct} />)
+  if (cartProducts?.length === 0) content = <h3>No Orders yet</h3>
+  else content = cartProducts?.map((cartProduct) => <Order data={cartProduct} />)
 
+  const componentRef = useRef<any>();
+  const printBtnRef = useRef<any>()
+  const [inputMoney, setInputMoney] = useState(0)
+  const [toggleCashier, setToggleCashier] = useState(false);
+
+  const handlePrint = () => {
+    if (printBtnRef.current) {
+      printBtnRef.current.handlePrint()
+    }
+  }
+
+  const subtotal = cartProducts?.reduce((total, cartProduct) => total + (cartProduct.product.price * cartProduct.quantity), 0) ?? 0
+  const tax = subtotal! * 0.12;
+  const totalAmount = tax + subtotal!;
+  const order_id = `${uuid()}`.replace(/\-/g, "")
+
+  const [createOrder] = useCreateOrderWalkinMutation()
+  const handleAfterPrint = async () => {
+    try {
+      const res: any = await createOrder({
+        totalAmount,
+        order_id,
+        cartProducts: cartProducts!
+      });
+      console.log(res);
+    } catch (error) {
+      console.error(error)
+    }
+    setToggleCashier(false)
+    setInputMoney(0)
+  }
+
+  const handlePay = () => {
+    setToggleCashier(true)
+  }
+
+  
 
   return (
     <CashierContentContainer>
+      {
+        toggleCashier && <PopupCashier
+          handlePrint={handlePrint}
+          inputMoney={inputMoney}
+          totalAmount={totalAmount}
+          setInputMoney={setInputMoney}
+          setToggleCashier={setToggleCashier}
+        />
+      }
       <h1>Current Order</h1>
       <Orders>
-        { content }
+        {content}
       </Orders>
 
       <OrderSummary>
         <Summary>
           <Subtotal>Subtotal</Subtotal>
-          <SubtotalAmount>{productPriceFormatter(50 + '')}</SubtotalAmount>
+          <SubtotalAmount>{productPriceFormatter(subtotal + '')}</SubtotalAmount>
         </Summary>
+
         <Summary>
           <Tax>Tax</Tax>
-          <TaxAmount>{productPriceFormatter(50 + '')}</TaxAmount>
+          <TaxAmount>{productPriceFormatter(tax + '')}</TaxAmount>
         </Summary>
+
         <Summary>
-          <Discount>Discount</Discount>
-          <DiscountAmount>{productPriceFormatter(50 + '')}</DiscountAmount>
+          <Subtotal>Total</Subtotal>
+          <SubtotalAmount>{productPriceFormatter(totalAmount + '')}</SubtotalAmount>
         </Summary>
-        <Summary>
-          <Total>Discount</Total>
-          <TotalAmount>{productPriceFormatter(50 + '')}</TotalAmount>
-        </Summary>
+
       </OrderSummary>
+
+      <PrintReceiptButton onClick={handlePay} > Pay Now</PrintReceiptButton>
+
+      <ReactToPrint
+        ref={printBtnRef}
+        onAfterPrint={handleAfterPrint}
+        // trigger={() => <PrintReceiptButton>Print Receipt</PrintReceiptButton>}
+        content={() => componentRef.current}
+      />
+
+      <div style={{ display: 'none' }}>
+        <ReceiptContainer ref={componentRef}>
+
+          <ReceiptContent>
+
+            <ReceiptHeader>
+              <BranchName>Zsakers Cafe</BranchName>
+              <Address>RQQ4+MP7, Hagonoy Bulacan</Address>
+              <Contact> (+63 960 841 0594) </Contact>
+              <DateContent> {new Date().toLocaleString()} </DateContent>
+
+              <OrderId>Order ID: <span>{order_id}</span></OrderId>
+            </ReceiptHeader>
+
+            <ReceiptBody>
+              {
+                cartProducts?.map((cartProduct) => {
+                  return <ReceiptProduct>
+                    <span>{cartProduct.product.productName}</span>
+                    <span>@ {cartProduct.product.price} x {cartProduct.quantity}</span>
+                    <span>{productPriceFormatter(cartProduct.product.price * cartProduct.quantity + '')}</span>
+                  </ReceiptProduct>
+                })
+              }
+            </ReceiptBody>
+
+            <ReceiptFooter>
+              <SummaryContent>
+                <div className='items-count'>Items Count:  </div>
+                <span>{cartProducts?.length}</span>
+              </SummaryContent>
+              <SummaryContent><div className='sub-total'>Sub total:  </div> <span>{productPriceFormatter (subtotal + '' )}</span></SummaryContent>
+              <SummaryContent><div className='sub-total'>Tax:  </div> <span>{productPriceFormatter (tax + '' )}</span></SummaryContent>
+              <SummaryContent> <div className='total-amount'>Total Amount: </div>  <span>{productPriceFormatter(totalAmount + '')}</span></SummaryContent>
+              <SummaryContent><div className='sub-total'>Cash:  </div> <span>{inputMoney}</span></SummaryContent>
+              <SummaryContent><div className='sub-total'>Change:  </div> <span>{productPriceFormatter((inputMoney - totalAmount).toFixed(2) + '')}</span></SummaryContent>
+            </ReceiptFooter>
+
+            <h3>Thank you!</h3>
+          </ReceiptContent>
+        </ReceiptContainer>
+      </div>
+
+
     </CashierContentContainer>
   )
 }

@@ -11,7 +11,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderDto, CreateOrderWalkinDto } from './dto/create-order.dto';
 import { CancelOrderDto, UpdateOrderDto } from './dto/update-order.dto';
 import { GetCurrentUser, Roles } from 'src/common/decorators';
 import UserInteface from 'src/models/user.model';
@@ -35,11 +35,10 @@ export class OrderController {
   @Post('/pos')
   @Roles(['CUSTOMER', 'STAFF'])
   async pos(
-    @Body() createOrderDto: CreateOrderDto,
-    @GetCurrentUser() currentUser: UserInteface,
-    @Res() res: Response,
+    @Body() createOrderDto: CreateOrderWalkinDto,
+    @GetCurrentUser('id') userId: number,
   ) {
-    return this.orderService.checkout(createOrderDto, currentUser, res)
+    return this.orderService.pos(createOrderDto, userId)
   }
 
   @Post('/payment')
