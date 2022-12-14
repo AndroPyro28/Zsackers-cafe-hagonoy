@@ -1,5 +1,5 @@
 import { privateApi } from "../app/baseApi";
-import { CreateOrder, CreateOrderWalkin, GetOrdersByAdmin, OrderDetails } from "../model";
+import { CreateOrder, CreateOrderWalkin, GetOrdersByAdmin, OrderDetails, Summary } from "../model";
 
 const orderApi = privateApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -28,8 +28,8 @@ const orderApi = privateApi.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Order" }, {type: 'Cart-Product'}],
     }),
     getOrdersByAdmin: builder.query<OrderDetails[], GetOrdersByAdmin>({
-      query: ({search, order_status}) => ({
-        url: `order/admin/?search=${search}&&order_status=${order_status}`,
+      query: ({search, order_status, transaction_type}) => ({
+        url: `order/admin/?search=${search}&&order_status=${order_status}&&transaction_type=${transaction_type}`,
         method: "GET",
       }),
       providesTags: (result: any, error, arg) => [
@@ -57,6 +57,15 @@ const orderApi = privateApi.injectEndpoints({
       providesTags: (result, error, arg) => [{ type: "Order", id:arg }],
     }),
 
+    getCompletedCancelledOrders: builder.query<OrderDetails[], {filterDateFrom: string,
+      filterDateTo: string}>({
+      query: ({filterDateFrom, filterDateTo}) => ({
+        url: `order/completed-cancelledOrders?filterDateFrom=${filterDateFrom}&&filterDateTo=${filterDateTo}`,
+        method: "GET",
+      }),
+      providesTags: (result, error, arg) => [{ type: "Order" }],
+    }),
+
     OrderDetailsNextStage: builder.mutation<OrderDetails, {id: number, deliveryStatus: number}>({
       query: ({id , deliveryStatus}) => ({
         url: `order/${id}`,
@@ -75,6 +84,14 @@ const orderApi = privateApi.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Order"}],
     }),
 
+    getSummary: builder.query<Summary, void>({
+      query: () => ({
+        url: `order/summary`,
+        method: "GET",
+      }),
+      providesTags: (result, error, arg) => [{ type: "Order"}],
+    }),
+
   }),
   overrideExisting: false,
 });
@@ -88,5 +105,7 @@ export const {
   useOrderDetailsNextStageMutation,
   useGetOrdersByCustomerQuery,
   useCancelOrderMutation,
-  useCreateOrderWalkinMutation
+  useCreateOrderWalkinMutation,
+  useGetCompletedCancelledOrdersQuery,
+  useGetSummaryQuery
 } = orderApi;

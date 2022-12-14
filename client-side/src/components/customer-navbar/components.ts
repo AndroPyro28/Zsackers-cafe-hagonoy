@@ -70,6 +70,7 @@ export const User = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
     font-size: 1.3em;
 
     & > .icon-container {

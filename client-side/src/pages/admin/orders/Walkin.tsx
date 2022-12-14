@@ -8,12 +8,13 @@ import {
     T_Head as Thead,
 } from './components';
 
-function Online() {
+function Walkin() {
+    
     const { search, orderStatus,  } = useOutletContext<{search: string, orderStatus: orderStatus}> ();
     const { data: orders, refetch, isLoading, error } = useGetOrdersByAdminQuery({
         search,
         order_status: orderStatus,
-        transaction_type: 'ONLINE'
+        transaction_type: 'WALK_IN'
     });
 
     useEffect(() => {
@@ -33,10 +34,9 @@ function Online() {
         <TableContainer>
             <TableRowHeader>
                 <Thead className="id"> Order ID </Thead>
-                <Thead className="customer"> Customer </Thead>
+                <Thead className="customer"> Cashier </Thead>
                 <Thead className="date"> Date </Thead>
                 <Thead className="price"> Price </Thead>
-                <Thead className="order__status"> Order Status </Thead>
                 <Thead className="payment__method"> Payment Method</Thead>
             </TableRowHeader>
 
@@ -46,4 +46,4 @@ function Online() {
     )
 }
 
-export default Online
+export default Walkin

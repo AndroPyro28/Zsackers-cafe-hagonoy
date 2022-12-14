@@ -42,9 +42,9 @@ function AdminNavbar() {
 
         {
           toggleDropDown && <DropdownContent>
-          <NavLink to={'profile'}>
+          {/* <NavLink to={'profile'}>
             Profile
-          </NavLink>
+          </NavLink> */}
           <a href="#" onClick={handleLogout}>
             Logout
           </a>

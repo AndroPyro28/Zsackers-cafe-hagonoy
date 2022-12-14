@@ -2,7 +2,8 @@ import { useParams } from 'react-router-dom';
 import Details from "../../../components/order_details/Details";
 import Product from "../../../components/order_details/Product";
 import Shipping from "../../../components/order_details/Shipping";
-import Status from "../../../components/order_details/Status";
+import StatusOnlineOrder from "../../../components/order_details/StatusOnlineOrder";
+import StatusWalkinOrder from "../../../components/order_details/StatusWalkinOrder";
 import Summary from "../../../components/order_details/Summary";
 import { useGetOrderByOrderIdQuery } from '../../../services';
 import {
@@ -16,7 +17,6 @@ import {
 } from "./components";
 
 function OrderDetails() {
-
   const { order_id } = useParams()
 
   const { data: orderData } = useGetOrderByOrderIdQuery(order_id!)
@@ -49,7 +49,10 @@ function OrderDetails() {
 
         </OrderedItemsContainer>
         {/* status component */}
-        <Status data={orderData!} />
+        {
+          orderData?.transaction_type === 'ONLINE' ? <StatusOnlineOrder data={orderData!} /> : <StatusWalkinOrder data={orderData!} />
+        }
+       
 
       </OrderDetailsContainer>
 

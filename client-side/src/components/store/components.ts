@@ -104,10 +104,15 @@ export const ProductContainer = styled.div`
     justify-content: space-between;
     transition: all .3s ease-in-out;
     /* box-shadow: 1px 3px 5px gray; */
+    opacity: ${({isOutOfStock}: {isOutOfStock: boolean}) => isOutOfStock ? '0.7' : '1'};
+    pointer-events: ${({isOutOfStock}: {isOutOfStock: boolean}) => isOutOfStock ? 'none' : 'all'};
+    text-decoration: ${({isOutOfStock}: {isOutOfStock: boolean}) => isOutOfStock ? ' line-through black 2px' : 'none'};
     cursor: default;
     &:hover {
       box-shadow: 1px 3px 5px gray;
     }
+
+    
 `
 
 export const Price = styled.span`

@@ -1,11 +1,22 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import PublicNavbar from '../components/public-navbar/PublicNavbar'
+import { useGetCurrentUser } from '../services'
 import { PublicRoutesContainer } from './components'
 import {excluded} from "./excluded"
 function PublicRoutes() {
 
   const {pathname} = useLocation()
-  
+  const {data:user, isLoading, isError} = useGetCurrentUser()
+
+    if(isLoading) return <></>
+
+    // if(!user || isError) return <Navigate to="/login" />
+
+    if(user?.role === 'ADMIN') return <Navigate to={'/admin'} />
+    
+    if(user?.role === 'CUSTOMER') return <Navigate to={'/customer'} />
+    
+    if(user?.role === 'STAFF') return <Navigate to={'/staff'} />
   return (
     <PublicRoutesContainer>
       {

@@ -15,11 +15,13 @@ export interface CreateOrderWalkin {
    order_id: string;
    cartProducts: CartProduct[];
 }
-type orderStatus = 'pending' | 'onGoing' | 'completed' | 'cancelled' | 'all'
 
+export type orderStatus = 'pending' | 'onGoing' | 'completed' | 'cancelled' | 'all'
+export type transactionType = 'ONLINE' | 'WALK_IN'
 export interface GetOrdersByAdmin {
    order_status: orderStatus;
    search: string;
+   transaction_type: transactionType
 }
 
 export interface OrderDetails {
@@ -37,4 +39,25 @@ export interface OrderDetails {
   delivery_status: number;
   cart_product: CartProduct[ ],
   cancel_reason: string;
+  transaction_type: transactionType
+}
+
+export interface Summary {
+   monthlyCancelledTransactions: {
+      month: number;
+      total: number;
+  }[];
+  monthlySuccessTransactions: {
+      month: number;
+      total: number;
+  }[];
+  monthlyTotalTransactions: {
+      month: number;
+      total: number;
+  }[];
+  monthlySales:  {
+   month: number;
+   total: number;
+}[];
+totalSalesToday: number
 }

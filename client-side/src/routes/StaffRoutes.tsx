@@ -1,5 +1,6 @@
 import React from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
+import StaffNavbar from '../components/staff-navbar/StaffNavbar'
 import { useGetCurrentUser } from '../services'
 import {StaffRoutesContainer} from './components'
 function StaffRoutes() {
@@ -15,6 +16,7 @@ function StaffRoutes() {
     
     return(
         <StaffRoutesContainer>
+          <StaffNavbar />
           <Outlet />
         </StaffRoutesContainer>
     )

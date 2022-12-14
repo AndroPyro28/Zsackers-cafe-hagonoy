@@ -24,6 +24,9 @@ import ToReceive from './components/purchases/ToReceive';
 import PurchaseDetails from './pages/customer/purchase-detail/PurchaseDetails';
 import '@progress/kendo-theme-default/dist/all.css';
 import "react-toastify/dist/ReactToastify.css";
+import Online from './pages/admin/orders/Online';
+import Walkin from './pages/admin/orders/Walkin';
+import Sales from './pages/admin/sales/Sales';
 
 function App() {
 
@@ -64,6 +67,15 @@ function App() {
           ]
         },
         {
+          path: 'sales',
+          children: [
+            {
+              element: <Sales />,
+              index: true,
+            }, 
+          ]
+        },
+        {
           path: 'employees',
           children: [
             {
@@ -74,18 +86,30 @@ function App() {
         },
         {
           path: 'orders',
-
+          element: <Orders />,
           children: [
-            // {
-            //   element: <Orders />,
-            //   index: true
-            // },
-            // {
-            //   path:":order_id",
-            //   element:<OrderDetails />
-            // },
+            {
+              element: <Online />,
+              index: true
+            },
+            {
+              element: <Online />,
+              path: 'online',
+            },
+            {
+              element: <Walkin />,
+              path: 'walk-in'
+            },
           ]
-        }
+        },
+        {
+          path: 'orders/online/:order_id',
+          element: <OrderDetails />,
+        },
+        {
+          path: 'orders/walk-in/:order_id',
+          element: <OrderDetails />,
+        },
       ]
     },
     { // customer
@@ -96,6 +120,7 @@ function App() {
           path: '',
           element: <Index />
         },
+       
         {
           path: 'store',
           children: [
@@ -155,7 +180,42 @@ function App() {
         {
             path:'pos',
             element: <Pos />
-        }
+        },
+        {
+          path: 'sales',
+          children: [
+            {
+              element: <Sales />,
+              index: true,
+            }, 
+          ]
+        },
+        {
+          path: 'orders',
+          element: <Orders />,
+          children: [
+            {
+              element: <Online />,
+              index: true
+            },
+            {
+              element: <Online />,
+              path: 'online',
+            },
+            {
+              element: <Walkin />,
+              path: 'walk-in'
+            },
+          ]
+        },
+        {
+          path: 'orders/online/:order_id',
+          element: <OrderDetails />,
+        },
+        {
+          path: 'orders/walk-in/:order_id',
+          element: <OrderDetails />,
+        },
       ]
     },
   ])

@@ -161,3 +161,15 @@ export const T_Data = styled.div`
     border-radius: 50%;
   }
 `;
+
+export const NavigationLinks = styled.div`
+  display: flex;
+  margin: 20px;
+  gap: 10px;
+
+  & > a {
+    color: gray;
+    padding: 10px;
+    transition: all .3s ease-in-out;
+  }
+`

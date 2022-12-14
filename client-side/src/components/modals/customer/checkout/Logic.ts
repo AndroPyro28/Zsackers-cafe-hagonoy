@@ -37,7 +37,6 @@ function Logic({ paymentType, totalAmount }: Props) {
   const [checkoutOrderMutation] = useCheckoutOrderMutation();
   const onSubmit = async (values: any) => {
     try {
-      console.log('submitting')
       const { barangay, houseNo, street, contact, city, province } = values;
       const address = `${houseNo} ${street} ${barangay} ${city} ${province}`;
 
@@ -46,14 +45,16 @@ function Logic({ paymentType, totalAmount }: Props) {
         address,
         cartProducts,
         paymentType,
-        totalAmount,
+        totalAmount: Math.round(totalAmount * 0.1 + totalAmount),
       });
-
-
-      const { checkouturl, order_id, proceedPayment } = result.data;
-      if (!proceedPayment) {
-        return toast('Out of stock', {type: 'warning'});
+      const {error} = result;
+      // console.log(result)
+      if (error?.data.message) {
+        return toast(error?.data.message, {type: 'warning'});
       }
+      const { checkouturl, order_id, proceedPayment} = result.data;
+
+
       localStorage.setItem(
         "onCheckoutProducts",
         JSON.stringify({

@@ -63,9 +63,9 @@ function InventoryRightContent({ searchName, setSearchName }: { searchName: stri
         <button onClick={() => setViewCategory(true)}>
           View category <i className="fa-solid fa-share-nodes"></i>
         </button>
-        <button onClick={() => setOpenCreateProductModal(true)}>
+        {/* <button onClick={() => setOpenCreateProductModal(true)}>
           Bundles <i className="fa-solid fa-boxes-stacked"></i>
-        </button>
+        </button> */}
         <button onClick={() => setOpenCreateProductModal(true)}>
           Add products <i className="fa-solid fa-plus plus"></i>
         </button>

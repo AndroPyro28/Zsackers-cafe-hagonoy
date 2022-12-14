@@ -1,55 +1,49 @@
 import { useEffect, useState } from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import Order from "../../../components/orders/Order";
 import { useGetOrdersByAdminQuery } from "../../../services";
+import { LinksContainer } from "../../customer/purchases/components";
 import {
   OrderDetailsContainer,
   OrderDetailsList,
   SearchBarWrapper,
   SearchBarContainer,
-  TableContainer,
-  TableRowHeader,
-  T_Head as Thead,
   GlobalStyles,
+  NavigationLinks,
 } from "./components";
 
 type orderStatus = 'pending' | 'onGoing' | 'completed' | 'cancelled' | 'all'
 
 
 function Orders() {
+
+  const { pathname } = useLocation()
   const [search, setSearch] = useState('')
 
   const [orderStatus, setOrderStatus] = useState<orderStatus>('all');
 
-  const { data: orders, refetch, isLoading } = useGetOrdersByAdminQuery({
-    search,
-    order_status: orderStatus
-  });
-
-  useEffect(() => {
-    refetch()
-  }, [search,
-    orderStatus])
-
-  console.log(orders);
-
-  let orderContent;
-
-  if (isLoading) {
-    orderContent = <h3>loading...</h3>
-  }
-  else {
-    orderContent = orders?.length === 0 ? <h3>No orders found</h3> : orders?.map((order) => <Order data={order} key={order.id} />)
+  const isActiveLink = ({ isActive }: any) => {
+    return {
+      color: isActive ? 'rgb(24,41,62)' : 'gray',
+      borderBottom: isActive ? 'solid 2px rgb(24,41,62)' : 'solid 2px transparent',
+      fontWeight: isActive ? '1000' : '100'
+    }
   }
 
   return (
     <OrderDetailsContainer>
       <GlobalStyles />
-      <h3>To Ship Orders</h3>
+      <h3>{pathname.includes('orders/online') ? 'Online' : 'Walkin'} Orders</h3>
 
       <p>
-        Welcome, Admin! Tracking customer order allows you to manage, modified
-        and approve all the pending orders in the system.
+        Welcome! Tracking customer order allows you to manage
+        and serve all the pending orders in the system.
       </p>
+
+      <NavigationLinks>
+        <NavLink to={'online'} style={isActiveLink}>Online Orders</NavLink>
+        <NavLink to={'walk-in'} style={isActiveLink}>Walkin Orders</NavLink>
+      </NavigationLinks>
 
       <OrderDetailsList>
         <SearchBarWrapper>
@@ -61,30 +55,21 @@ function Orders() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </SearchBarContainer>
-
-          <select
+          {pathname.includes('orders/online') && <select
             className="select"
             onChange={(e) => setOrderStatus(e.target.value as orderStatus)}
           >
             <option value="all">All Orders</option>
             <option value="pending">Pending</option>
             <option value="onGoing">On Going</option>
-          </select>
+          </select>}
+
         </SearchBarWrapper>
 
-        <TableContainer>
-          <TableRowHeader>
-            <Thead className="id"> Order ID </Thead>
-            <Thead className="customer"> Customer </Thead>
-            <Thead className="date"> Date </Thead>
-            <Thead className="price"> Price </Thead>
-            <Thead className="order__status"> Order Status </Thead>
-            <Thead className="payment__method"> Payment Method</Thead>
-          </TableRowHeader>
+        <Outlet
+          context={{ search, orderStatus }}
+        />
 
-          {orderContent}
-
-        </TableContainer>
       </OrderDetailsList>
     </OrderDetailsContainer>
   )

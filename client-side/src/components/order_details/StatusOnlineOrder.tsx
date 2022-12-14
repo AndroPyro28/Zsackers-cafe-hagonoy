@@ -3,7 +3,7 @@ import { OrderDetails } from '../../model';
 import { OrderStatus, OrderStatusContainer, OrderStatusInfo } from '../../pages/admin/order_details/components'
 import Logic from './Logic';
 
-function Status({data}: {data: OrderDetails} ) {
+function StatusOnlineOrder({data}: {data: OrderDetails} ) {
 
   const [deliveryStatus, setDeliveryStatus] = useState(0);
   const [statusSummaryPackaging, setStatusSummaryPackaging] = useState("");
@@ -36,40 +36,52 @@ function Status({data}: {data: OrderDetails} ) {
       <h3>Order Status</h3>
 
       <OrderStatus className={statusSummaryPackaging}>
-        <i className="fa-solid fa-boxes-stacked i"></i>
-        <OrderStatusInfo status={statusSummaryPackaging}>
-          <span>
-            Order Packed{" "}
-            <i className={`fa-solid fa-circle-check i ${statusSummaryPackaging}`}></i>
-          </span>
-          <small>Order is being prepared</small>
-        </OrderStatusInfo>
-      </OrderStatus>
+      <i className="fa-solid fa-boxes-stacked i"></i>
+      <OrderStatusInfo status={statusSummaryPackaging}>
+        <span>
+          Order Packed{" "}
+          <i className={`fa-solid fa-circle-check i ${statusSummaryPackaging}`}></i>
+        </span>
+        <small>Order is being prepared</small>
+      </OrderStatusInfo>
+    </OrderStatus>
+      
 
       <OrderStatus className={statusSummaryShipping}>
-        <i className="fa-solid fa-truck-fast i"></i>
-        <OrderStatusInfo  status={statusSummaryShipping}>
-          <span>
-            Order Dispatched{" "}
-            <i className={`fa-solid fa-circle-check i ${statusSummaryShipping}`}></i>
-          </span>
-          <small>Preparing to dispatch </small>
-        </OrderStatusInfo>
-      </OrderStatus>
+      <i className="fa-solid fa-truck-fast i"></i>
+      <OrderStatusInfo  status={statusSummaryShipping}>
+        <span>
+          Order Dispatched{" "}
+          <i className={`fa-solid fa-circle-check i ${statusSummaryShipping}`}></i>
+        </span>
+        <small>Preparing to dispatch </small>
+      </OrderStatusInfo>
+    </OrderStatus>
 
+     <OrderStatus className={statusSummaryShipping}>
+      <i className="fa-solid fa-truck-fast i"></i>
+      <OrderStatusInfo  status={statusSummaryShipping}>
+        <span>
+          Order Dispatched{" "}
+          <i className={`fa-solid fa-circle-check i ${statusSummaryShipping}`}></i>
+        </span>
+        <small>Preparing to dispatch </small>
+      </OrderStatusInfo>
+    </OrderStatus>
+      
       <OrderStatus className={statusSummaryDelivering}>
-        <i className="fa-solid fa-truck-ramp-box  i"></i>
-        <OrderStatusInfo  status={statusSummaryDelivering}>
-          <span>
-            Order Delivered{" "}
-            <i
-              className={`fa-solid fa-circle-check i ${statusSummaryDelivering}`}
-            ></i>
-          </span>
-          <small>Order is in shipping process </small>
-        </OrderStatusInfo>
-      </OrderStatus>
-
+      <i className="fa-solid fa-truck-ramp-box  i"></i>
+      <OrderStatusInfo  status={statusSummaryDelivering}>
+        <span>
+          Order Delivered{" "}
+          <i
+            className={`fa-solid fa-circle-check i ${statusSummaryDelivering}`}
+          ></i>
+        </span>
+        <small>Order is in shipping process </small>
+      </OrderStatusInfo>
+    </OrderStatus>
+      
       {data?.id ? (
         <>
           {data?.order_status !== "cancelled" && deliveryStatus !== -1 ? (
@@ -91,4 +103,4 @@ function Status({data}: {data: OrderDetails} ) {
   )
 }
 
-export default Status
+export default StatusOnlineOrder
