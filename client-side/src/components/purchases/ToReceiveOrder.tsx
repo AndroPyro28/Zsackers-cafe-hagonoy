@@ -19,6 +19,7 @@ function ToReceiveOrder({data}: Props) {
         id: data.id,
         deliveryStatus: data.delivery_status
       })
+      console.log(res)
     } catch (error) {
       console.error(error)
     }
