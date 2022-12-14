@@ -8,6 +8,8 @@ import UserInteface from 'src/models/user.model';
 import { OrderDetails } from 'src/models/order-details.model';
 import { orderStatus } from '@prisma/client';
 import { VonageApi } from 'src/common/utils/vonage.utils';
+import { FindOrderAdmin } from './dto/find-order.dto';
+import { totalmem } from 'os';
 @Injectable()
 export class OrderService {
   constructor(
@@ -18,7 +20,7 @@ export class OrderService {
   ) {}
   
   async checkout(createOrderDto: CreateOrderDto,currentUser: UserInteface, res: Response) {
-    const { paymentType, cartProducts, address, contact } = createOrderDto;
+    const { paymentType, cartProducts, address, contact, totalAmount} = createOrderDto;
 
     const returnJson: any = {
       proceedPayment: true,
@@ -37,7 +39,7 @@ export class OrderService {
         url: 'https://g.payx.ph/payment_request',
         formData: {
           'x-public-key': process.env.GCASH_API_KEY,
-          amount: `${1}`,
+          amount: `${totalAmount}`,
           description: 'Payment for services rendered',
           redirectsuccessurl: `${process.env.CLIENT_URL}/customer/payment`,
           // redirectfailurl: `${process.env.CLIENT_URL_PROD}/customer/cart`,
@@ -60,13 +62,15 @@ export class OrderService {
     if (paymentType === 'cod') {
       return res.json({
         ...returnJson,
-        checkouturl: `http://localhost:3000/customer/payment`,
+        checkouturl: `${process.env.CLIENT_URL}/customer/payment`,
         order_id: `${uuid()}`.replace(/\-/g,""),
       });
     }
   }
 
+  
   async pos(createOrderDto: CreateOrderWalkinDto, userId: number) {
+    console.log(createOrderDto, userId)
     const newOrderDetails = await this.orderDetailsModel.createOrderWalkin(createOrderDto, userId)
 
     const {cartProducts} = createOrderDto;
@@ -79,7 +83,7 @@ export class OrderService {
 
     const updateProducts = await this.productModel.updateProductsStocks(productIds)
 
-    const updateCartProducts = await this.cartProductModel.updateManyCartProductsWithOrder(cartProductIds, newOrderDetails.id)
+    const updateCartProducts = await this.cartProductModel.updateManyCartProductsWithOrder(cartProductIds, newOrderDetails?.id)
     return {
       success: true
     }
@@ -102,17 +106,289 @@ export class OrderService {
     }
   }
 
-  findAllByAdmin(order_status: string, search: string) {
-    return this.orderDetailsModel.findAllByAdmin(order_status, search);
+  findAllByAdmin(queries: FindOrderAdmin) {
+    return this.orderDetailsModel.findAllByAdmin(queries);
   }
 
   findAllByCustomer(status: string, userId: number ) {
     return this.orderDetailsModel.findAllByCustomer(status, userId);
   }
 
+  findAllCompletedAndCancelledOrders(
+    filterDateFrom: string,
+    filterDateTo: string,
+  ) {
+    return this.orderDetailsModel.findAllCompletedAndCancelledOrders(filterDateFrom,
+      filterDateTo);
+
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} order`;
   }
+
+  async summary( ) {
+    const orders = await this.orderDetailsModel.findAllOrders();
+
+    const monthlyCancelledTransactions = [
+      {
+        month: 0,
+        total: 0
+      },
+      {
+        month: 1,
+        total: 0
+      },
+      {
+        month: 2,
+        total: 0
+      },
+      {
+        month: 3,
+        total: 0
+      },
+      {
+        month: 4,
+        total: 0
+      },
+      {
+        month: 5,
+        total: 0
+      },
+      {
+        month: 6,
+        total: 0
+      },
+      {
+        month: 7,
+        total: 0
+      },
+      {
+        month: 8,
+        total: 0
+      },
+      {
+        month: 9,
+        total: 0
+      },
+      {
+        month: 10,
+        total: 0
+      },
+      {
+        month: 11,
+        total: 0
+      },
+    ]
+
+    const monthlySuccessTransactions = [
+      {
+        month: 0,
+        total: 0
+      },
+      {
+        month: 1,
+        total: 0
+      },
+      {
+        month: 2,
+        total: 0
+      },
+      {
+        month: 3,
+        total: 0
+      },
+      {
+        month: 4,
+        total: 0
+      },
+      {
+        month: 5,
+        total: 0
+      },
+      {
+        month: 6,
+        total: 0
+      },
+      {
+        month: 7,
+        total: 0
+      },
+      {
+        month: 8,
+        total: 0
+      },
+      {
+        month: 9,
+        total: 0
+      },
+      {
+        month: 10,
+        total: 0
+      },
+      {
+        month: 11,
+        total: 0
+      },
+    ]
+
+    const monthlyTotalTransactions = [
+      {
+        month: 0,
+        total: 0
+      },
+      {
+        month: 1,
+        total: 0
+      },
+      {
+        month: 2,
+        total: 0
+      },
+      {
+        month: 3,
+        total: 0
+      },
+      {
+        month: 4,
+        total: 0
+      },
+      {
+        month: 5,
+        total: 0
+      },
+      {
+        month: 6,
+        total: 0
+      },
+      {
+        month: 7,
+        total: 0
+      },
+      {
+        month: 8,
+        total: 0
+      },
+      {
+        month: 9,
+        total: 0
+      },
+      {
+        month: 10,
+        total: 0
+      },
+      {
+        month: 11,
+        total: 0
+      },
+    ]
+
+    const monthlySales = [
+      {
+        month: 0,
+        total: 0
+      },
+      {
+        month: 1,
+        total: 0
+      },
+      {
+        month: 2,
+        total: 0
+      },
+      {
+        month: 3,
+        total: 0
+      },
+      {
+        month: 4,
+        total: 0
+      },
+      {
+        month: 5,
+        total: 0
+      },
+      {
+        month: 6,
+        total: 0
+      },
+      {
+        month: 7,
+        total: 0
+      },
+      {
+        month: 8,
+        total: 0
+      },
+      {
+        month: 9,
+        total: 0
+      },
+      {
+        month: 10,
+        total: 0
+      },
+      {
+        month: 11,
+        total: 0
+      },
+    ]
+
+    const yearNow = new Date().getFullYear();
+
+    const totalSalesToday = orders?.reduce((total ,order) => {
+      const orderDate = new Date(order.createdAt)?.toISOString().slice(0, 10);
+      const todayDate = new Date()?.toISOString().slice(0, 10);
+
+      if(orderDate  === todayDate ) {
+        return total + order.totalAmount
+      }
+
+      return total;
+    }, 0)
+
+    orders.forEach((order) => {
+      const month = new Date(order.createdAt).getMonth();
+      const year = new Date(order.createdAt).getFullYear();
+      if (year === yearNow && order.order_status === 'cancelled') {
+        monthlyCancelledTransactions[month].total++;
+      }
+    });
+
+    orders.forEach((order) => {
+      const month = new Date(order.createdAt).getMonth();
+      const year = new Date(order.createdAt).getFullYear();
+      if (year === yearNow && order.order_status === 'completed') {
+        monthlySuccessTransactions[month].total++;
+      }
+    });
+
+    orders.forEach((order) => {
+      const month = new Date(order.createdAt).getMonth();
+      const year = new Date(order.createdAt).getFullYear();
+      if (year === yearNow) {
+        monthlyTotalTransactions[month].total++;
+      }
+    });
+
+    orders.forEach((order) => {
+      const month = new Date(order.createdAt).getMonth();
+      const year = new Date(order.createdAt).getFullYear();
+      if (year === yearNow && order?.order_status != 'cancelled') {
+        monthlySales[month].total += order?.totalAmount;
+      }
+    });
+
+    return {
+      monthlyCancelledTransactions,
+      monthlySuccessTransactions,
+      monthlyTotalTransactions,
+      monthlySales,
+      totalSalesToday
+    }
+  }
+
+  
 
   async findOneByOrderId (order_id: string) {
     const orderDetails = await this.orderDetailsModel.findOneByOrderId(order_id);
@@ -164,7 +440,9 @@ export class OrderService {
     `
   }
 
-  this.vonageApi.sendSms(order.contact, message)
+    if(order.transaction_type === 'ONLINE') {
+      this.vonageApi.sendSms(order.contact, message)
+    }
  
     const updatedOrder = await this.orderDetailsModel.updateStatus(id, deliveryStatus);
 
@@ -181,9 +459,9 @@ export class OrderService {
 
     -Zsakers cafe
     `
-    
-    this.vonageApi.sendSms(order.contact, message);
-
+    if(order.transaction_type === 'ONLINE') {
+      this.vonageApi.sendSms(order.contact, message)
+    }
     const cancelOrder = await this.orderDetailsModel.cancelOrder(id, cancelOrderDto);
 
     if(!cancelOrder) throw new ForbiddenException('Didnt update status');

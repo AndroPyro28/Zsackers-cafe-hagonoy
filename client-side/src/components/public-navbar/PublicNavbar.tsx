@@ -18,9 +18,9 @@ function PublicNavbar() {
           About
         </NavLink>
 
-        <NavLink to={"/products"} style={navLinkStyles}>
+        {/* <NavLink to={"/products"} style={navLinkStyles}>
           Products
-        </NavLink>
+        </NavLink> */}
       </Links>
 
       <NavLink to={"/login"}>login</NavLink>

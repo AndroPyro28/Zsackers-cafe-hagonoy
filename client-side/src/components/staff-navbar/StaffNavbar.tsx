@@ -27,7 +27,7 @@ function StaffNavbar() {
             <i className="fa-solid fa-truck-fast"></i> Orders
             </NavLink>
             <NavLink to={'pos'}>
-            <i className="fa-solid fa-users"></i> Pos
+            <i className="fa-solid fa-cash-register"></i> Pos
             </NavLink>
         </AdminLinks>
         <UserProfile>

@@ -14,13 +14,16 @@ function AdminNavbar() {
   return (
     <AdminNavbarContainer>
         <AdminLinks>
-            <NavLink to={''}>
+            {/* <NavLink to={''}>
             <i className="fa-solid fa-chart-line"></i> Dashboard
-            </NavLink>
+            </NavLink> */}
             <NavLink to={'inventory'}>
             <i className="fa-solid fa-cart-flatbed"></i> Inventory
             </NavLink>
-            <NavLink to={''}>
+            <NavLink to={'pos'}>
+            <i className="fa-solid fa-cash-register"></i> Pos
+            </NavLink>
+            <NavLink to={'sales'}>
             <i className="fa-solid fa-chart-pie"></i> Sales
             </NavLink>
             <NavLink to={'orders'}>

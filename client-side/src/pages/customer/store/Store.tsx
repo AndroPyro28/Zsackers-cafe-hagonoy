@@ -40,7 +40,7 @@ function Store() {
       <Banner />
       <StoreGlobalStyles />
       {
-        productId > 0 &&  <ProductDetails productId={productId}/>
+        productId > 0 && <ProductDetails setProductId={setProductId} productId={productId}/>
       }
 
       <Filter

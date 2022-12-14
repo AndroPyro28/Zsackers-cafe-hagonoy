@@ -67,6 +67,10 @@ function App() {
           ]
         },
         {
+          path:'pos',
+          element: <Pos />
+        },
+        {
           path: 'sales',
           children: [
             {

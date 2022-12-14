@@ -16,10 +16,12 @@ function Product({data, setProductId}: Props) {
             <Image src={data.image_url} />
             <Name>{data.productName}</Name>
             <Details>{data.details || '...'}</Details>
-            <Buttons> <span className='view' onClick={() => setProductId(data.id)}>
-               <i className="fa-solid fa-eye"></i></span>
+            <Buttons>
+               {/* <span className='view' onClick={() => setProductId(data.id)}>
+               <i className="fa-solid fa-eye"></i></span> */}
+
                 <span className='add__to__cart' onClick={() => addToCart(data)}>{data?.stock <= 0 ? 'Out of stock' : 'Add to cart'} </span>
-                </Buttons>
+            </Buttons>
     </ProductContainer>
   )
 }

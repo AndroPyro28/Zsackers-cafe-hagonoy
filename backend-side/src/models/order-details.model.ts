@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { orderStatus } from '@prisma/client';
 import { CreateOrderDto, CreateOrderWalkinDto } from 'src/routes/order/dto/create-order.dto';
+import { FindOrderAdmin } from 'src/routes/order/dto/find-order.dto';
 import { CancelOrderDto } from 'src/routes/order/dto/update-order.dto';
 import { order_Details } from './root.model';
 import UserInteface from './user.model';
@@ -31,7 +32,7 @@ export class OrderDetails {
     const { totalAmount, order_id} = createOrder;
     const newOrder = await order_Details.create({
       data: {
-        totalAmount,
+        totalAmount:Math.trunc(totalAmount),
         order_id,
         transaction_type:'WALK_IN',
         userId: userId,
@@ -46,7 +47,8 @@ export class OrderDetails {
     }
   }
 
-  async findAllByAdmin(order_status: string, search: string,) {
+  async findAllByAdmin(queries: FindOrderAdmin) {
+    const {search, transaction_type, order_status} = queries;
     try {
       let condition: any = {
         OR: [
@@ -55,12 +57,14 @@ export class OrderDetails {
               contains: search
             },
             order_status: 'pending',
+            transaction_type
           },
           {
             order_id: {
               contains: search
             },
-            order_status: 'onGoing'
+            order_status: 'onGoing',
+            transaction_type
           }
         ]
       }
@@ -69,7 +73,8 @@ export class OrderDetails {
             order_id: {
               contains: search
             },
-            order_status: order_status as orderStatus
+            order_status: order_status as orderStatus,
+            transaction_type
         }
       }
       const orders = await order_Details.findMany({
@@ -90,6 +95,47 @@ export class OrderDetails {
       return orders
 
       
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async findAllCompletedAndCancelledOrders(filterDateFrom: string, filterDateTo: string,) {
+    try {
+      const orders = await order_Details.findMany({
+        where: {
+          OR: [
+            {
+              order_status: 'cancelled',
+              createdAt: {
+                gte:new Date(filterDateFrom),
+                lte: new Date(filterDateTo)
+              }
+            },
+            {
+              order_status: 'completed',
+              createdAt: {
+                gte:new Date(filterDateFrom),
+                lte: new Date(filterDateTo)
+              }
+            }
+          ]
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              profile: true
+            },
+          },
+          cart_product: true
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+      return orders
     } catch (error) {
       console.error(error)
     }
@@ -264,6 +310,15 @@ export class OrderDetails {
           cancel_reason: cancelOrderDto.reason
         }})
       return updatedOrder
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async findAllOrders() {
+    try {
+      const orders = await order_Details.findMany()
+      return orders
     } catch (error) {
       console.error(error)
     }

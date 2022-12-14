@@ -17,13 +17,14 @@ import { GetCurrentUser, Roles } from 'src/common/decorators';
 import UserInteface from 'src/models/user.model';
 import { Response } from 'express';
 import { orderStatus } from '@prisma/client'
+import { FindOrderAdmin } from './dto/find-order.dto';
 
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) { }
 
   @Post('/checkout')
-  @Roles(['CUSTOMER', 'STAFF'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   async checkout(
     @Body() createOrderDto: CreateOrderDto,
     @GetCurrentUser() currentUser: UserInteface,
@@ -33,7 +34,7 @@ export class OrderController {
   }
 
   @Post('/pos')
-  @Roles(['CUSTOMER', 'STAFF'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   async pos(
     @Body() createOrderDto: CreateOrderWalkinDto,
     @GetCurrentUser('id') userId: number,
@@ -42,7 +43,7 @@ export class OrderController {
   }
 
   @Post('/payment')
-  @Roles(['CUSTOMER', 'STAFF'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   async payment(
     @Body() createOrderDto: CreateOrderDto,
     @GetCurrentUser('id') userId: number,
@@ -51,16 +52,27 @@ export class OrderController {
   }
 
   @Get('admin')
-  @Roles(['ADMIN'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   findAllByAdmin(
-    @Query('order_status') order_status: string,
-    @Query('search') search: string
+    @Query() queries: FindOrderAdmin
   ) {
-    return this.orderService.findAllByAdmin(order_status, search);
+    return this.orderService.findAllByAdmin(queries);
+  }
+
+  @Get('completed-cancelledOrders')
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
+  findAllCompletedAndCancelledOrders(
+    @Query('filterDateFrom') filterDateFrom : string,
+    @Query('filterDateTo')filterDateTo : string
+  ) {
+    return this.orderService.findAllCompletedAndCancelledOrders(
+      filterDateFrom,
+      filterDateTo
+    );
   }
 
   @Get('customer')
-  @Roles(['STAFF', 'CUSTOMER'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   findAllByCustomer(
     @Query('status') status: string,
     @GetCurrentUser('id') userId: number
@@ -69,11 +81,17 @@ export class OrderController {
   }
 
   @Get('order-id/:order_id')
-  @Roles(['ADMIN', 'CUSTOMER'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   findOneByOrderId(
     @Param('order_id') order_id: string,
   ) {
     return this.orderService.findOneByOrderId(order_id);
+  }
+
+  @Get('summary')
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
+  summary() {
+    return this.orderService.summary();
   }
 
   @Get(':id')
@@ -83,14 +101,14 @@ export class OrderController {
   }
 
   @Patch(':id')
-  @Roles(['ADMIN', 'STAFF'])
+  @Roles(['ADMIN', 'CUSTOMER', 'STAFF'])
   updateStatus(
     @Param('id', ParseIntPipe) id: number, @Body('deliveryStatus', ParseIntPipe) deliveryStatus: number) {
     return this.orderService.updateStatus(id, deliveryStatus);
   }
 
   @Patch('cancel/:id')
-  @Roles(['ADMIN', 'STAFF'])
+  @Roles(['ADMIN', 'STAFF', 'CUSTOMER'])
   cancelOrder(
     @Param('id', ParseIntPipe) id: number,
     @Body() cancelOrderDto: CancelOrderDto
