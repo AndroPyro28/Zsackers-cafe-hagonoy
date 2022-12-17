@@ -5,7 +5,7 @@ import { useAddToCartMutation, useGetCartProducts } from '../../services/cart-pr
 
 function Logic() {
     const [addToCartMutation] = useAddToCartMutation();
-  const {data: cartProducts} = useGetCartProducts()
+    const {data: cartProducts} = useGetCartProducts()
     
     const addToCart = async (product: Product) => {
 

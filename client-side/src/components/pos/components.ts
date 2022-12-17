@@ -195,6 +195,7 @@ export const OrderContainer = styled.div`
         border-radius: 20px;
         font-size: 1.1em;
         margin: 5px;
+        cursor: pointer;
     }
     & >.name {
         width: fit-content;

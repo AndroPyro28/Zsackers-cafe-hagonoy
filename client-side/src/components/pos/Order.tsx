@@ -1,5 +1,6 @@
 import { prepareDataForValidation } from 'formik'
 import React from 'react'
+import { toast } from 'react-toastify'
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { CartProduct } from '../../model'
 import { useGetProductByIdQuery } from '../../services'
@@ -13,14 +14,18 @@ function Order({ data }: Props) {
 
   const [updateQuantity] = useUpdateQuantityMutation()
         
-        
   const [deleteOne] = useDeleteOneCartProductMutation()
 
   const handleUpdate = async (action: "increment" | "decrement") => {
-    const res = await updateQuantity({
-      id: data.id,
-      action
-    })
+
+    if(action === 'increment' && data?.quantity < data?.product?.stock || action === 'decrement') {
+      const res = await updateQuantity({
+        id: data.id,
+        action
+      })
+    } else {
+      toast('You reached the maximum stock for this product', {type: 'info'})
+    }
   }
 
   const handleDelete = async () => {

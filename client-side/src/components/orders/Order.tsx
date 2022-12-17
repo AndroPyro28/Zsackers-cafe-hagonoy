@@ -17,15 +17,17 @@ function Order({ data }: Props) {
   const { time, date } = dateAndTimeParser(data.createdAt + '')
 
   const {data: user} = useGetCurrentUser()
+
   const handleNavigate = () => {
     if(data?.transaction_type === 'ONLINE')
      {
        navigate(`/${user?.role.toLocaleLowerCase()}/orders/online/${data.order_id}`)
      }
      else {
-      navigate(`/${user?.role.toLocaleLowerCase()}/orders/online/${data.order_id}`)
+      navigate(`/${user?.role.toLocaleLowerCase()}/orders/walk-in/${data.order_id}`)
     }
   }
+  
   return (
     <TableRowData onClick={handleNavigate}>
       <T_Data className="id" > {data?.order_id}</T_Data>

@@ -3,7 +3,6 @@ import FeaturedProducts from '../../../components/featured-products/FeaturedProd
 import { IndexContainer, Intro, Content, CircleContainer, Circle, Inner } from './components'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStore } from "@fortawesome/free-solid-svg-icons"
-import StoreIcon from '@material-ui/icons/Store';
 import "./style.css"
 
 

@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Details from "../../../components/order_details/Details";
 import Product from "../../../components/order_details/Product";
 import Shipping from "../../../components/order_details/Shipping";
 import StatusOnlineOrder from "../../../components/order_details/StatusOnlineOrder";
 import StatusWalkinOrder from "../../../components/order_details/StatusWalkinOrder";
 import Summary from "../../../components/order_details/Summary";
+import { transactionType } from '../../../model';
 import { useGetOrderByOrderIdQuery } from '../../../services';
 import {
   OrderNumber,
@@ -18,8 +19,13 @@ import {
 
 function OrderDetails() {
   const { order_id } = useParams()
+  const navigate = useNavigate()
+  const { data: orderData, isLoading, isError} = useGetOrderByOrderIdQuery(order_id!)
+  const transactionType: transactionType = useLocation()?.pathname?.includes('orders/online') ? 'ONLINE' : 'WALK_IN';
 
-  const { data: orderData } = useGetOrderByOrderIdQuery(order_id!)
+  if(isLoading) return <></>
+  if(isError || orderData?.transaction_type !== transactionType) navigate(-1);
+
   return (
     <>
       <GlobalStyles />
