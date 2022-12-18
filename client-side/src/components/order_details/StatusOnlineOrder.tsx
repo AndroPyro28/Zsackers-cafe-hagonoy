@@ -45,7 +45,6 @@ function StatusOnlineOrder({data}: {data: OrderDetails} ) {
         <small>Order is being prepared</small>
       </OrderStatusInfo>
     </OrderStatus>
-      
 
       <OrderStatus className={statusSummaryShipping}>
       <i className="fa-solid fa-truck-fast i"></i>
@@ -58,17 +57,6 @@ function StatusOnlineOrder({data}: {data: OrderDetails} ) {
       </OrderStatusInfo>
     </OrderStatus>
 
-     <OrderStatus className={statusSummaryShipping}>
-      <i className="fa-solid fa-truck-fast i"></i>
-      <OrderStatusInfo  status={statusSummaryShipping}>
-        <span>
-          Order Dispatched{" "}
-          <i className={`fa-solid fa-circle-check i ${statusSummaryShipping}`}></i>
-        </span>
-        <small>Preparing to dispatch </small>
-      </OrderStatusInfo>
-    </OrderStatus>
-      
       <OrderStatus className={statusSummaryDelivering}>
       <i className="fa-solid fa-truck-ramp-box  i"></i>
       <OrderStatusInfo  status={statusSummaryDelivering}>

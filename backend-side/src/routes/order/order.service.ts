@@ -62,7 +62,7 @@ export class OrderService {
     if (paymentType === 'cod') {
       return res.json({
         ...returnJson,
-        checkouturl: `${process.env.CLIENT_URL}/customer/payment`,
+        checkouturl: `http://localhost:3000/customer/payment`,
         order_id: `${uuid()}`.replace(/\-/g,""),
       });
     }
