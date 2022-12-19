@@ -168,7 +168,7 @@ export const OrderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-
+  font-size: 0.9em;
   & > td {
     flex: 1;
     /* gap: 10px; */
@@ -189,7 +189,7 @@ export const OrderContainer = styled.div`
       background: #eaeaea;
       outline: none;
       border: solid 1px gray;
-      padding: 5px 10px;
+      padding: 5px 8px;
       border-radius: 20px;
       font-size: 1.1em;
       margin: 5px;

@@ -9,7 +9,7 @@ interface Props {
 function EmployeeData({data}: Props) {
 
   const {dateAndTimeParser} = DateTimeFormatter()
-  const {time, date} = dateAndTimeParser(data.createdAt)
+  const {time, date} = dateAndTimeParser(data?.createdAt)
 
   const [toggleAction, setToggleAction] = useState(false);
 
@@ -40,8 +40,8 @@ function EmployeeData({data}: Props) {
     <EmployeeDataContainer>
       <TD className='fullname'> <span> {data?.profile?.firstname} {data?.profile?.lastname} </span> </TD>
       <TD className='email'> <span>{data?.email}</span> </TD>
-      <TD className='contact'> <span>{data?.profile.contact}</span> </TD>
-      <TD className='status'> <span className={data.status.toLocaleLowerCase()}> • {data.status.toLocaleLowerCase()} </span> </TD>
+      <TD className='contact'> <span>{data?.profile?.contact}</span> </TD>
+      <TD className='status'> <span className={data?.status.toLocaleLowerCase()}> • {data?.status.toLocaleLowerCase()} </span> </TD>
       <TD className='created'> <span> {date} : {time} </span> </TD>
       <TD className='action'> 
       <span className='i' onClick={() => setToggleAction(prev => !prev)}><i className="fa-solid fa-ellipsis "></i>  </span>
