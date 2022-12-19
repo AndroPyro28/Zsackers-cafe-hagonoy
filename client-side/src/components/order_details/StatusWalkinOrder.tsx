@@ -45,7 +45,8 @@ function Status({data}: {data: OrderDetails} ) {
             className={`fa-solid fa-circle-check i ${statusSummaryDelivering}`}
           ></i>
         </span>
-        <small>Order is being prepared </small>
+        <small> {statusSummaryDelivering === 'active' || statusSummaryDelivering === 'notActive'  ? 'Order is being prepared' : 'Order Completed'} </small>
+
       </OrderStatusInfo>
     </OrderStatus>
       

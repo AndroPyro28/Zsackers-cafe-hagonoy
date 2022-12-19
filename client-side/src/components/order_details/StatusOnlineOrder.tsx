@@ -21,9 +21,6 @@ function StatusOnlineOrder({data}: {data: OrderDetails} ) {
     setStatusSummaryDelivering(statusSummary(3));
   }, [deliveryStatus]);
 
-  console.log(statusSummaryPackaging,
-    statusSummaryShipping,
-    statusSummaryDelivering,)
   const { statusSummary,
     orderNextStage
   } = Logic({
@@ -42,7 +39,7 @@ function StatusOnlineOrder({data}: {data: OrderDetails} ) {
           Order Packed{" "}
           <i className={`fa-solid fa-circle-check i ${statusSummaryPackaging}`}></i>
         </span>
-        <small>Order is being prepared</small>
+        <small>{statusSummaryPackaging === 'active' || statusSummaryPackaging === 'notActive'  ? 'Order is being prepared' : 'Order has been packed'}</small>
       </OrderStatusInfo>
     </OrderStatus>
 
@@ -53,7 +50,8 @@ function StatusOnlineOrder({data}: {data: OrderDetails} ) {
           Order Dispatched{" "}
           <i className={`fa-solid fa-circle-check i ${statusSummaryShipping}`}></i>
         </span>
-        <small>Preparing to dispatch </small>
+        <small>{statusSummaryShipping === 'active' || statusSummaryShipping === 'notActive'  ? 'Preparing to dispatch' : 'Order has been dispatched'}</small>
+
       </OrderStatusInfo>
     </OrderStatus>
 
@@ -66,7 +64,7 @@ function StatusOnlineOrder({data}: {data: OrderDetails} ) {
             className={`fa-solid fa-circle-check i ${statusSummaryDelivering}`}
           ></i>
         </span>
-        <small>Order is in shipping process </small>
+        <small> {statusSummaryDelivering === 'active' || statusSummaryDelivering === 'notActive'  ? 'Order is in shipping process' : 'Order Has been delivered'} </small>
       </OrderStatusInfo>
     </OrderStatus>
       

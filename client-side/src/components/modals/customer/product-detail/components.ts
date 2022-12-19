@@ -15,6 +15,18 @@ export const ProductDetailsContainer = styled(motion.div)`
     border-radius: 10px;
     overflow: hidden;
     display: flex;
+
+    & > button {
+        position: absolute;
+        top: 0px;
+        right: 10px;
+        border: none;
+        background: none;
+        color: maroon;
+        font-size: 1.3em;
+        font-weight: 1000;
+        cursor: pointer;
+    }
 `
 
 export const ImageContainer = styled.div`
@@ -82,6 +94,7 @@ export const AddToCartBtn = styled.button`
     color: white;
     /* width: 50%; */
     border-radius: 5px;
+    cursor: pointer;
 `
 export const ProductDetail = styled.div`
     height: 100%;

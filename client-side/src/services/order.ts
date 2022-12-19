@@ -25,7 +25,7 @@ const orderApi = privateApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Order" }, {type: 'Cart-Product'}],
+      invalidatesTags: (result, error, arg) => [{ type: "Order" }, {type: 'Cart-Product'}, {type: 'Product'}],
     }),
     getOrdersByAdmin: builder.query<OrderDetails[], GetOrdersByAdmin>({
       query: ({search, order_status, transaction_type}) => ({

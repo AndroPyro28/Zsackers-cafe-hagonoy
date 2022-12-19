@@ -5,6 +5,7 @@ import { OrderDetails } from '../../model';
 import { useCancelOrderMutation } from '../../services';
 import { useState } from 'react';
 import CancelOrderModal from '../modals/customer/cancel-order/CancelOrderModal';
+import DateTimeFormatter from '../../helpers/DateTimeFormatter';
 
 interface Props {
     data: OrderDetails
@@ -13,6 +14,10 @@ function PreparingOrder({data}: Props) {
     const navigate = useNavigate()
 
     const [toggleCancel, setToggleCancel] = useState(false);
+
+    const { dateAndTimeParser } = DateTimeFormatter()
+
+    const {time, date} = dateAndTimeParser(data?.createdAt + '')
   return (
     <Order> 
     {
@@ -28,6 +33,14 @@ function PreparingOrder({data}: Props) {
         <Row>
           <h4>Total amount of {productPriceFormatter(data?.totalAmount + '')}</h4>
         </Row>
+
+        <Row>
+          <h4>
+          <i className="fa-solid fa-clock"></i>&nbsp;{" "}
+            {date} at {time}
+          </h4>
+        </Row>
+
         <Row>
           <h3>
             <i className="fa-solid fa-basket-shopping"></i>&nbsp;{" "}

@@ -15,8 +15,8 @@ function Logic({ paymentType, totalAmount }: Props) {
     houseNo: "",
     street: "",
     contact: "",
-    city: "",
-    province: "",
+    city: "Hagonoy",
+    province: "Bulacan",
   };
 
   const digitsOnly = (value: any) => /^\d+$/.test(value);
@@ -45,15 +45,13 @@ function Logic({ paymentType, totalAmount }: Props) {
         address,
         cartProducts,
         paymentType,
-        totalAmount: Math.round(totalAmount * 0.1 + totalAmount),
+        totalAmount,
       });
       const {error} = result;
-      // console.log(result)
       if (error?.data.message) {
         return toast(error?.data.message, {type: 'warning'});
       }
-      const { checkouturl, order_id, proceedPayment} = result.data;
-
+      const { checkouturl, order_id, proceedPayment, totalAmount: total_amount} = result.data;
 
       localStorage.setItem(
         "onCheckoutProducts",
@@ -63,7 +61,7 @@ function Logic({ paymentType, totalAmount }: Props) {
           cartProducts,
           paymentType,
           order_id,
-          totalAmount: Math.round(totalAmount * 0.1 + totalAmount),
+          totalAmount: total_amount,
           proceedPayment
         })
 

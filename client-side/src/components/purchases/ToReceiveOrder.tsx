@@ -3,6 +3,7 @@ import { OrderDetails } from '../../model'
 import { Info, Order, ReceivedButton, Row, ViewButton } from './components'
 import { useNavigate } from 'react-router-dom'
 import { useOrderDetailsNextStageMutation } from '../../services'
+import DateTimeFormatter from '../../helpers/DateTimeFormatter'
 interface Props {
     data: OrderDetails
 }
@@ -12,6 +13,10 @@ function ToReceiveOrder({data}: Props) {
   const navigate = useNavigate()
 
   const [orderNextStageMutation] = useOrderDetailsNextStageMutation()
+
+  const { dateAndTimeParser } = DateTimeFormatter()
+
+    const {time, date} = dateAndTimeParser(data?.createdAt + '')
 
   const orderCompleted = async () => {
     try {
@@ -37,6 +42,13 @@ function ToReceiveOrder({data}: Props) {
       <Row>
         <h4>Total amount of {productPriceFormatter(data?.totalAmount + '')}</h4>
       </Row>
+
+      <Row>
+          <h4>
+          <i className="fa-solid fa-clock"></i>&nbsp;{" "}
+            {date} at {time}
+          </h4>
+        </Row>
 
       <Row>
         <h3>

@@ -27,7 +27,7 @@ function PopupCashier({
               placeholder={`${totalAmount}`}
                type="number" />
             </CashierInput>
-             <button disabled={inputMoney < totalAmount}
+             <button disabled={inputMoney < totalAmount || inputMoney === 0}
              onClick={handlePrint}>
               Print Receipt
             </button>

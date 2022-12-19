@@ -16,7 +16,7 @@ function Data({ order }: { order: OrderDetails }) {
       navigate(`/${user?.role.toLocaleLowerCase()}/orders/online/${order.order_id}`)
     }
     else {
-      navigate(`/${user?.role.toLocaleLowerCase()}/orders/online/${order.order_id}`)
+      navigate(`/${user?.role.toLocaleLowerCase()}/orders/walk-in/${order.order_id}`)
     }
   }
   return (

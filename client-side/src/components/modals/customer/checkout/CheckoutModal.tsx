@@ -12,7 +12,35 @@ interface Props {
 function CheckoutModal({ paymentType, setOpenCheckoutModal, totalAmount }: Props) {
   const [proceed, setProceed] = useState(false);
 
-  const { onSubmit, validationSchema, initialValues } = Logic({ paymentType, totalAmount })
+  const { onSubmit, validationSchema, initialValues } = Logic({ paymentType, totalAmount });
+  const brgyList = [
+    'Abulalas',
+    'Carillo',
+    'Iba',
+    'Iba-ibayo',
+    'Mercado',
+    'Palapat',
+    'Pugad',
+    'Sagrada Familia',
+    'San Agustin',
+    'San Isidro',
+    'San Jose',
+    'San Juan',
+    'San Miguel',
+    'San Nicolas',
+    'San Pablo',
+    'San Pascual',
+    'San Pedro',
+    'San Roque',
+    'Santa Cruz',
+    'Santa Elena',
+    'Santa Monica',
+    'Santo Nino',
+    'Santo Rosario',
+    'Tampok',
+    'Tibaguin',
+  ]
+  
   return (
     <ModalBackdrop>
 
@@ -32,9 +60,15 @@ function CheckoutModal({ paymentType, setOpenCheckoutModal, totalAmount }: Props
             <p> <i className="fa-solid fa-info infoIcon"></i> Shipping address</p>
 
             <FieldRow>
+
               <FieldInput>
                 <label htmlFor="">Barangay</label>
-                <Field name="barangay" placeholder="Barangay" />
+                <Field as="select" name="barangay" >
+                  <option value="">Select Brgy</option>
+                  {
+                    brgyList?.map((brgy) => <option value={brgy}> {brgy} </option>)
+                  }
+                </Field>
                 <ErrorMessage component={'div'} className="error" name="barangay" />
               </FieldInput>
 
@@ -62,10 +96,17 @@ function CheckoutModal({ paymentType, setOpenCheckoutModal, totalAmount }: Props
             </FieldRow>
 
             <FieldRow>
-              <FieldInput>
+              {/* <FieldInput>
                 <label htmlFor="">City</label>
                 <Field name="city" placeholder="City">
+                </Field>
+                <ErrorMessage component={'div'} className="error" name="city" />
+              </FieldInput> */}
 
+              <FieldInput>
+                <label htmlFor="">City</label>
+                <Field as="select" name="city" >
+                  <option value="Hagonoy">Hagonoy</option>
                 </Field>
                 <ErrorMessage component={'div'} className="error" name="city" />
               </FieldInput>
@@ -73,7 +114,7 @@ function CheckoutModal({ paymentType, setOpenCheckoutModal, totalAmount }: Props
               <FieldInput>
                 <label htmlFor="">Province</label>
                 <Field as="select" name="province" >
-                  <option value="">Select province</option>
+                  {/* <option value="">Select province</option> */}
                   <option value="bulacan ">Bulacan</option>
                 </Field>
                 <ErrorMessage component={'div'} className="error" name="province" />

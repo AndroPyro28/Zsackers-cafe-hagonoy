@@ -17,8 +17,8 @@ function Product({data, setProductId}: Props) {
             <Name>{data.productName}</Name>
             <Details>{data.details || '...'}</Details>
             <Buttons>
-               {/* <span className='view' onClick={() => setProductId(data.id)}>
-               <i className="fa-solid fa-eye"></i></span> */}
+               <span className='view' onClick={() => setProductId(data.id)}>
+               <i className="fa-solid fa-eye"></i></span>
 
                 <span className='add__to__cart' onClick={() => addToCart(data)}>{data?.stock <= 0 ? 'Out of stock' : 'Add to cart'} </span>
             </Buttons>

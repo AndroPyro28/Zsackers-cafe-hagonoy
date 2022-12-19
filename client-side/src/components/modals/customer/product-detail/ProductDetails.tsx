@@ -21,12 +21,12 @@ import Product from './variant'
 import Variants from './Variants'
 
 function ProductDetails({ productId, setProductId }: { productId: number, setProductId:  React.Dispatch<React.SetStateAction<number>> }) {
+    const {addToCart} = Logic()
 
     const { data: product, isLoading, isError } = useGetProductByIdQuery(productId);
     if(isLoading) return <></>
 
     if(isError)  return <></>
-    const {addToCart} = Logic()
     return (
         <ModalBackdrop>
             <ProductDetailsContainer>

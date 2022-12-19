@@ -1,20 +1,18 @@
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { useGetCartProductsQuery } from '../../services/cart-products'
-import { Address, BranchName, ReceiptProduct, CashierContent as CashierContentContainer, Contact, Discount, DiscountAmount, Date as DateContent, OrderId, Orders, OrderSummary, PrintReceiptButton, ReceiptBody, ReceiptContainer, ReceiptContent, ReceiptFooter, ReceiptHeader, Subtotal, SubtotalAmount, Summary, Tax, TaxAmount, Total, TotalAmount, SummaryContent, } from './components'
+import { Address, BranchName, ReceiptProduct, CashierContent as CashierContentContainer, Contact, Discount, DiscountAmount, Date as DateContent, OrderId, Orders, OrderSummary, PrintReceiptButton, ReceiptBody, ReceiptContainer, ReceiptContent, ReceiptFooter, ReceiptHeader, Subtotal, SubtotalAmount, Summary, Tax, TaxAmount, Total, TotalAmount, SummaryContent, CashierInfo, } from './components'
 import Order from './Order'
 import { useRef, useState } from 'react'
 import { v4 as uuid } from 'uuid'
 
 import ReactToPrint from 'react-to-print'
 import PopupCashier from '../modals/staff/PopupCashier'
-import { useCreateOrderWalkinMutation } from '../../services'
-import { create } from 'yup/lib/array'
-import { createRoot } from 'react-dom/client'
+import { useCreateOrderWalkinMutation, useGetCurrentUser } from '../../services'
 function CashierContent() {
 
   const { data: cartProducts, isLoading, isError } = useGetCartProductsQuery()
   let content;
-
+  const {data: user} = useGetCurrentUser()
   if (isLoading) content = <h3>Loading...</h3>
 
   if (isError) content = <h3>Something went wrong...</h3>
@@ -33,12 +31,13 @@ function CashierContent() {
     }
   }
 
-  const subtotal = cartProducts?.reduce((total, cartProduct) => total + (cartProduct.product.price * cartProduct.quantity), 0) ?? 0
-  const tax = subtotal! * 0.12;
-  const totalAmount = tax + subtotal!;
+  const totalAmount = cartProducts?.reduce((total, cartProduct) => total + (cartProduct.product.price * cartProduct.quantity), 0) ?? 0
+  const tax = (totalAmount! / 1.12) * .12;
+  const subtotal = totalAmount! - tax;
   const order_id = `${uuid()}`.replace(/\-/g, "")
 
   const [createOrder] = useCreateOrderWalkinMutation()
+
   const handleAfterPrint = async () => {
     try {
       const res: any = await createOrder({
@@ -46,7 +45,6 @@ function CashierContent() {
         order_id,
         cartProducts: cartProducts!
       });
-      console.log(res);
     } catch (error) {
       console.error(error)
     }
@@ -57,8 +55,6 @@ function CashierContent() {
   const handlePay = () => {
     setToggleCashier(true)
   }
-
-  
 
   return (
     <CashierContentContainer>
@@ -113,8 +109,8 @@ function CashierContent() {
               <Address>RQQ4+MP7, Hagonoy Bulacan</Address>
               <Contact> (+63 960 841 0594) </Contact>
               <DateContent> {new Date().toLocaleString()} </DateContent>
-
-              <OrderId>Order ID: <span>{order_id}</span></OrderId>
+              <OrderId>OrderId: <span>{order_id}</span></OrderId>
+              <CashierInfo>Cashier Name: <span>{user?.profile.firstname} {user?.profile.lastname}</span></CashierInfo>
             </ReceiptHeader>
 
             <ReceiptBody>
