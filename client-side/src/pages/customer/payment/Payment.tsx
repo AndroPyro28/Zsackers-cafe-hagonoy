@@ -73,24 +73,24 @@ function Payment() {
       <i className="fa-solid fa-circle-check checkIcon"></i>
 
       <Title>
-        <h1>Payment Successful</h1>
-        <p>Your payment has been processed!</p>
-        <small>Details of transaction are included below</small>
+        <h1>Order Placed</h1>
+        <p>Your Order is now on process!</p>
+        <small>Details are included below</small>
       </Title>
 
       <Line />
 
-      <TransactionNumber>Transaction ID: {order_id}</TransactionNumber>
+      <TransactionNumber>Order ID: {order_id}</TransactionNumber>
 
       <PaymentData>
-        <span>TOTAL AMOUNT PAID</span>
+        <span>TOTAL AMOUNT</span>
         <strong>{productPriceFormatter('' + totalAmount)}</strong>
       </PaymentData>
 
       <Line />
 
       <PaymentData>
-        <span>payed by</span>
+        <span>payment method</span>
         <strong>{paymentType}</strong>
       </PaymentData>
 
