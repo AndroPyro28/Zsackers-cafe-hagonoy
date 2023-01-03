@@ -52,15 +52,15 @@ const chartOption: ChartOptions = {
   //     color: "black",
   //   },
   // },
-  animations: {
-      tension: {
-          duration: 1000,
-          easing: "linear",
-          from: 0,
-          to: 1,
-          loop: true,
-      },
-  },
+  // animations: {
+  //     tension: {
+  //         duration: 1000,
+  //         easing: "linear",
+  //         from: 0,
+  //         to: 1,
+  //         loop: true,
+  //     },
+  // },
   // scales: {
   //   y: {
   //     // defining min and max so hiding the dataset does not change scale range
