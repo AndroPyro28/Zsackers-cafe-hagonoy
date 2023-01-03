@@ -1,6 +1,6 @@
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { CancelButton, Info, Order, Row, ViewButton } from './components'
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { OrderDetails } from '../../model';
 import { useCancelOrderMutation } from '../../services';
 import { useState } from 'react';
@@ -8,21 +8,21 @@ import CancelOrderModal from '../modals/customer/cancel-order/CancelOrderModal';
 import DateTimeFormatter from '../../helpers/DateTimeFormatter';
 
 interface Props {
-    data: OrderDetails
+  data: OrderDetails
 }
-function PreparingOrder({data}: Props) {
-    const navigate = useNavigate()
+function PreparingOrder({ data }: Props) {
+  const navigate = useNavigate()
 
-    const [toggleCancel, setToggleCancel] = useState(false);
+  const [toggleCancel, setToggleCancel] = useState(false);
 
-    const { dateAndTimeParser } = DateTimeFormatter()
+  const { dateAndTimeParser } = DateTimeFormatter()
 
-    const {time, date} = dateAndTimeParser(data?.createdAt + '')
+  const { time, date } = dateAndTimeParser(data?.createdAt + '')
   return (
-    <Order> 
-    {
-      toggleCancel && <CancelOrderModal setToggleCancel={setToggleCancel} id={data.id} />
-    }
+    <Order>
+      {
+        toggleCancel && <CancelOrderModal setToggleCancel={setToggleCancel} id={data.id} />
+      }
       <img src={data?.cart_product[0]?.product?.image_url} />
       <Info>
         <Row>
@@ -36,7 +36,7 @@ function PreparingOrder({data}: Props) {
 
         <Row>
           <h4>
-          <i className="fa-solid fa-clock"></i>&nbsp;{" "}
+            <i className="fa-solid fa-clock"></i>&nbsp;{" "}
             {date} at {time}
           </h4>
         </Row>
@@ -48,21 +48,24 @@ function PreparingOrder({data}: Props) {
           </h3>
         </Row>
         <Row>
-          <small style={{textTransform:"capitalize"}}>
-          <i className="fa-solid fa-credit-card"></i> &nbsp; {data?.paymentMethod} Payment
+          <small style={{ textTransform: "capitalize" }}>
+            <i className="fa-solid fa-credit-card"></i> &nbsp; {data?.paymentMethod} Payment
           </small>
         </Row>
         <Row>
-        <ViewButton className=""
-         onClick={() => navigate(`/customer/purchase-details/${data.order_id}`)}
-         >
+          <ViewButton className=""
+            onClick={() => navigate(`/customer/purchase-details/${data.order_id}`)}
+          >
             View Order
           </ViewButton>
-          <CancelButton className="" 
-          onClick={() => setToggleCancel(true)}
-          >
-            Cancel Order
-          </CancelButton>
+          {
+            data.paymentMethod !== 'gcash' && <CancelButton className=""
+              onClick={() => setToggleCancel(true)}
+            >
+              Cancel Order
+            </CancelButton>
+          }
+
         </Row>
       </Info>
     </Order>
