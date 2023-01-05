@@ -62,17 +62,17 @@ function PaymentSection() {
 
         <Summary>
           <span>Shipping</span>
-          <span>{productPriceFormatter('' + total * 0.1)}</span>
+          <span>{productPriceFormatter('' + 40)}</span>
         </Summary>
 
         <Summary>
           <span>Total</span>
-          <span>{productPriceFormatter('' + (total * 0.1 + total))}</span>
+          <span>{productPriceFormatter('' + (40 + total))}</span>
         </Summary>
       </SummaryContainer>
 
       <ChekoutButton onClick={handleClick}>
-        <span className='total'> {productPriceFormatter('' + (total * 0.1 + total))} </span>
+        <span className='total'> {productPriceFormatter('' + (40 + total))} </span>
         <span className='title'>Checkout by {paymentType} <i className="fa-solid fa-arrow-right"></i></span>
       </ChekoutButton>
     </PaymentSectionContainer>

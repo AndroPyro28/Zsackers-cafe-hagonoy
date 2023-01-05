@@ -34,7 +34,8 @@ function CashierContent() {
   const totalAmount = cartProducts?.reduce((total, cartProduct) => total + (cartProduct.product.price * cartProduct.quantity), 0) ?? 0
   const tax = (totalAmount! / 1.12) * .12;
   const subtotal = totalAmount! - tax;
-  const order_id = `${uuid()}`.replace(/\-/g, "")
+  const hashId = `${uuid()}`.replace(/\-/g,"").replace(/\D+/g, '');
+  const order_id = hashId.substring(0, 5)
 
   const [createOrder] = useCreateOrderWalkinMutation()
 

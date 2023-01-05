@@ -20,7 +20,7 @@ function Summary({data}:{data:OrderDetails}) {
       {
         pathname?.includes('/orders/online') && <OrderCalculation>
         <div>Shipping:</div>
-        <div>{productPriceFormatter(subtotal * 0.1 + '')}</div>
+        <div>{productPriceFormatter(40 + '')}</div>
       </OrderCalculation>
       }
 

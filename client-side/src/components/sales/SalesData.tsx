@@ -22,6 +22,7 @@ import {
     BarController,
 } from "chart.js";
 import { useGetCompletedCancelledOrdersQuery, useGetSummaryQuery } from "../../services";
+import { Summary } from "../../model";
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -95,12 +96,24 @@ ChartJS.register(
     BarController
 );
 
-function SalesData() {
-    const {data: summary, isLoading} = useGetSummaryQuery()
+interface Props {
+    summaryYear: number;
+    totalSalesToday: number;
+    monthlyCancelledTransactions: { total: number, month: number }[]
+    monthlySales: { total: number, month: number }[]
+    monthlySuccessTransactions: { total: number, month: number }[]
+    monthlyTotalTransactions: { total: number, month: number }[]
+}
+function SalesData({ summaryYear,
+    totalSalesToday,
+    monthlyCancelledTransactions,
+    monthlySales,
+    monthlySuccessTransactions,
+    monthlyTotalTransactions }: Props) {
+    // const {data: summary, isLoading} = useGetSummaryQuery(summaryYear)
+    // if(isLoading) return <></>
 
-    if(isLoading) return <></>
-
-    const { monthlyCancelledTransactions, monthlySales, monthlySuccessTransactions, monthlyTotalTransactions, totalSalesToday} = summary!
+    // const { monthlyCancelledTransactions, monthlySales, monthlySuccessTransactions, monthlyTotalTransactions, totalSalesToday} = summary!
 
     const monthlyCancelledStats = new Array(12);
     monthlyCancelledTransactions?.forEach((cancelled) => {
@@ -131,7 +144,7 @@ function SalesData() {
                 label: "Monthly sales",
                 borderColor: "rgb(6, 224, 46)",
                 backgroundColor: "rgb(6, 224, 46)",
-                data:monthlyTotalSalesStats,
+                data: monthlyTotalSalesStats,
                 borderWidth: 2,
                 borderRadius: 100,
             },
@@ -139,7 +152,7 @@ function SalesData() {
                 type: "line",
                 label: "Monthly Successful Transactions",
                 backgroundColor: "#a6b7f1",
-                data:monthlySuccessTransactionStats,
+                data: monthlySuccessTransactionStats,
                 borderColor: "#a6b7f1",
                 borderWidth: 2,
                 borderRadius: 100,
@@ -162,11 +175,10 @@ function SalesData() {
                 borderWidth: 2,
                 borderRadius: 100,
             },
-           
+
         ],
     };
 
-    console.log(totalSalesToday)
     return (
         <SalesDataContainer>
             <DataContainer1>
@@ -178,7 +190,7 @@ function SalesData() {
                 <SaleInfo
                     icon={"fa-solid fa-bag-shopping"}
                     data={monthlySales?.reduce((total, sale) => total + sale.total, 0)}
-                    title={`Total sales for ${new Date().getFullYear()}`}
+                    title={`Total sales for ${summaryYear}`}
                 />
                 <SaleInfo
                     icon={"fa-solid fa-cash-register"}

@@ -84,9 +84,9 @@ const orderApi = privateApi.injectEndpoints({
       invalidatesTags: (result, error, arg) => [{ type: "Order"}],
     }),
 
-    getSummary: builder.query<Summary, void>({
-      query: () => ({
-        url: `order/summary`,
+    getSummary: builder.query<Summary, number>({
+      query: (year=new Date().getFullYear()) => ({
+        url: `order/summary/${year}`,
         method: "GET",
       }),
       providesTags: (result, error, arg) => [{ type: "Order"}],

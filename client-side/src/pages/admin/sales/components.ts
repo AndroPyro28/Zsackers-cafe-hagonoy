@@ -48,3 +48,72 @@ export const FilterDataContainer = styled.div`
     flex-direction: column-reverse;
     }
 `
+
+export const FilterDataContainer2 = styled.div`
+    width: 97%;
+    margin: 10px 20px 20px 20px;
+    border-radius: 10px;
+    background: white;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 0px;
+    @media (max-width:800px) {
+    flex-direction: column-reverse;
+    }
+`
+
+
+export const PrintExport = styled.div`
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    margin: 5px 20px;
+    & > label {
+    }
+    &>select {
+        padding: 5px 10px;
+        outline: none;
+    }
+
+    &>button {
+        padding: 4px 20px;
+    }
+`
+
+export const PdfContent = styled.div`
+    display: flex;
+    justify-content: center;
+
+    flex-direction: column;
+    align-items: center;
+    background: rgb(1, 1, 41);
+    /* height: 100%; */
+    /* width: 50%; */
+    & > h1 {
+        margin: 5px;
+        color: white;
+    }
+`
+
+export const Summary = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 100px;
+`
+
+export const MonthSummary = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+
+    & > .content {
+        font-size: 0.5em;
+    }
+
+    & > h4 {
+        margin: 5px 0px;
+        color: gray;
+        /* color: lightgreen; */
+    }
+`

@@ -27,7 +27,7 @@ function OrderDetails({data}: Props) {
       <i className="fa-solid fa-receipt"></i> subtotal: {productPriceFormatter(subtotal + '')} pesos only
       </small>
       <small>
-      <i className="fa-solid fa-receipt"></i> shipping: {productPriceFormatter(Math.round(subtotal * 0.1) + '')} pesos only
+      <i className="fa-solid fa-receipt"></i> shipping: {productPriceFormatter(Math.round(40) + '')} pesos only
       </small>
       <small>
       <i className="fa-solid fa-credit-card"></i> {data?.paymentMethod} Payment
