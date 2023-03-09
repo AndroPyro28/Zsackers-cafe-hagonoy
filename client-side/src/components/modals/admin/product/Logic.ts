@@ -57,13 +57,14 @@ function Logic() {
     productName: "",
     productPrice: "",
     productStock: "",
-    quantity: "",
+    quantity: 0,
     details: "",
     image: "",
     categoryId: "",
     subcategoryId: "",
-    setcategoryId: "",
-    // productId: 0,
+    productType: "SINGLE",
+    productIds: []
+    // setcategoryId: "",
   };
 
   const SUPPORTED_FORMATS = [
@@ -76,29 +77,30 @@ function Logic() {
   const validationSchema = yup.object().shape({
     productName: yup
       .string()
-      .required("Product name is required field")
-      .min(6, "Product name must be atleast 6 characters"),
+      .required("Name is required field")
+      .min(6, "Name must be atleast 6 characters"),
       // .matches(/^[A-Za-z\s]*$/, "Must container letters only"),
     productPrice: yup
       .number()
-      .required("Product price is required field")
-      .min(0, "Product price must be minimum of 0"),
+      .required("Price is required field")
+      .min(0, "Price must be minimum of 0"),
     productStock: yup
       .number()
-      .required("Product stock is required field")
-      .min(0, "Product stock must be minimum of 0"),
+      .required("Stock is required field")
+      .min(0, "Stock must be minimum of 0"),
     quantity: yup
       .number()
-      .required("Quantity is required field")
-      .min(1, "Quantity must be minimum of 1"),
+      // .required("Quantity is required field")
+      .optional(),
+      // .min(1, "Quantity must be minimum of 1"),
     categoryId: yup.number().required("Category is required field"),
     subcategoryId: yup.number().required("Subcategory is required field"),
-    setcategoryId: yup.number().required("Setcategory is required field"),
+    // setcategoryId: yup.number().required("Setcategory is required field"),
     // productId: yup.number(),
     details: yup
       .string()
-      .typeError("details is required field")
-      .min(6, "Product details must be atleast 6 characters"),
+      .typeError("Details is required field")
+      .min(6, "Details must be atleast 6 characters"),
     // .matches(/^[A-Za-z\s]*$/, "Must container letters only"),
     image: yup
       .mixed()

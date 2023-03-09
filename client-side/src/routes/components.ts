@@ -17,11 +17,11 @@ export const AdminGlobalStyles = createGlobalStyle`
   }
 
   &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 2px green;
+    box-shadow: inset 0 0 2px rgb(1,59,77);
   }
 
   &::-webkit-scrollbar-thumb {
-    background: green;
+    background: rgb(1,59,77);
     border-radius: 10px;
   }
 `
@@ -30,9 +30,18 @@ export const AdminRoutesContainer = styled.section`
 `
 
 export const CustomerRoutesContainer = styled.section`
-  padding-top: 90px;
+  /* padding-top: 90px; */
+  padding-top: ${() => {
+        const {pathname} = useLocation()
+        const givePadding = !excluded.some(path => pathname.includes(path));
+        return givePadding ? "90px" : "0px"
+    }};
 `
 
 export const StaffRoutesContainer = styled.section`
+
+`
+
+export const UpdatePasswordRoutesContainer = styled.section`
 
 `

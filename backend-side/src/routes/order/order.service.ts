@@ -9,13 +9,15 @@ import { OrderDetails } from 'src/models/order-details.model';
 import { orderStatus } from '@prisma/client';
 import { VonageApi } from 'src/common/utils/vonage.utils';
 import { FindOrderAdmin } from './dto/find-order.dto';
+import { CartProductVariants } from 'src/models/cart-product-variants.model';
 @Injectable()
 export class OrderService {
   constructor(
     private readonly orderDetailsModel: OrderDetails,
     private readonly cartProductModel: CartProduct,
     private readonly productModel: Product,
-    private readonly vonageApi: VonageApi
+    private readonly vonageApi: VonageApi,
+    private readonly cartProductVariantsModel: CartProductVariants
   ) {}
   
   async checkout(createOrderDto: CreateOrderDto,currentUser: UserInteface, res: Response) {
@@ -50,11 +52,13 @@ export class OrderService {
         },
       };
       request(options, function (error, response) {
-        if (error) throw new Error(error);
+        const payload = JSON.parse(response.body);
 
-        const { data } = JSON.parse(response.body);
+        const { data, error: errorMessage } = payload;
 
-        const { checkouturl, hash } = data;
+         if (errorMessage) return res.json({ message: 'Payment Method is unavailable', error: true });
+
+          const { checkouturl, hash } = data;
 
         return res.json({ ...returnJson, checkouturl, order_id: hash });
       });
@@ -94,13 +98,21 @@ export class OrderService {
     const {cartProducts} = createOrderDto;
     const cartProductIds = cartProducts.map(cartProduct => cartProduct.id);
 
-    const productIds = cartProducts.map(cartProduct => ({
+    const bundleVariants = await this.cartProductVariantsModel.findVariants(cartProductIds);
+    const productIds1 = cartProducts.map(cartProduct => ({
       id: cartProduct.product.id,
       quantity: cartProduct.quantity
     }));
-    const updateProducts = await this.productModel.updateProductsStocks(productIds)
 
-    const updateCartProducts = await this.cartProductModel.updateManyCartProductsWithOrder(cartProductIds,newOrderDetails.id)
+    const productIds2 = bundleVariants.map((bundleVariant) => ({
+      id: bundleVariant.productId,
+      quantity: bundleVariant.quantity
+    }))
+
+    const productIdsToUpdate = [...productIds1, ...productIds2]
+
+    this.productModel.updateProductsStocks(productIdsToUpdate)
+    this.cartProductModel.updateManyCartProductsWithOrder(cartProductIds,newOrderDetails.id)
     return {
       success: true
     }
@@ -453,19 +465,42 @@ export class OrderService {
   async cancelOrder(id: number, cancelOrderDto: CancelOrderDto) {
     const order = await this.orderDetailsModel.findOrderById(id);
 
-    const message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
+    const productToRetrieve: {id: number, stock: number}[] = []
+    order?.cart_product.forEach((cartProduct) => {
+      if(cartProduct.product.productType === 'BUNDLE') {
+        cartProduct.Cart_Product_Variant.forEach((cartProductVariant) => {
+          productToRetrieve.push({
+            id: cartProductVariant.productId,
+            stock: cartProductVariant.quantity
+          })
+        })
+      } else {
+        productToRetrieve.push({
+          id: cartProduct.productId,
+          stock: cartProduct.product.quantity
+        })
+      }
+    })
+
+    this.productModel.retrieveCancelledProductsStocks(productToRetrieve)
+    if( order.transaction_type === 'ONLINE' && order?.delivery_status < 2  ) {
+
+      const message = `Good day ${order.user.profile.firstname} ${order.user.profile.lastname},
 
     Your order has been cancelled, reason: ${cancelOrderDto.reason}
 
     -Zsakers cafe
     `
-    if(order.transaction_type === 'ONLINE') {
       this.vonageApi.sendSms(order.contact, message)
-    }
-    const cancelOrder = await this.orderDetailsModel.cancelOrder(id, cancelOrderDto);
 
-    if(!cancelOrder) throw new ForbiddenException('Didnt update status');
-    return cancelOrder
+      const cancelOrder = await this.orderDetailsModel.cancelOrder(id, cancelOrderDto);
+
+      if(!cancelOrder) throw new ForbiddenException('Order didnt cancelled');
+      return cancelOrder
+    } else {
+      const cancelOrder = await this.orderDetailsModel.cancelOrder(id, cancelOrderDto);
+      return cancelOrder
+    }  
   }
 
   remove(id: number) {

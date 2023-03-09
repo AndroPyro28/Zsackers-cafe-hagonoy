@@ -18,6 +18,7 @@ function PreparingOrder({ data }: Props) {
   const { dateAndTimeParser } = DateTimeFormatter()
 
   const { time, date } = dateAndTimeParser(data?.createdAt + '')
+
   return (
     <Order>
       {
@@ -59,7 +60,7 @@ function PreparingOrder({ data }: Props) {
             View Order
           </ViewButton>
           {
-            data.paymentMethod !== 'gcash' && <CancelButton className=""
+            data.paymentMethod !== 'gcash' && data?.delivery_status < 1 && <CancelButton className=""
               onClick={() => setToggleCancel(true)}
             >
               Cancel Order

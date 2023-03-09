@@ -4,9 +4,10 @@ import { UpdateProduct } from "../../model";
 interface Props {
     imageUrl?: string;
     setDisableUpdate?:React.Dispatch<React.SetStateAction<boolean>>;
-    imageFile?: File
+    imageFile?: File;
+    bundleChildrenProductIds?: number[]
 }
-function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
+function Logic({imageUrl, setDisableUpdate, imageFile, bundleChildrenProductIds}: Props) {
 
     const handleChange = (setFunction: React.Dispatch<React.SetStateAction<number>>, value: any ) => {
         setFunction(Number(value))
@@ -46,16 +47,13 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
     stock: yup.number()
     .required('stock is required field')
     .min(0, 'stock must be minimum of 0'),
-    quantity: yup.number()
-    .required('Quantity is required field')
-    .min(1, 'Quantity must be minimum of 1'),
+    quantity: yup
+    .number()
+    .optional(),
     categoryId: yup.number().typeError('Category is required field')
     .required('Category is required field'),
     subcategoryId: yup.number().typeError('Subcategory is required field')
     .required('Subcategory is required field'),
-    setcategoryId:  yup.number().typeError('Subcategory is required field')
-    .required('Subcategory is required field'),
-    // productId: yup.number(),
     details: yup.string()
     .typeError('details is required field').
     // required('Product name is required field').
@@ -81,9 +79,10 @@ function Logic({imageUrl, setDisableUpdate, imageFile}: Props) {
             categoryId: Number(values.categoryId),
             // productId: Boolean(values.productId) ? Number(values.productId) : null,
             subcategoryId: Number(values.subcategoryId),
-            setcategoryId: Number(values.setcategoryId),
+            // setcategoryId: Number(values.setcategoryId),
             details: values.details,
-            image_url: imageUrl!
+            image_url: imageUrl!,
+            bundleChildrenProductIds
         });
         const {error, data} = res;
             if(error) {

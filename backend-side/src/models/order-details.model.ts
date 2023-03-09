@@ -147,7 +147,9 @@ export class OrderDetails {
 
   async findAllByCustomer(status: string, userId: number) {
     try {
-      let condition: object = {}
+      let condition: object = {
+        userId
+      }
       if(status === 'preparing') {
         condition = {
           OR: [
@@ -200,6 +202,7 @@ export class OrderDetails {
           }
         }
       }
+
       const orders = await order_Details.findMany({
         where: condition,
         include: {
@@ -220,6 +223,7 @@ export class OrderDetails {
           createdAt: 'desc'
         }
       });
+      // console.log(orders)
       return orders
 
       
@@ -246,7 +250,12 @@ export class OrderDetails {
           },
           cart_product: {
             include: {
-              product: true
+              product: true,
+              Cart_Product_Variant: {
+                include: {
+                  product: true
+                }
+              }
             }
           }
         },
@@ -267,8 +276,18 @@ export class OrderDetails {
               id: true,
               email: true,
               profile: true
-            }
+            },
           },
+          cart_product: {
+            include: {
+              Cart_Product_Variant: {
+                include: {
+                  product: true
+                }
+              },
+              product: true
+            },
+          }
       }});
       return order;
     } catch (error) {

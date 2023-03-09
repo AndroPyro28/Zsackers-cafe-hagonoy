@@ -6,6 +6,9 @@ import { Product as ProductModel } from '@prisma/client';
 @Injectable()
 export class Product {
   async createProduct(body: CreateProductDto) {
+    if(body.quantity == 0 || !body.quantity) {
+      body.quantity = 1;
+    }
     try {
       const newProduct = await product.create({
         data: {
@@ -18,8 +21,7 @@ export class Product {
           details: body.details,
           categoryId: Number(body.categoryId),
           subcategoryId: Number(body.subcategoryId),
-          setcategoryId: Number(body.setcategoryId),
-          // productId: Boolean(body.productId) ? Number(body.productId) : null,
+          productType : body.productType
         },
       });
       return newProduct;
@@ -42,9 +44,6 @@ export class Product {
         search.subcategoryId !== 0 && {
          subcategoryId: search.subcategoryId
         },
-        search.setcategoryId !== 0 && {
-          setcategoryId: search.setcategoryId
-         },
        ];
       const conditionArr = arr.filter(value => typeof value === 'object')
       const products = await product.findMany({
@@ -55,6 +54,18 @@ export class Product {
         include: {
           category: true,
           sub_category: true,
+          bundleParentProduct: {
+            select: {
+              id: true,
+              bundleChildProduct: true,
+            }
+          },
+          bundleChildProduct: {
+            select: {
+              id: true,
+              bundleParentProduct: true,
+            }
+          }
         },
         orderBy: {
           createdAt: 'desc'
@@ -82,6 +93,25 @@ export class Product {
     }
   }
 
+  async retrieveCancelledProductsStocks (productToRetrieve: {id: number, stock: number}[]) {
+    try {
+      productToRetrieve.forEach(async (p) => {
+         await product.update({
+          where: {
+            id: p.id,
+          },
+          data: {
+            stock: {
+              increment: p.stock
+            }
+          }
+        })
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async getProductById(id: number) {
     try {
       const result = await product.findUnique({
@@ -91,6 +121,18 @@ export class Product {
         include:{
           category: true,
           sub_category: true,
+          bundleParentProduct: {
+            select: {
+              id: true,
+              bundleChildProduct: true,
+            }
+          },
+          bundleChildProduct: {
+            select: {
+              id: true,
+              bundleParentProduct: true,
+            }
+          }
         }
       })
       return result;
@@ -118,14 +160,15 @@ export class Product {
   async updateProductsStocks(products: {id: number, quantity: number}[]) {
     try {
       products.forEach(async (p) => {
-       await product.update({
+       await product.updateMany({
           where: {
-            id: p.id
+            id: p.id,
+            productType: 'SINGLE'
           },
           data: {
             stock: {
               decrement: p.quantity
-            }
+            },
           },
         })
       })
@@ -134,8 +177,11 @@ export class Product {
     }
   }
 
+
   async updateProduct(id: number, body: UpdateProduct) {
     try {
+      delete body.id;
+      delete body.bundleChildrenProductIds
       const updated = await product.update({
         where: {
           id

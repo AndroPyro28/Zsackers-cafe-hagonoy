@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { decompressFromBase64 } from '@prisma/client/runtime';
 import { cart_Product, product } from './root.model';
 
 @Injectable()
@@ -21,6 +20,29 @@ export class CartProduct {
       return cartProducts;
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async findManyByIds(cartProductIds: number[]) {
+    try {
+      const cartProducts = await cart_Product.findMany({
+        where: {
+          id: {
+            in: cartProductIds
+          },
+        },
+        include: {
+          product: true,
+          Cart_Product_Variant: {
+            include: {
+              product: true
+            }
+          }
+        }
+      })
+      return cartProducts;
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -65,8 +87,11 @@ export class CartProduct {
           isArchive: false,
           userId,
         },
+        include: {
+          product: true
+        }
       });
-      if (!Boolean(isAlreadyInCart)) {
+      if (!Boolean(isAlreadyInCart) || Boolean(isAlreadyInCart) && isAlreadyInCart.product.productType === 'BUNDLE') {
         const addToCart = await cart_Product.create({
           data: {
             productId,
@@ -75,7 +100,6 @@ export class CartProduct {
         });
         return addToCart;
       }
-
       const incremeantProductOnCart = await cart_Product.update({
         where: {
           id: isAlreadyInCart.id,
@@ -127,7 +151,7 @@ export class CartProduct {
       }
 
       if (action === 'increment') {
-        return cartProduct.quantity + 1 > cartProduct.product.stock
+        return cartProduct.quantity + 1 > cartProduct.product.stock && cartProduct.product.productType === 'SINGLE'
           ? new Error('Cannot exceed to product stock')
           : await cart_Product.updateMany({
               where: {
@@ -141,6 +165,23 @@ export class CartProduct {
               },
             });
       }
+      // if (action === 'increment' && cartProduct.product.productType === 'SINGLE') {
+      //   return cartProduct.quantity + 1 > cartProduct.product.stock
+      //     ? new Error('Cannot exceed to product stock')
+      //     : await cart_Product.updateMany({
+      //         where: {
+      //           id: cartProductId,
+      //           userId,
+      //         },
+      //         data: {
+      //           quantity: {
+      //             increment: 1,
+      //           },
+      //         },
+      //       });
+      // }
+
+      
     } catch (error) {
       console.error(error);
     }

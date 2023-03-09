@@ -60,28 +60,51 @@ export const OrderedItemsContainer = styled.div`
   margin: 20px 10px 20px 20px;
   flex: 2.5;
   position: relative;
-  padding-bottom: 70px;
+  padding-bottom: 100px;
   overflow: auto;
+
 `;
 
 export const OrderedProducts = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto !important;
-  height: 385px;
+  height: 400px;
 `;
+
+export const OrderProductContainer = styled.div`
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  border-radius: 10px;
+  /* border: solid 1px gray; */
+`
+
+export const BundledOrderProducts = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-self: flex-end;
+`
 
 export const OrderedProduct = styled.div`
   display: flex;
   align-items: center;
-  max-height: 70px;
-  margin: 10px;
+  position: relative;
+  & > .dropDownIcon {
+    /* margin-left: 20px; */
+    position: absolute;
+    left: 6px;
+    font-size: 0.9em;
+    color: gray;
+  }
   & > .product__image {
     width: 90px;
     max-height: 65px;
-    margin: 10px;
+    margin: 10px 30px;
     border-radius: 10px;
-    object-fit: contain;
+    object-fit: cover;
   }
   & > div {
     display: flex;
@@ -139,7 +162,7 @@ export const OrderSummary = styled.section`
 export const OrderCalculation = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 10px 20px;
+  margin: 5px 10px;
   & > div {
     &:nth-child(1) {
       font-weight: 700;
@@ -175,13 +198,18 @@ export const OrderStatusContainer = styled.section`
     text-align: center;
     border-bottom: solid 1px lightgray;
   }
-  & > button {
-    width: fit-content;
-    position: absolute;
+  
+`;
+
+export const ButtonStatusContainer = styled.div`
+  position: absolute;
     bottom: 20px;
+    gap: 10px;
     left: 0;
     right: 0;
     margin: auto;
+    width: fit-content;
+    & > button {
     box-shadow: inset 0px 1px 0px 0px #ffffff;
     background:  rgb(68,215,123);
     background-color:  rgb(68,215,123);
@@ -196,6 +224,11 @@ export const OrderStatusContainer = styled.section`
     text-shadow: 0px 1px 0px #ffffff;
     transition: all 0.3s ease;
     color: white;
+    margin-inline: 5px;
+
+    &.cancel__order__btn {
+      background: gray;
+    }
     &:active {
       background: rgb(135,153,255);
     }
@@ -208,7 +241,7 @@ export const OrderStatusContainer = styled.section`
       margin: 50px 20px 20px 20px;
     }
   }
-`;
+`
 
 export const OrderStatus = styled.div`
   @keyframes animateStatus {

@@ -10,7 +10,7 @@ export const InventoryLayout = styled.section`
   height: 100vh;
   padding: 10px 0px;
   justify-content: space-evenly;
-  overflow:hidden;
+  /* overflow:hidden; */
   gap: 10px;
   padding: 10px;
   /* padding-top: 10px; */
@@ -66,14 +66,14 @@ export const ProductStatisticContainer = styled.div`
   padding: 10px;
   background: white;
   border-radius: 10px;
-  height: 80%;
+  height: 100%;
   & > .product__info {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     & > .product__label {
       font-size: 0.7em;
-
+      text-align: center;
       & > .center {
         margin: 0px auto;
       }
@@ -86,11 +86,54 @@ export const ProductStatistic = styled.div`
   height: 450px;
 `;
 
+export const InventoryRightWrapper = styled.div`
+  width: 80%;
+  background: white;
+  margin-top: 40px;
+  position: relative;
+  height: auto;
+
+  @media (max-width:1200px) {
+    width: 100%;
+  }
+`
+
+export const Tabs = styled.div`
+  display: flex;
+  position: absolute;
+  top: -40px;
+  gap: 5px;
+
+  @media (max-width: 400px) {
+  top: -35px;
+
+  }
+`
+
+export const Tab = styled.div`
+  background: ${({active}: {active: boolean}) => active ? 'white' : 'gray'};
+  color: ${({active}: {active: boolean}) => active ? 'black' : 'white'};
+  border-radius: 15px;
+  padding: 10px 20px;
+  border-bottom-left-radius:0px;
+  border-bottom-right-radius:0px;
+  cursor: pointer;
+  font-weight: 1000;
+  /* z-index: 1; */
+  transition: all .2s ease-in-out;
+  @media (max-width: 400px) {
+    padding: 8px 13px;
+    font-size: 0.9em;
+  }
+`
+
 export const InventoryRightContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: white;
-  width: 80%;
+  width: 100%;
+  overflow: auto;
+
   border-radius: 10px;
 
   @media (max-width:1200px) {
@@ -105,7 +148,7 @@ export const InventoryRightContentContainer = styled.div`
 
 export const FilterItemsContainer = styled.div`
   display: flex;
-  margin: 10px;
+  /* margin: 10px; */
   align-items: center;
   justify-content: center;
   
@@ -174,7 +217,7 @@ export const FilterContainer = styled.div`
   display: flex;
   border-radius: 10px;
   border: solid 1px gray;
-  padding: 10px 10px;
+  padding: 5px 10px;
   align-items: center;
   margin-inline: 5px;
 
@@ -330,7 +373,10 @@ export const ProductListContainer = styled.div`
   display: flex;
   flex-direction: column;
   /* overflow: auto; */
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  overflow: auto;
+  height: 73vh;
+  /* background: red; */
 `;
 
 export const ProductItem = styled.div`
@@ -539,7 +585,7 @@ export const ButtonContainer = styled.div`
     border: none;
     outline: none;
     border-radius: 10px;
-    padding: 10px 20px;
+    padding: 5px 15px;
     cursor: pointer;
     width: fit-content;
     margin: 10px;
