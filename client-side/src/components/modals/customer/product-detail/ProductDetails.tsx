@@ -25,6 +25,7 @@ import {useLocation} from 'react-router-dom'
 function ProductDetails({ productId, setProductId }: { productId: number, setProductId:  React.Dispatch<React.SetStateAction<number>> }) {
     
     const [bundleVariants, setBundleVariants] = useState<bundleVariants>([]);
+    const [addOns, setAddOns] = useState<bundleVariants>([]);
     const {addToCart} = Logic({bundleVariants})
     const {pathname} = useLocation()
     const { data: product, isLoading, isError } = useGetProductByIdQuery(productId);
@@ -41,10 +42,11 @@ function ProductDetails({ productId, setProductId }: { productId: number, setPro
     const addToCartClick = () => {
             addToCart(product!)
     }
+    console.log(product)
     return (
         <ModalBackdrop>
             {
-                !isLoading && product && <ProductDetailsContainer hasVariants={hasVariants}>
+                !isLoading && product && <ProductDetailsContainer>
                 <button onClick={() => setProductId(0)}>X</button>
                 <ProductDetail>
                     <ImageContainer>
@@ -60,9 +62,14 @@ function ProductDetails({ productId, setProductId }: { productId: number, setPro
                         </Others>
                     </Details>
                 </ProductDetail>
-                {
-                    product?.productType === 'BUNDLE' && <Variants orderedProduct={product} variants={product?.bundleParentProduct!} setBundleVariants={setBundleVariants} bundleVariants={bundleVariants}/>
-                }
+                <Variants 
+                    orderedProduct={product} 
+                    variants={product?.bundleParentProduct!} 
+                    setBundleVariants={setBundleVariants} 
+                    bundleVariants={bundleVariants}
+                    addOns={addOns}
+                    setAddOns={setAddOns}
+                />
             </ProductDetailsContainer>
             }
             

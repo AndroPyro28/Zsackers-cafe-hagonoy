@@ -20,7 +20,7 @@ export class Product {
           image_id: body.image_id,
           details: body.details,
           categoryId: Number(body.categoryId),
-          subcategoryId: Number(body.subcategoryId),
+          subcategoryId: !body.subcategoryId ? null : Number(body.subcategoryId) ,
           productType : body.productType
         },
       });
@@ -52,7 +52,11 @@ export class Product {
           archive: false,
         },
         include: {
-          category: true,
+          category: {
+            include: {
+              Product: true
+            }
+          },
           sub_category: true,
           bundleParentProduct: {
             select: {
@@ -64,8 +68,8 @@ export class Product {
             select: {
               id: true,
               bundleParentProduct: true,
-            }
-          }
+            },
+          },
         },
         orderBy: {
           createdAt: 'desc'
@@ -119,7 +123,11 @@ export class Product {
           id,
         },
         include:{
-          category: true,
+          category: {
+            include: {
+              Product: true
+            }
+          },
           sub_category: true,
           bundleParentProduct: {
             select: {

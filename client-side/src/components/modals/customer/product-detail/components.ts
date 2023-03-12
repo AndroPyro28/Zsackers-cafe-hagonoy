@@ -4,7 +4,7 @@ import {motion} from 'framer-motion'
 export const ProductDetailsContainer = styled(motion.div)`
     height: 95vh;
     max-width: 65vw;
-    width: ${({hasVariants}: {hasVariants: boolean}) => hasVariants ? '100%' : '35vw'}; 
+    width: 100% ; 
     /* width: 100%; */
     background: white;
     position: absolute;
@@ -56,7 +56,7 @@ gap: 20px;
 `
 
 export const Title = styled.h1`
-    font-weight: 100;
+    font-weight: 1000;
     margin: 20px;
     font-size: 1.3em;
 `

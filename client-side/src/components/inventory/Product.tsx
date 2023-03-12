@@ -172,21 +172,19 @@ function Product({ data, categories }: Props) {
                         <Field name="price" placeholder="Product price" id="price" type="number" disabled={disableUpdate} />
                         <ErrorMessage name="price" component={'div'} className="error__message" />
                       </ItemRowInfo>
-
                       {
-                        data?.productType === 'SINGLE' && <ItemRowInfo>
-                          <label htmlFor="stock">Stock</label>
-                          <Field name="stock" id="stock" placeholder="Product stock" type="number" disabled={disableUpdate} />
-                          <ErrorMessage name="stock" component={'div'} className="error__message" />
-                        </ItemRowInfo>
-                      }
-
-                      {
-                        data?.productType === 'BUNDLE' && <ItemRowInfo>
+                        data?.productType === 'BUNDLE' ? 
+                        <ItemRowInfo>
                           <label htmlFor="quantity">Serving Quantity</label>
                           <Field name="quantity" id="quantity" placeholder="Serving quantity" type="number" disabled={disableUpdate} />
                           <ErrorMessage name="quantity" component={'div'} className="error__message" />
                         </ItemRowInfo>
+                        : 
+                        <ItemRowInfo>
+                        <label htmlFor="stock">Stock</label>
+                        <Field name="stock" id="stock" placeholder="Product stock" type="number" disabled={disableUpdate} />
+                        <ErrorMessage name="stock" component={'div'} className="error__message" />
+                      </ItemRowInfo>
                       }
 
                     </ItemRowInfoContainer>
