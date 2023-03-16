@@ -21,59 +21,28 @@ function Addon({addonData, bundleVariants, setBundleVariants} : Props) {
   }, [])
 
   const variant = bundleVariants.find((value) => value.productId == addonData?.id);
-  const incrementAvailable = addonData.stock <= variant?.quantity!;
 
-  const handleDecrement = () => {
+const handleClickAddons = () => {
     const bundles = bundleVariants;
-    setBundleVariants([])
-    bundles.map((bundle) => {
-        if(bundle.productId == addonData?.id) {
-            setBundleVariants(prev => 
-                [...prev, {
-                    quantity: bundle.quantity > 0 ? bundle.quantity - 1 : 0 , 
-                    productId: bundle.productId,
-                    exclude: true
-                }
-                ]
-            )
-        }
-        else {
-            setBundleVariants(prev => [...prev, bundle])
-        }
-    })
+    const addonIndex = bundles.findIndex(bundle => bundle.productId == addonData.id) 
     
-}
-
-  const handleIncrement = () => {
-    const bundles = bundleVariants;
-    setBundleVariants([])
-    bundles.forEach((bundle) => {
-        if(bundle.productId == addonData?.id) {
-            setBundleVariants(prev => 
-                [...prev, {
-                    quantity: 
-                    bundle.quantity + 1, 
-                    productId: bundle.productId,
-                    exclude: true
-                }
-            ]
-            )
-        }
-        else {
-            setBundleVariants(prev => [...prev, bundle])
-        }
-    })
+    if(bundles[addonIndex]?.quantity === 0) {
+        bundles[addonIndex].quantity = 1;
+    } else {
+        bundles[addonIndex].quantity = 0;
+    }
+    setBundleVariants(bundles)
 }
 
   return (
-    <VariantContainer>
+    <VariantContainer onClick={handleClickAddons} 
+    style={{cursor:'pointer'}}
+        active = {variant?.quantity! > 0}
+    >
             <img src={addonData?.image_url} className='product__image' alt="" />
             <span className='product__name'>{addonData?.productName}</span>
             <span className='product__setcategory'>{ productPriceFormatter( addonData.price + '') }</span>
             <div className='buttons'> 
-            <button className='decrement'  onClick={handleDecrement}>-</button>  
-            <span className='quantity'>{variant?.quantity} </span> 
-            <button className='increment' disabled={incrementAvailable} onClick={handleIncrement}>+</button> 
             </div>
         </VariantContainer>
   )

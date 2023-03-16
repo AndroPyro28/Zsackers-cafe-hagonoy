@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useGetCartProducts } from '../../services/cart-products';
 import CartProduct from './CartProduct'
 import { CartProducts } from './components'

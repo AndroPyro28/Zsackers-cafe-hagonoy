@@ -18,10 +18,10 @@ function CartItem({ data }: Props) {
       if (Cart_Product_Variant && Cart_Product_Variant?.length > 0) {
         const addonPrice = Cart_Product_Variant.reduce((total, cartVariant) => {
           const addonPrice = cartVariant.product.productType === 'ADDONS' ?
-            total + (cartVariant.quantity * cartVariant.product.price) : 0;
-          return (addonPrice * quantity)
+            total + cartVariant.product.price : 0;
+          return (addonPrice)
         }, 0)
-        setPrice((quantity * product.price) + addonPrice);
+        setPrice(quantity * (product.price + addonPrice));
       }
     }, [data])
 

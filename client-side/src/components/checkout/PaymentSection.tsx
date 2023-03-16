@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getCartProducts } from '../../features';
+import { getAddedProductToCheckout, getCartProducts } from '../../features';
 import productPriceFormatter from '../../helpers/ProductPriceFormatter'
 import { CartProduct } from '../../model';
 import { useGetCartProducts } from '../../services/cart-products';
@@ -12,16 +12,27 @@ function PaymentSection() {
 
   const [paymentType, setPaymentType] = useState<string>('cod')
   const [openCheckoutModal, setOpenCheckoutModal] = useState(false);
-  const{data: cartProducts, isLoading} = useGetCartProducts();
+  // const{data: cartProducts, isLoading} = useGetCartProducts();
 
   const selectPayment = (payment: string) => setPaymentType(payment);
 
   const checkoutCartProducts: CartProduct[] = useSelector(getCartProducts)
-  
-  const total = checkoutCartProducts.reduce((total, cartProduct) => {
-      const cartProductFound = cartProducts?.find((cart) => cart.id == cartProduct.id );
-      return total + cartProductFound!.quantity * cartProductFound!.product.price;
-    }, 0)
+  const totalPrice = useSelector(getAddedProductToCheckout)
+
+    // const total = checkoutCartProducts.reduce((total: any, cartProduct) => {
+    //   const cartProductFound: any = cartProducts?.find((cart) => cart.id == cartProduct.id );
+
+    //   if(cartProductFound?.Cart_Product_Variant.length > 0) {
+    //     const addonsPrice = cartProductFound.Cart_Product_Variant.reduce((totalAddonsValue: number, addon: CartProduct) => {
+    //       const addonPrice = addon.product.productType === 'ADDONS' ? addon?.product.price : 0;
+    //       return addonPrice + totalAddonsValue
+    //     }, 0)
+
+    //     return (addonsPrice + total + cartProduct.product.price) * cartProduct.quantity
+    //   }
+
+    //   return (total + cartProduct.product.price) * cartProduct.quantity
+    // }, 0)
 
   const handleClick = () => {
     if(checkoutCartProducts.length <= 0 ) {
@@ -33,7 +44,7 @@ function PaymentSection() {
   return (
     <PaymentSectionContainer>
       {
-        openCheckoutModal && <CheckoutModal paymentType={paymentType} totalAmount={total} setOpenCheckoutModal={setOpenCheckoutModal}/>
+        openCheckoutModal && <CheckoutModal paymentType={paymentType} totalAmount={totalPrice} setOpenCheckoutModal={setOpenCheckoutModal}/>
       }
       <Title>
         Payment
@@ -58,22 +69,22 @@ function PaymentSection() {
       <SummaryContainer>
         <Summary>
           <span>Subtotal</span>
-          <span>{productPriceFormatter('' + total)}</span>
+          <span>{productPriceFormatter('' + totalPrice)}</span>
         </Summary>
 
         <Summary>
           <span>Shipping</span>
-          <span>{productPriceFormatter('' + (total > 0 ? 40 : 0))}</span>
+          <span>{productPriceFormatter('' + (totalPrice > 0 ? 40 : 0))}</span>
         </Summary>
 
         <Summary>
           <span>Total</span>
-          <span>{productPriceFormatter('' + (total > 0 ? 40 + total : 0))}</span>
+          <span>{productPriceFormatter('' + (totalPrice > 0 ? 40 + totalPrice : 0))}</span>
         </Summary>
       </SummaryContainer>
 
       <ChekoutButton onClick={handleClick}>
-        <span className='total'> {productPriceFormatter('' + (total > 0 ? 40 + total : 0))} </span>
+        <span className='total'> {productPriceFormatter('' + (totalPrice > 0 ? 40 + totalPrice : 0))} </span>
         <span className='title'>Checkout by {paymentType} <i className="fa-solid fa-arrow-right"></i></span>
       </ChekoutButton>
     </PaymentSectionContainer>

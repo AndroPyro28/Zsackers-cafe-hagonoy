@@ -25,17 +25,38 @@ function CartProduct({ data }: Props) {
   }
   const [price, setPrice] = useState(0)
 
+  // useEffect(() => {
+  //   setPrice(quantity * product.price)
+  //   if (Cart_Product_Variant && Cart_Product_Variant?.length > 0) {
+  //     const addonPrice = Cart_Product_Variant.reduce((total, cartVariant) => {
+  //       const addonPrice = cartVariant.product.productType === 'ADDONS' ?
+  //       total + (cartVariant.quantity * cartVariant.product.price) : 0;
+  //       return addonPrice * quantity
+  //     }, 0)
+  //     setPrice((quantity * product.price) + addonPrice);
+  //   }
+  // }, [data])
+
   useEffect(() => {
     setPrice(quantity * product.price)
-    if (Cart_Product_Variant && Cart_Product_Variant?.length > 0) {
-      const addonPrice = Cart_Product_Variant.reduce((total, cartVariant) => {
-        const addonPrice = cartVariant.product.productType === 'ADDONS' ?
-        total + (cartVariant.quantity * cartVariant.product.price) : 0;
-        return addonPrice * quantity
-      }, 0)
-      setPrice((quantity * product.price) + addonPrice);
-    }
-  }, [data])
+  if (Cart_Product_Variant && Cart_Product_Variant?.length > 0) {
+    const addonPrice = Cart_Product_Variant.reduce((total, cartVariant) => {
+      const addonPrice = cartVariant.product.productType === 'ADDONS' ?
+        total + cartVariant.product.price : 0;
+      return (addonPrice)
+    }, 0)
+    setPrice(quantity * (product.price + addonPrice));
+  }
+}, [data])
+
+const handleIncrement = () => {
+  updateCartQuantity(id, 'increment')
+}
+
+const handleDecrement = () => {
+  updateCartQuantity(id, 'decrement')
+}
+
 
 
   return (
@@ -47,11 +68,12 @@ function CartProduct({ data }: Props) {
         <span className='details'>{product.details}</span>
       </td>
       <td className='quantity'>
-        <button onClick={() => updateCartQuantity(id, 'decrement')} className="dec">-</button>
+        <button onClick={handleDecrement} className="dec">-</button>
         <span className='qty'>{data?.quantity}</span>
-        <button disabled={data?.quantity >= product.stock && product.productType === 'SINGLE'} onClick={() => updateCartQuantity(id, 'increment')} className="inc">+</button>
+        <button disabled={data?.quantity >= product.stock && product.productType === 'SINGLE'} 
+        onClick={handleIncrement} className="inc">+</button>
       </td>
-      <td className='calculation'>@ {price} x {data?.quantity}</td>
+      <td className='calculation'>@ {price / data?.quantity} x {data?.quantity}</td>
       <td className='price'> {productPriceFormatter(price + '')} </td>
       <td className='remove'> <span onClick={handleDelete}>Remove</span>  </td>
     </CartProductContainer>

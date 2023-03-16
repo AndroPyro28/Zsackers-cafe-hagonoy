@@ -13,8 +13,8 @@ function Variant({data, setBundleVariants, bundleVariants, orderedProduct}: Prop
     const variant = bundleVariants.find((value) => value.productId == data?.id);
     
     const totalQuantityOfBundledProducts = bundleVariants
-    ?.reduce((total, bundle) => bundle.quantity + total , 0)
-
+    ?.reduce((total, bundle) => !bundle.exclude ? bundle.quantity + total : total , 0)
+    
     const incrementAvailable = data?.stock <= variant?.quantity! || orderedProduct.quantity <= totalQuantityOfBundledProducts
     useEffect(() => {
         setBundleVariants(prev => [...prev, {quantity: 0, productId: data?.id,

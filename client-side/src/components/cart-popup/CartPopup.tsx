@@ -12,19 +12,18 @@ function CartPopup() {
   const navigate = useNavigate()
 
   const calculateAmount = (totalValue: any, cartProduct: CartProduct) => {
-    let addonsPrice = 0;
     // calculate add ons
     if (cartProduct.Cart_Product_Variant && cartProduct.Cart_Product_Variant?.length > 0) {
+      const addonPrice = cartProduct.Cart_Product_Variant.reduce((total, cartVariant) => {
+        const addonPrice = cartVariant.product.productType === 'ADDONS' ?
+          total + cartVariant.product.price : total;
+        return (addonPrice)
+      }, 0)
 
-      addonsPrice = cartProduct.Cart_Product_Variant.reduce((total, cartVariant) => {
-          const addonPrice = cartVariant.product.productType === 'ADDONS' ?
-           total + (cartVariant.product.price * cartVariant.quantity) : 0
-           return addonPrice * cartProduct.quantity
-        }, 0)
-
+      return (addonPrice + totalValue + cartProduct.product.price) * cartProduct.quantity;
     }
 
-    return ((cartProduct.product.price * cartProduct.quantity) + totalValue) + addonsPrice
+    return (totalValue + cartProduct.product.price) * cartProduct.quantity
   }
 
   const totalAmount = cartProducts?.reduce(calculateAmount, 0);
