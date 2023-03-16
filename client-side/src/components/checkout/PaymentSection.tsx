@@ -19,7 +19,7 @@ function PaymentSection() {
   const checkoutCartProducts: CartProduct[] = useSelector(getCartProducts)
   
   const total = checkoutCartProducts.reduce((total, cartProduct) => {
-      const cartProductFound = cartProducts?.find((cart) => cart .id == cartProduct.id );
+      const cartProductFound = cartProducts?.find((cart) => cart.id == cartProduct.id );
       return total + cartProductFound!.quantity * cartProductFound!.product.price;
     }, 0)
 

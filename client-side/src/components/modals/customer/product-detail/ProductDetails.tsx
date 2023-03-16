@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import productPriceFormatter from '../../../../helpers/ProductPriceFormatter'
 import { useGetProductByIdQuery } from '../../../../services'
 import Logic from '../../../store/Logic'
@@ -29,20 +29,25 @@ function ProductDetails({ productId, setProductId }: { productId: number, setPro
     const {addToCart} = Logic({bundleVariants})
     const {pathname} = useLocation()
     const { data: product, isLoading, isError } = useGetProductByIdQuery(productId);
+
     // if(isLoading) return <></>
     if(isError)  return <></>
 
     const hasVariants = product?.productType === 'BUNDLE'
 
     const totalQuantityOfBundledProducts = bundleVariants
-    ?.reduce((total, bundle) => bundle.quantity + total , 0)
+    ?.reduce((total, bundle) => 
+    !bundle.exclude ? bundle.quantity + total : total , 0)
 
     const isAvailable = hasVariants && totalQuantityOfBundledProducts == product.quantity || !hasVariants
+    // const isAvailable = totalQuantityOfBundledProducts == product?.quantity
 
     const addToCartClick = () => {
             addToCart(product!)
     }
-    console.log(product)
+
+    
+    
     return (
         <ModalBackdrop>
             {

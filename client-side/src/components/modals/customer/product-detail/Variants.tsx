@@ -21,32 +21,37 @@ function Variants({ variants, setBundleVariants, bundleVariants, orderedProduct,
     if (variants.length > 0) variantsContent = <Flavors>
         {
             variants.map((product) => (
-                <Variant 
-                data={product.bundleChildProduct} 
-                setBundleVariants={setBundleVariants} 
-                bundleVariants={bundleVariants} 
-                orderedProduct={orderedProduct}
-                />
-            ))
-        }
-    </Flavors>
-
-let addonsContent;
-if (orderedProduct.category.Product.length === 0) addonsContent = <h2>No other addons</h2>
-if (orderedProduct.category.Product.length > 0) addonsContent = <Flavors>
-        {
-            orderedProduct.category.Product?.filter(product => product?.productType === 'ADDONS').map((product) => (
-                <Addon 
-                    data={product}
+                <Variant
+                    data={product.bundleChildProduct}
+                    setBundleVariants={setBundleVariants}
+                    bundleVariants={bundleVariants}
                     orderedProduct={orderedProduct}
                 />
             ))
         }
     </Flavors>
 
+    let addonsContent;
+    if (orderedProduct.category.Product.length === 0) addonsContent = <h2>No other addons</h2>
+    if (orderedProduct.category.Product.length > 0) addonsContent = <Flavors>
+        {
+            orderedProduct.category.Product?.filter(product => product?.productType === 'ADDONS').map((product) => (
+                <Addon
+                    addonData={product}
+                    orderedProduct={orderedProduct}
+                    setBundleVariants={setBundleVariants}
+                    bundleVariants={bundleVariants}
+                />
+            ))
+        }
+    </Flavors>
+
     return <ProductFlavors>
-        <Title>Other variants</Title>
-        {variantsContent}
+
+        {orderedProduct.productType === 'BUNDLE' && <>
+            <Title>Other variants</Title>
+            {variantsContent}
+        </>}
         <Title>Add ons</Title>
         {addonsContent}
     </ProductFlavors>

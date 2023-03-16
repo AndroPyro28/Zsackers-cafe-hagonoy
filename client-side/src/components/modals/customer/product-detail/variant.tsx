@@ -17,7 +17,8 @@ function Variant({data, setBundleVariants, bundleVariants, orderedProduct}: Prop
 
     const incrementAvailable = data?.stock <= variant?.quantity! || orderedProduct.quantity <= totalQuantityOfBundledProducts
     useEffect(() => {
-        setBundleVariants(prev => [...prev, {quantity: 0, productId: data?.id}])
+        setBundleVariants(prev => [...prev, {quantity: 0, productId: data?.id,
+        exclude: false}])
     }, [])
 
     const handleIncrement = () => {
@@ -26,7 +27,8 @@ function Variant({data, setBundleVariants, bundleVariants, orderedProduct}: Prop
         bundles.map((bundle) => {
             if(bundle.productId == data?.id) {
                 setBundleVariants(prev => 
-                    [...prev, {quantity: bundle.quantity + 1, productId: bundle.productId}]
+                    [...prev, {quantity: bundle.quantity + 1, productId: bundle.productId,
+                        exclude: false}]
                 )
             }
             else {
@@ -42,7 +44,8 @@ function Variant({data, setBundleVariants, bundleVariants, orderedProduct}: Prop
         bundles.map((bundle) => {
             if(bundle.productId == data?.id) {
                 setBundleVariants(prev => 
-                    [...prev, {quantity: bundle.quantity > 0 ?bundle.quantity - 1 : 0 , productId: bundle.productId}]
+                    [...prev, {quantity: bundle.quantity > 0 ?bundle.quantity - 1 : 0 , productId: bundle.productId,
+                        exclude: false}]
                 )
             }
             else {
