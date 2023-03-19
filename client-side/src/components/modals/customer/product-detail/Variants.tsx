@@ -32,10 +32,11 @@ function Variants({ variants, setBundleVariants, bundleVariants, orderedProduct,
     </Flavors>
 
     let addonsContent;
-    if (orderedProduct.category.Product.length === 0) addonsContent = <h2>No other addons</h2>
-    if (orderedProduct.category.Product.length > 0) addonsContent = <Flavors>
+    const addons = orderedProduct.category.Product?.filter(product => product?.productType === 'ADDONS' && product.stock > 0)
+    if (addons.length === 0) addonsContent = <h2>No other addons</h2>
+    if (addons.length > 0) addonsContent = <Flavors>
         {
-            orderedProduct.category.Product?.filter(product => product?.productType === 'ADDONS').map((product) => (
+            addons.map((product) => (
                 <Addon
                     addonData={product}
                     orderedProduct={orderedProduct}
@@ -53,7 +54,7 @@ function Variants({ variants, setBundleVariants, bundleVariants, orderedProduct,
             {variantsContent}
         </>}
         <Title>Add ons</Title>
-        {addonsContent}
+            {addonsContent}
     </ProductFlavors>
 }
 

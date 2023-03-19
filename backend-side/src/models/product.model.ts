@@ -165,17 +165,19 @@ export class Product {
     }
   }
 
-  async updateProductsStocks(products: {id: number, quantity: number}[]) {
+  async updateProductsStocks(products: {id: number, quantity: number, parentQuantity: number}[]) {
     try {
       products.forEach(async (p) => {
        await product.updateMany({
           where: {
             id: p.id,
-            productType: 'SINGLE'
+            productType: {
+              not: 'BUNDLE'
+            }
           },
           data: {
             stock: {
-              decrement: p.quantity
+              decrement: p.quantity * p.parentQuantity
             },
           },
         })
@@ -196,6 +198,7 @@ export class Product {
         },
         data: {
           ...body,
+          subcategoryId: Boolean(body.subcategoryId) ? body.subcategoryId : null
         },
       })
       return updated;

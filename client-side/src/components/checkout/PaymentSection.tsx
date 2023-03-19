@@ -8,31 +8,28 @@ import { useGetCartProducts } from '../../services/cart-products';
 import CheckoutModal from '../modals/customer/checkout/CheckoutModal';
 import { Payment, Payments, PaymentSectionContainer, PaymentType, Title, SummaryContainer, Summary, ChekoutButton } from './components'
 
-function PaymentSection() {
+function PaymentSection({refresher}: {refresher: boolean}) {
 
   const [paymentType, setPaymentType] = useState<string>('cod')
   const [openCheckoutModal, setOpenCheckoutModal] = useState(false);
-  // const{data: cartProducts, isLoading} = useGetCartProducts();
+  const{data: cartProducts, isLoading} = useGetCartProducts();
 
   const selectPayment = (payment: string) => setPaymentType(payment);
 
   const checkoutCartProducts: CartProduct[] = useSelector(getCartProducts)
-  const totalPrice = useSelector(getAddedProductToCheckout)
 
-    // const total = checkoutCartProducts.reduce((total: any, cartProduct) => {
-    //   const cartProductFound: any = cartProducts?.find((cart) => cart.id == cartProduct.id );
-
-    //   if(cartProductFound?.Cart_Product_Variant.length > 0) {
-    //     const addonsPrice = cartProductFound.Cart_Product_Variant.reduce((totalAddonsValue: number, addon: CartProduct) => {
-    //       const addonPrice = addon.product.productType === 'ADDONS' ? addon?.product.price : 0;
-    //       return addonPrice + totalAddonsValue
-    //     }, 0)
-
-    //     return (addonsPrice + total + cartProduct.product.price) * cartProduct.quantity
-    //   }
-
-    //   return (total + cartProduct.product.price) * cartProduct.quantity
-    // }, 0)
+  const totalPrice = checkoutCartProducts.reduce((total, cartProduct) => {
+    const cartProductFound = cartProducts?.find((cart) => cart .id == cartProduct.id );
+    let addonsPrice = 0;
+    if(cartProductFound!.Cart_Product_Variant && cartProductFound!.Cart_Product_Variant.length > 0) {
+      cartProductFound!.Cart_Product_Variant.forEach((addons) => {
+        if(addons.product.productType === 'ADDONS') {
+          addonsPrice += (addons.product.price * addons.quantity) * cartProductFound!.quantity;
+        }
+      })
+    }
+     return total + cartProductFound!.quantity * cartProductFound!.product.price + addonsPrice
+  }, 0)
 
   const handleClick = () => {
     if(checkoutCartProducts.length <= 0 ) {

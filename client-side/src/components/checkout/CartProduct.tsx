@@ -9,9 +9,10 @@ import { useDeleteOneCartProductMutation } from '../../services/cart-products';
 import { useEffect, useState } from 'react';
 interface Props {
   data: CartProdutModel
+  setRefresher: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function CartProduct({ data }: Props) {
+function CartProduct({ data, setRefresher }: Props) {
   const { product, quantity, id, Cart_Product_Variant } = data;
   const { updateCartQuantity } = Logic()
   const dispatch = useDispatch();
@@ -47,17 +48,17 @@ function CartProduct({ data }: Props) {
     }, 0)
     setPrice(quantity * (product.price + addonPrice));
   }
-}, [data])
+}, [data, setRefresher])
 
 const handleIncrement = () => {
   updateCartQuantity(id, 'increment')
+  setRefresher(prev => !prev)
 }
 
 const handleDecrement = () => {
   updateCartQuantity(id, 'decrement')
+  setRefresher(prev => !prev)
 }
-
-
 
   return (
     <CartProductContainer isInCheckout={isInCheckout}>

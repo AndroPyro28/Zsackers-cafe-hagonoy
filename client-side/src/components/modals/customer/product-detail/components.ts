@@ -143,7 +143,6 @@ export const VariantContainer = styled.div`
     gap: 5px;
 
     background: ${({active}: {active?: boolean}) => active ? 'rgb(198,240,198)' : 'white'};
-    
     & > .product__name {
         font-size: 0.9em;
         color: rgb(51,102,51);

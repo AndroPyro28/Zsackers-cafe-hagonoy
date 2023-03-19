@@ -78,6 +78,7 @@ export const OrderProductContainer = styled.div`
   flex-direction: column;
   margin: 10px;
   border-radius: 10px;
+  transition: all .3s ease-in-out;
   /* border: solid 1px gray; */
 `
 
@@ -86,6 +87,7 @@ export const BundledOrderProducts = styled.div`
   flex-direction: column;
   width: 80%;
   align-self: flex-end;
+  transition:  all .3s ease-in-out;
 `
 
 export const OrderedProduct = styled.div`
