@@ -204,7 +204,7 @@ export const OrderStatusContainer = styled.section`
 `;
 
 export const ButtonStatusContainer = styled.div`
-  position: absolute;
+  /* position: absolute; */
     bottom: 20px;
     gap: 10px;
     left: 0;

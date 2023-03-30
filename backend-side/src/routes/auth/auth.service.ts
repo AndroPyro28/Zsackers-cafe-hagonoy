@@ -130,12 +130,11 @@ export class AuthService {
     }
 
     async changePassword (userId: number, body: ChangePasswordDto) {
-
       const user = await this.userModel.findUserByid(userId);
       if(!user) throw new ForbiddenException('Invalid Credentials');
 
       const isPasswordMatch = await this.argonhelper.compare(body.oldPassword, user.password)
-      if(!isPasswordMatch) throw new ForbiddenException('Invalid Credentials');
+      if(!isPasswordMatch) throw new ForbiddenException('incorrect old password ');
 
       const hashPw = await this.argonhelper.hash(body.newPassword)
 
